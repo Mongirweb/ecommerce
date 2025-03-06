@@ -1,0 +1,35 @@
+.client {
+  min-height: 35vh;
+  background-color: rgb(240, 240, 240);
+  display: flex; /* Flexbox para centrar contenido */
+  align-items: center; /* Centrado vertical */
+  justify-content: center; /* Centrado horizontal */
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 50%;
+    padding: 40px;
+    text-align: center;
+    @media (max-width: 700px) {
+      width: 100%;
+    }
+  }
+  &__button {
+    border: none;
+    outline: none;
+    background: #25d366;
+    padding: 8.5px 12px;
+    border-radius: 7px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 14px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+}

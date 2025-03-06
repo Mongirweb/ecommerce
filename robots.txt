@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+disallow: [/admin, /signin, /business, /messenger]
+Sitemap: https://www.somoselhueco.com/sitemap

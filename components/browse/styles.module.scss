@@ -1,0 +1,190 @@
+.filter {
+  &__prices {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    .option {
+      cursor: pointer;
+      &:hover {
+        color: $empresy-azul;
+      }
+    }
+    .activeOption {
+      cursor: pointer;
+
+      color: $empresy-azul;
+      text-decoration: underline;
+    }
+  }
+  padding: 1rem;
+  h3 {
+    font-size: 17px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-bottom: 10px;
+    span {
+      svg {
+        fill: #333;
+        width: 10px;
+      }
+    }
+  }
+  section {
+    ul {
+      margin-left: 1rem;
+    }
+    li {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      span {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        svg {
+          width: 10px;
+          fill: #333;
+        }
+      }
+    }
+  }
+  .showMore {
+    font-size: 16px;
+    text-decoration: underline;
+    cursor: pointer;
+    &:hover {
+      color: $empresy-azul;
+    }
+  }
+  &__price {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+    span {
+      font-size: 14px;
+    }
+    input {
+      width: 70px;
+      height: 32px;
+      padding-left: 5px;
+      font-size: 14px;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  &__forward {
+    cursor: pointer;
+    &_circle {
+      height: 30px;
+      width: 30px;
+      background-color: #ccc;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        fill: #7e7c7c;
+      }
+    }
+    &_circleActive {
+      height: 30px;
+      width: 30px;
+      background-color: #2a89ef;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        fill: #ffffff;
+      }
+    }
+  }
+  &__sizes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 10px;
+    &_size {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    label {
+      font-size: 15px;
+    }
+  }
+  &__colors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    button {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      &:hover {
+        outline: 1px solid #000;
+        outline-offset: 3px;
+      }
+    }
+  }
+  &__brand {
+    background: #fff;
+    width: 100px;
+    height: 37px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    color: #222;
+    &:hover {
+      border: 1px solid #000;
+    }
+    img {
+      height: 29px;
+      object-fit: contain;
+    }
+  }
+  &__discounts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    .option {
+      cursor: pointer;
+      &:hover {
+        color: $empresy-azul;
+      }
+    }
+    .activeOption {
+      cursor: pointer;
+
+      color: $empresy-azul;
+      text-decoration: underline;
+    }
+  }
+}
+.activeFilter {
+  border: 1px solid #222;
+}
+.activeFilterColor {
+  outline: 1px solid #000;
+  outline-offset: 3px;
+}

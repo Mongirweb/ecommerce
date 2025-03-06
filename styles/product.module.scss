@@ -1,0 +1,48 @@
+.product {
+  min-height: 100vh;
+  background-color: $grey-color;
+
+  .path {
+    font-size: 14px;
+    color: #666;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    a {
+      &:hover {
+        text-decoration: underline;
+        color: $empresy-azul;
+      }
+    }
+  }
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    background-color: #fff;
+    .divider {
+      width: 100%;
+      border-bottom: 1px solid $border-color;
+      margin-top: 20px;
+      margin-bottom: 40px;
+    }
+  }
+  &__main {
+    position: relative;
+    display: flex;
+    margin-top: 1rem;
+    gap: 1rem;
+    max-width: 1200px;
+    @media (max-width: 800px) {
+      flex-direction: column;
+    }
+  }
+  &__related {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 1rem;
+    border-radius: 10px;
+  }
+}

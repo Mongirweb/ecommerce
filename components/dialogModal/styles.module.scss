@@ -1,0 +1,131 @@
+/* CustomDialog.module.scss */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.271); /* semi-transparent black overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999; /* Ensure it's on top */
+}
+
+.modal {
+  background: #fff;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #eee;
+  padding: 1rem;
+  svg {
+    font-size: 36px;
+    color: $green-color;
+  }
+  .closeBtn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+  }
+  @media (max-width: 500px) {
+    svg {
+      font-size: 30px;
+      color: $green-color;
+    }
+    h2 {
+      font-size: 20px;
+    }
+  }
+}
+
+.modalBody {
+  padding: 1rem;
+  flex: 1 1 auto; /* let body grow */
+}
+
+.modalFooter {
+  padding: 1rem;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: #eee;
+  width: 100%;
+  max-width: 500px;
+
+  .btn {
+    padding: 0.5rem 2rem;
+    background: $blue-color;
+    border: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: transform 0.2s ease;
+    /* Ensure the button takes the full width of its parent */
+
+    /* Optionally, make it a block element to avoid any inline spacing quirks */
+    gap: 10px;
+    font-weight: bold;
+  }
+  .btn_continue {
+    padding: 0.5rem 1rem;
+    background: white;
+    border: 1px solid black;
+    color: black;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: transform 0.2s ease;
+    /* Ensure the button takes the full width of its parent */
+
+    /* Optionally, make it a block element to avoid any inline spacing quirks */
+    display: block;
+    font-weight: bold;
+  }
+  .actionsWrapper {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    width: 100%;
+  }
+}
+
+.msg {
+  margin: 1rem 0;
+}
+
+/* A simple button style */
+
+.btn:hover {
+  /* Scale the button up on hover */
+  transform: scale(1.05);
+}
+
+.btn_continue:hover {
+  /* Scale the button up on hover */
+  transform: scale(1.05);
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+}

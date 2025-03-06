@@ -1,0 +1,16 @@
+.share {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: black;
+  font-weight: bold;
+  svg {
+    transition: transform 0.1s ease;
+    border-radius: 50px;
+    margin: 5px;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}

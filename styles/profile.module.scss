@@ -1,0 +1,184 @@
+.header {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.orders {
+  nav {
+    margin-top: 2rem;
+    ul {
+      /*
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+       */
+      display: grid;
+      grid-template-columns: repeat(8, auto);
+      gap: 2px;
+      height: 20px;
+      li {
+        font-size: 15px;
+        color: #222;
+        cursor: pointer;
+        transition: all 0.1s;
+        &:hover {
+          font-weight: 600;
+          border-bottom: 1px solid #222;
+        }
+      }
+    }
+    @media (max-width: 730px) {
+      display: none;
+    }
+  }
+
+  table {
+    width: 100%;
+    margin-top: 1rem;
+
+    thead {
+      background: #222;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    tbody {
+      td {
+        padding: 5px;
+      }
+    }
+
+    td {
+      text-align: center;
+      svg {
+        width: 27px;
+        height: 27px;
+        cursor: pointer;
+        stroke: $blue-color;
+        &:hover {
+          stroke: $dark-blue-color;
+        }
+      }
+    }
+
+    /* Responsive Styling */
+    @media (max-width: 680px) {
+      td:nth-child(1), /* Hide Productos */
+      td:nth-child(3), /* Hide Metodo de Pago */
+      td:nth-child(5), /* Hide Pagado */
+      td:nth-child(6), /* Hide Status */
+      th:nth-child(1),
+      th:nth-child(3),
+      th:nth-child(5),
+      th:nth-child(6) {
+        display: none;
+      }
+    }
+  }
+
+  &__images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    text-align: center;
+    background: #eee;
+    color: #222;
+    img {
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+
+  &__paid {
+    img {
+      width: 25px !important;
+    }
+  }
+}
+
+.active {
+  font-weight: 600;
+  border-bottom: 1px solid #222;
+}
+
+.button {
+  width: 150px;
+  height: 50px;
+  color: #fff;
+  font-weight: 600;
+  background: #000;
+  cursor: pointer;
+  margin: 2rem 0 0 1rem;
+}
+
+.disabled {
+  cursor: not-allowed;
+  background: #eee;
+}
+
+.profileInfo {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  .profileInfoItem {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    p {
+      font-weight: 600;
+    }
+    span {
+      color: #565658;
+    }
+  }
+}
+
+/* Common text styles for success or error */
+.success {
+  display: block;
+  color: #2e7d32; /* greenish */
+  margin: 0.5rem 0;
+}
+.error {
+  display: block;
+  color: #d32f2f; /* red */
+  margin: 0.5rem 0;
+}
+
+/* You can define a container for your notice message */
+.noticeBox {
+  display: flex;
+  align-items: start; /* or center, depending on your layout */
+  background-color: #f5f8fa;
+  border: 1px solid #cfdce6;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.noticeIcon {
+  margin-right: 0.5rem;
+  font-size: 1.3rem;
+  color: #0072ea; /* subtle brand color for icon */
+}
+
+.noticeMessage {
+  font-size: 0.95rem;
+  color: #0f1111;
+  line-height: 1.4;
+}
+
+/* Additional spacing for form items, if needed */
+.formGroup {
+  margin-bottom: 1rem;
+}

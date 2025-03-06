@@ -1,0 +1,48 @@
+.forgot {
+  min-height: calc(100vh - 440px);
+  display: grid;
+  place-items: center;
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    p {
+      font-size: 14px;
+      color: #7c7b7b;
+    }
+    .back__svg {
+      width: 50px;
+      height: 50px;
+      border: 1px solid #66666657;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+
+      &:hover {
+        border-color: $blue-color;
+        svg {
+          fill: $blue-color;
+        }
+      }
+      svg {
+        width: 20px;
+        height: 20px;
+        fill: #222;
+      }
+    }
+    span {
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      gap: 10px;
+      //padding-left: 10px;
+      .back {
+        color: $blue-color;
+        cursor: pointer;
+        border-bottom: 1px solid $blue-color;
+        padding-bottom: 5px;
+      }
+    }
+  }
+}

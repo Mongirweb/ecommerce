@@ -1,0 +1,609 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  grid-template-areas:
+    "menu header header"
+    "menu swiper user"
+    "menu offers user";
+
+  @media (max-width: 1232px) {
+    grid-template-columns: 1fr 3fr;
+  }
+  @media (max-width: 990px) {
+    grid-template-columns: 1fr 3fr;
+  }
+  @media (max-width: 730px) {
+    grid-template-areas:
+      "menu"
+      "swiper"
+      "offers";
+    grid-template-columns: 1fr;
+
+    .menu {
+      width: 100% !important;
+      height: fit-content !important;
+      &__list {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: center;
+        li {
+          transform: translateY(-25px);
+        }
+      }
+    }
+  }
+  .menu {
+    grid-area: menu;
+    height: 580px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: $shadow-1;
+    position: relative; // Add relative positioning
+
+    @media (max-width: 990px) {
+      &__list {
+        display: flex;
+        flex-direction: column;
+
+        ul {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    }
+
+    @media (max-width: 730px) {
+      width: 100% !important;
+      height: fit-content !important;
+      &__list {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 20px !important;
+        position: absolute; // Position absolutely to appear above other content
+        top: 100%; // Position below the menu header
+        z-index: 100; // Ensure it appears above other content
+        background: #fff;
+
+        li {
+          width: 100% !important;
+          display: flex !important;
+          justify-content: left;
+          padding: 10px;
+          height: 40px !important;
+
+          a {
+            display: flex !important;
+            flex-direction: row !important;
+            padding: 0 !important;
+            gap: 20 !important;
+
+            span {
+              display: flex !important;
+            }
+          }
+        }
+      }
+    }
+
+    &__header {
+      width: 100%;
+      height: 35px;
+      background: $grey-color;
+      border-bottom: 1px solid $grey-color;
+      box-shadow: $shadow-2;
+      justify-content: space-between;
+
+      @media (max-width: 990px) {
+        // Optional: Hide header or adjust styles for mobile
+        svg,
+        b {
+          // display: none;
+        }
+      }
+      @media (max-width: 730px) {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        background: $light-grey-color;
+      }
+
+      svg {
+        height: 25px;
+        width: 25px;
+        fill: #000000;
+        stroke: #000000;
+      }
+
+      &_todo {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        background: $light-grey-color;
+        padding: 10px;
+
+        @media (max-width: 730px) {
+          background-color: transparent;
+        }
+      }
+    }
+
+    &__list {
+      list-style-type: none;
+      margin-top: 3px;
+
+      li {
+        height: 35px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        font-size: 15px;
+
+        @media (max-width: 990px) {
+          height: 50px;
+        }
+
+        &:hover {
+          background: $grey-color;
+        }
+
+        a {
+          padding: 0 20px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          color: #000000;
+
+          svg {
+            fill: #000000;
+            stroke: #000000;
+          }
+        }
+      }
+    }
+  }
+
+  .header {
+    grid-area: header;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @media (max-width: 730px) {
+      display: none !important;
+    }
+    ul {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      li {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        font-size: 19px;
+        font-weight: 600;
+        color: $blue-color;
+      }
+    }
+  }
+
+  .swiper {
+    grid-area: swiper;
+    height: 300px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: $shadow-1;
+  }
+
+  .user {
+    position: relative;
+    grid-area: user;
+    height: 530px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: $shadow-1;
+    @media (max-width: 1232px) {
+      display: none;
+    }
+    &__header {
+    }
+    &__container {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+    }
+    &__infos {
+      position: relative;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+
+      h1 {
+        font-size: 24px;
+      }
+      p {
+        font-size: 20px;
+      }
+
+      h4 {
+        margin-top: 10px;
+        text-transform: capitalize;
+      }
+      span {
+        font-weight: 400;
+        font-size: 15px;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+      svg {
+        width: 50px;
+        height: 50px;
+        stroke: $empresy-azul;
+      }
+      &_btns {
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        button {
+          cursor: pointer;
+          font-weight: 600;
+          background: linear-gradient(90deg, #50fad5 0%, #3ab3ff 100%);
+          padding: 10px 20px;
+          border-radius: 10px;
+          font-size: 18px;
+          font-weight: bold;
+          cursor: pointer;
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+    &__links {
+      margin-top: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      li {
+        width: 40px;
+        height: 40px;
+        background: $grey-color;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+        svg {
+          width: 26px;
+          height: 26px;
+          stroke: $blue-color;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        &:hover {
+          background: $blue-color;
+          svg {
+            stroke: #fff;
+          }
+        }
+        &:nth-of-type(3),
+        &:nth-of-type(4) {
+          svg {
+            fill: $blue-color;
+          }
+          &:hover {
+            svg {
+              fill: #fff;
+            }
+          }
+        }
+      }
+    }
+    &__footer {
+      position: absolute;
+      bottom: 0;
+      transform: rotate(180deg);
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center; // Center the button horizontally within its container
+      align-items: center; // Center the button vertically within its container
+      width: 100%; // Ensure the container takes up the full width
+      margin: 0 auto; // Center the container itself, if needed
+    }
+
+    .button1 {
+      margin: 0 auto;
+      background-color: $blue-color;
+      color: #000000;
+      padding: 7px 40px;
+      border: none;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: $shadow-1;
+      margin-top: 15px;
+
+      &:hover {
+        background-color: darken($blue-color, 10%);
+        transform: scale(1.05);
+      }
+
+      &:active {
+        transform: scale(1);
+      }
+
+      @media (max-width: 730px) {
+        display: none;
+      }
+    }
+  }
+
+  .modal {
+    width: 100%;
+    height: 100%;
+    display: grid;
+
+    .subMenu {
+      display: grid;
+      gap: 10px;
+      list-style: none;
+      padding: 0;
+      width: 100%;
+
+      @media (min-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr); // 3 columns for wide screens
+      }
+
+      @media (min-width: 768px) and (max-width: 1023px) {
+        grid-template-columns: repeat(2, 1fr); // 2 columns for medium screens
+      }
+
+      @media (max-width: 767px) {
+        grid-template-columns: 1fr; // 1 column for mobile screens
+      }
+
+      li {
+        padding: 5px;
+        border-radius: 5px;
+
+        a {
+          color: #000; // Adjust as needed
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}
+
+.about_us {
+  background: linear-gradient(
+    90deg,
+    rgba(80, 250, 213, 0.3) 0%,
+    rgba(58, 179, 255, 0.3) 100%
+  );
+  height: fit-content !important;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  gap: 40px;
+  margin-top: 40px;
+  p {
+    font-size: 1.8rem;
+    color: #000;
+    text-align: center;
+  }
+
+  @media (max-width: 670px) {
+    padding: 20px;
+  }
+
+  &__texts {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 80px;
+
+    @media (max-width: 670px) {
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    &_text {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      p {
+        font-size: 22px;
+        text-align: left;
+        font-weight: bold;
+      }
+      span {
+        font-size: 16px;
+      }
+      button {
+        background: linear-gradient(90deg, #50fad5 0%, #3ab3ff 100%);
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+      @media (max-width: 670px) {
+        p {
+          font-size: 18px;
+        }
+        span {
+          font-size: 14px;
+        }
+        button {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+
+.new {
+  position: absolute;
+  top: -8px;
+  left: -9px;
+  width: 80px;
+  z-index: 99;
+}
+
+.searchContainer {
+  font-family: sans-serif;
+  position: relative;
+  width: 50%;
+  @media (max-width: 400px) {
+    width: 100%;
+  }
+}
+
+.inputWrapper {
+  position: relative;
+}
+.search {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  background: #eeeeeebc;
+  height: 40px;
+  border-radius: 50px;
+  box-shadow: inset $shadow-1;
+  input {
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    padding-left: 1rem;
+  }
+  &__icon {
+    width: auto;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    background: #000000;
+    border-radius: 50px;
+
+    margin-right: 8px;
+    cursor: pointer;
+    svg {
+      width: 21px;
+      height: 21px;
+      fill: #fff;
+      stroke: #fff;
+      stroke-width: 0.8px;
+    }
+  }
+}
+
+.searchInput {
+  width: 100%;
+  padding: 8px 12px 8px 12px; // Adjust padding as needed
+  font-size: 14px;
+  font-weight: 500;
+  border: 1.5px solid black;
+  border-radius: 50px;
+  outline: none;
+
+  &:focus {
+    border-color: #0070f3; // adjust color to match your design
+  }
+}
+
+.clearButton {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #aaa;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #555;
+  }
+}
+
+.dropdownContainer {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  z-index: 10;
+  overflow: hidden;
+}
+
+.scrollArea {
+  height: 300px;
+}
+
+.resultItem {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f3f4f6;
+  }
+}
+
+.highlightedResultItem {
+  background-color: #f3f4f6;
+}
+
+.resultItemImage {
+  height: 40px;
+  width: 40px;
+  margin-right: 8px;
+}
+
+.resultItemText {
+  font-size: 14px;
+}
+
+.emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #6b7280; // gray-500
+}

@@ -1,0 +1,47 @@
+@import "../../base";
+.colors {
+  padding-top: 1rem;
+  border-top: 1px solid #ccc;
+  button {
+    background: $blue-color;
+    color: #fff;
+  }
+  .flex {
+    img {
+      height: 30px;
+      width: 30px;
+    }
+  }
+}
+.wheel {
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.square__color {
+  font-weight: 700;
+  cursor: pointer;
+  color: black;
+  overflow: hidden;
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
+  border: 1px solid black;
+  display: flex;
+}
+.toggle {
+  position: relative;
+  height: 0px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  &__btn {
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    &:hover {
+      stroke: $blue-color;
+    }
+  }
+}

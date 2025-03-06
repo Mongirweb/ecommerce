@@ -1,0 +1,322 @@
+.infos {
+  color: #666;
+  width: 100%;
+  @media (max-width: 840px) {
+    padding-top: 1rem !important;
+  }
+  @media (max-width: 680px) {
+    width: 600px;
+    max-width: 100%;
+  }
+  @media (max-width: 630px) {
+    width: 500px;
+    max-width: 100%;
+  }
+  @media (max-width: 530px) {
+    width: 450px;
+    max-width: 100%;
+  }
+  @media (max-width: 480px) {
+    width: 400px;
+    max-width: 100%;
+  }
+  @media (max-width: 430px) {
+    width: 360px;
+    max-width: 100%;
+  }
+  @media (max-width: 380px) {
+    width: 320px;
+    max-width: 100%;
+  }
+  @media (max-width: 340px) {
+    width: 300px;
+    max-width: 100%;
+  }
+
+  &__container {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    margin-bottom: 3rem;
+    @media (max-width: 500px) {
+      margin-bottom: 0px;
+    }
+    &_infos {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      &_name {
+        font-size: 18px;
+        color: #000;
+        font-weight: bold;
+      }
+      &_company {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        img {
+          width: 30px;
+          height: 30px;
+          object-fit: contain;
+          border-radius: 50%;
+        }
+      }
+      &_rating {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        font-size: 14px;
+      }
+      &_price {
+        color: black;
+        display: flex;
+        flex-direction: column-reverse;
+
+        p {
+          font-size: 36px;
+          font-weight: 400;
+          padding-left: 5px;
+        }
+
+        h3 {
+          font-weight: normal;
+          font-size: 16px;
+          padding-left: 5px;
+          color: #666;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          span {
+            &:first-of-type {
+              text-decoration: line-through;
+            }
+            &:last-of-type {
+              color: #0647fa;
+            }
+          }
+        }
+      }
+      &_sizes {
+        h4 {
+          margin-top: 1rem;
+        }
+
+        &_wrap {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 1rem;
+        }
+        &_size {
+          min-width: 45px;
+          width: fit-content;
+          padding-left: 10px;
+          padding-right: 10px;
+          height: 45px;
+          border-radius: 50%;
+          display: grid;
+          place-items: center;
+          border: 1px solid #e6e6e6;
+          cursor: pointer;
+          margin-top: 10px;
+          &:hover {
+            background-image: linear-gradient(
+              to top,
+              #f3e7e9 0%,
+              #e3eeff 99%,
+              #e3eeff 100%
+            );
+          }
+        }
+      }
+      &_colors {
+        /* The parent container: still fine to keep display: flex, 
+           so multiple color swatches appear side by side. */
+        display: flex;
+        flex-direction: column; /* or column if you prefer */
+        margin-top: 1rem;
+        gap: 1rem;
+        flex-wrap: wrap;
+
+        span {
+          /* Switch to flex so image & text can stack. */
+          display: flex;
+          flex-direction: column;
+          align-items: center; /* optional: center them horizontally */
+          width: auto; /* or a fixed width if you like */
+          cursor: pointer;
+          /* Remove or modify height & overflow */
+          /* height: 80px;  <-- remove this */
+          /* overflow: hidden;  <-- remove this too */
+          border: 1px solid #e6e6e6;
+          border-radius: 5px;
+
+          img {
+            width: 80px;
+            height: 100px;
+            object-fit: cover;
+            /* Keep the 80×80 just for the image. */
+          }
+
+          /* Optional: style your paragraph below the image. */
+          p {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 5px;
+            font-size: 14px;
+            width: 80px;
+            padding-bottom: 5px;
+            /* anything else you like */
+          }
+
+          &:hover {
+            outline: 1px solid #666;
+            outline-offset: 2px;
+          }
+        }
+        &_wrap {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 1rem;
+        }
+      }
+    }
+    @media (max-width: 500px) {
+      flex-direction: column;
+    }
+  }
+
+  &__container_action {
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    padding: 10px;
+    height: fit-content;
+    &_shipping {
+      display: block;
+      color: $green-color;
+      font-weight: bold;
+    }
+    &_quantity {
+      display: block;
+      color: rgb(255, 132, 0);
+      font-weight: bold;
+    }
+    &_qty {
+      padding: 1rem 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+      button {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        p {
+          transform: translateY(-1px);
+        }
+        span {
+          width: 20px;
+          text-align: center;
+        }
+      }
+    }
+    &_actions {
+      @media (min-width: 1160px) {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      button {
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50px;
+        gap: 10px;
+        height: 50px;
+        color: #666;
+        font-weight: 600;
+        font-size: 17px;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.2s;
+        svg {
+          width: 24px;
+          height: 24px;
+          transform: translateY(-2px);
+        }
+        &:first-of-type {
+          background: $empresy-azul;
+          color: #fff;
+        }
+        &:last-of-type {
+          border: 1px solid $empresy-azul;
+          background: $empresy-azul;
+          color: #fff;
+          svg {
+            margin-top: 5px;
+          }
+          @media (min-width: 1160px) {
+            width: 300px;
+          }
+          &:hover {
+            background: transparent;
+            border: 1px solid #333;
+            color: #333;
+          }
+        }
+      }
+    }
+  }
+
+  &__sku {
+    font-size: 12px;
+    font-weight: normal;
+  }
+
+  &__accordian {
+    margin-top: 1rem;
+    max-width: 400px;
+    &_grid {
+      display: flex;
+      justify-content: space-between;
+      color: #666;
+      font-weight: normal;
+      span {
+        display: flex;
+        gap: 2px;
+        text-align: justify;
+      }
+      p {
+        text-transform: capitalize;
+      }
+    }
+    .accordian {
+      border: none;
+      font-weight: 700;
+      &__summary {
+        background: transparent;
+      }
+    }
+  }
+}
+.active_size {
+  background-image: linear-gradient(
+    to top,
+    #f3e7e9 0%,
+    #e3eeff 99%,
+    #e3eeff 100%
+  );
+}
+.active_color {
+  outline: 1px solid #666;
+  outline-offset: 2px;
+}

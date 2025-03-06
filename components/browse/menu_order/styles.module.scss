@@ -1,0 +1,26 @@
+.menu_mobile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  background: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid #ece6e6;
+  margin-bottom: 10px;
+  p {
+    color: gray;
+  }
+  &__option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: $empresy-azul;
+    }
+  }
+}

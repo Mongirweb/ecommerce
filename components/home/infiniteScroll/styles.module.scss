@@ -1,0 +1,368 @@
+.wrapper {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  margin-bottom: 40px;
+  margin-top: 40px;
+  height: fit-content;
+
+  @media (max-width: 450px) {
+    margin-top: 0px;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .seeMore {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-top: 10px;
+    button {
+      background: $empresy-azul;
+      border-radius: 20px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 5px 30px;
+      &:hover {
+        opacity: 0.7;
+      }
+      margin: 10px;
+    }
+  }
+  .header {
+    background: white;
+    color: black;
+    font-size: 20px;
+    padding: 1rem 10px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    margin-bottom: 5px;
+    gap: 10px;
+    svg {
+      font-size: 24px;
+    }
+  }
+
+  .productsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    @media (max-width: 450px) {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 5px;
+    }
+    @media (max-width: 400px) {
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 5px;
+    }
+    @media (max-width: 360px) {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 5px;
+    }
+    @media (max-width: 340px) {
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 5px;
+    }
+  }
+
+  .product {
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    background: #fff;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      transition: transform 0.3s ease; // Add transition for smooth scaling
+      overflow: hidden;
+
+      &:hover {
+        overflow: hidden;
+        opacity: 0.7;
+      }
+    }
+    @media (max-width: 670px) {
+      height: fit-content;
+    }
+
+    &__infos {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+
+      .product_name {
+        text-align: left;
+        line-height: 1;
+        width: 100%;
+        span {
+          font-size: 14px;
+        }
+      }
+      .product_brand {
+        font-size: 13px;
+        color: #666;
+        display: none;
+      }
+      .product_price {
+        text-align: left;
+        width: 100%;
+        line-height: 1;
+        p {
+          font-size: 14px;
+          color: #666;
+        }
+        span {
+          font-size: 16px;
+          font-weight: bold;
+        }
+
+        .product_price_discount {
+          display: flex;
+          flex-direction: column;
+          white-space: nowrap;
+          justify-content: space-between;
+          padding-top: 4px;
+          gap: 5px;
+          .product_price_discount_price {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+          }
+          .product_add {
+            a {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border: 1px solid black;
+              padding: 2px 8px;
+              border-radius: 20px;
+              width: 40px;
+              &:hover {
+                box-shadow: 0 0 0 0.5px black; // Add an extra shadow instead of changing the border
+              }
+              svg {
+                font-size: 22px;
+              }
+            }
+          }
+        }
+        .product_price_nodiscount {
+          display: flex;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding-top: 4px;
+          gap: 5px;
+          .product_add {
+            a {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border: 1px solid black;
+              padding: 2px 8px;
+              border-radius: 20px;
+              width: 40px;
+              &:hover {
+                box-shadow: 0 0 0 0.5px black; // Add an extra shadow instead of changing the border
+              }
+              svg {
+                font-size: 22px;
+              }
+            }
+          }
+        }
+      }
+      @media (max-width: 670px) {
+        gap: 2px !important;
+        .product_name {
+          span {
+            font-size: 14px;
+          }
+        }
+        .product_brand {
+          font-size: 11px;
+          color: #666;
+        }
+      }
+      .product_price {
+        p {
+          font-size: 12px;
+          color: #666;
+        }
+        font-size: 18px;
+      }
+      @media (max-width: 450px) {
+        .product_price {
+          p {
+            font-size: 10px;
+            color: #666;
+          }
+          span {
+            font-size: 16px !important;
+          }
+        }
+      }
+      @media (max-width: 450px) {
+        margin-left: 8px;
+      }
+    }
+    &__colors {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 5px;
+      display: none;
+      img {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: $shadow-1;
+        cursor: pointer;
+        outline-offset: 2px;
+        &:hover {
+          outline: 1px solid #000;
+        }
+      }
+      .active {
+        outline: 1px solid #000;
+      }
+      span {
+        width: 21px;
+        height: 21px;
+        border-radius: 50%;
+        box-shadow: $shadow-1;
+        overflow: hidden;
+      }
+    }
+    &__discount {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      z-index: 1;
+      background: $yellow-color;
+      color: #333;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    &__stats {
+      margin-top: 1rem;
+      width: 100%;
+      height: 250px;
+      background: #f7f8fa;
+      padding: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 10rem;
+      @media (max-width: 930px) {
+        gap: 3rem;
+        padding: 1rem;
+      }
+      @media (max-width: 755px) {
+        flex-direction: column;
+        height: 100%;
+      }
+      &_overview {
+        &_rating {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          span {
+            font-size: 13px;
+          }
+          svg {
+            width: 35px;
+            height: 35px;
+          }
+        }
+      }
+      &_reviews {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-left: 2rem;
+
+        &_review {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          svg {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+          }
+          .bar {
+            position: relative;
+            width: 20vw;
+            height: 5px;
+            background: #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            &__inner {
+              position: absolute;
+              left: 0;
+              height: 100%;
+              background: #ff4747;
+            }
+          }
+          span {
+            font-weight: 700;
+            font-size: 19px;
+          }
+        }
+      }
+    }
+    &_rating {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      font-size: 14px;
+      @media (max-width: 450px) {
+        margin-left: 8px;
+      }
+    }
+  }
+  .swiperSlide {
+    @media (max-width: 450px) {
+      padding-bottom: 40px;
+    }
+  }
+
+  .loader {
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .spinner {
+    animation: spin 1s linear infinite;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

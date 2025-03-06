@@ -1,0 +1,127 @@
+.browse {
+  background: $grey-color;
+  height: 100%;
+  width: 100vw;
+
+  &__container {
+    max-width: 97%;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+  &__store {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+
+    @media (max-width: 670px) {
+      grid-template-columns: 1fr;
+    }
+
+    &_filters {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow-y: auto;
+      text-align: center;
+      padding-top: 1rem;
+      padding-bottom: 2rem;
+      &:before {
+        content: "";
+        height: 1px;
+        width: 200px;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #ccc;
+      }
+      @media (max-width: 670px) {
+        display: none !important;
+      }
+    }
+    &_products {
+      display: flex !important;
+      flex-wrap: wrap;
+      gap: 1rem;
+      @media (max-width: 670px) {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0;
+      }
+    }
+  }
+  &__clearBtn {
+    width: 180px;
+    border: 1px solid #000;
+    font-weight: 600;
+    outline: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    background: transparent;
+    &:hover {
+      background: #eee;
+    }
+  }
+  &__path {
+    padding: 20px 10px;
+    color: #777;
+    @media (max-width: 670px) {
+      display: none;
+    }
+  }
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-bottom: 1rem;
+    gap: 1rem;
+    a {
+      width: 280px;
+      border: 1px solid #ccc;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      &:hover {
+        border-color: #000;
+      }
+    }
+  }
+}
+.pagination {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 2rem;
+}
+.fixed {
+  position: relative;
+  min-height: 100vh;
+  .browse__store_filters {
+    position: fixed;
+    top: 2rem;
+    width: 320px;
+  }
+  .browse__store_products_wrap {
+    position: absolute;
+    top: 2rem;
+    left: 336px;
+  }
+}
+.noProductsMessage {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  font-weight: bold;
+  justify-content: center;
+  margin-top: 40px;
+  p {
+    text-align: center;
+    width: 70%;
+  }
+  @media (min-width: 400px) {
+    justify-content: flex-start;
+  }
+}

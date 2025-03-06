@@ -1,0 +1,44 @@
+@import "../base";
+.cart {
+  &__method {
+    h2 {
+      &:last-of-type {
+        margin-top: 10px;
+        font-size: 10px;
+      }
+    }
+  }
+}
+.images {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e8e7e7;
+  img {
+    width: 60px;
+    height: 40px;
+    object-fit: contain;
+    border: 1px solid #e8e7e7;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    margin-left: 5px;
+  }
+}
+.protection {
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: #6d6969;
+  font-size: 15px;
+  svg {
+    font-size: 30px;
+    color: rgb(10, 200, 26);
+  }
+}
+.header {
+  color: #222 !important;
+}

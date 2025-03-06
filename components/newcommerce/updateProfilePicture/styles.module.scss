@@ -1,0 +1,128 @@
+.picture {
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  box-shadow: 0 12px 20px 0 var(--shadow-1), 0 2px 4px 0 var(--shadow-2),
+    inset 0 0 0 1px var(--shadow-inset);
+  min-height: 228px;
+  width: 500px;
+  border-radius: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 85%;
+  margin: 0 auto;
+  border: 1px solid rgb(186, 185, 185);
+  &__header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 14px 15px 17px 15px;
+    border-bottom: 1px solid #eff3f6;
+    &_close {
+      cursor: pointer;
+      &:hover {
+        opacity: 0.5;
+      }
+      svg {
+        height: 30px;
+        width: 30px;
+      }
+    }
+  }
+  &__update {
+    position: relative;
+    height: 400px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &_crooper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      height: 300px;
+      width: 100%;
+      background: rgb(169, 166, 166);
+      img {
+        width: 100%;
+        object-fit: contain;
+        height: 100%;
+      }
+      .reactEas.update_imgyCrop_CropAreaGrid {
+        width: 300px !important;
+        height: 300px !important;
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+    &_slider {
+      position: absolute;
+      bottom: -20px;
+      width: 100%;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      justify-content: center;
+      input[type="range"] {
+        -webkit-appearance: none;
+        width: 55%;
+        height: 4px;
+        background: #94b0e9;
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        outline: none;
+        border-radius: 50%;
+        background-color: rgb(63, 112, 158);
+        box-shadow: 0 2px 2px var(--shadow-1), 0 2px 2px 0 var(--shadow-2),
+          inset 0 0 0 1px var(--shadow-inset);
+        border: 1px solid var(--bg-third);
+      }
+      &_circle {
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+    }
+  }
+  &__submit {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    &_cancel {
+      background: rgb(255, 68, 0);
+      color: white;
+      font-weight: bold;
+      padding: 5px 5px;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+    &_save {
+      background: rgb(0, 106, 255);
+      color: white;
+      font-weight: bold;
+      padding: 5px 5px;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+  @media (max-width: 550px) {
+    width: 90%;
+  }
+}
