@@ -1,135 +1,111 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useInView } from "react-intersection-observer";
 import styles from "../styles/Home.module.scss";
 import { categories } from "../data/categorie";
-import Main from "../components/home/main";
 import MainSwiper from "../components/home/main/swiper";
 import dynamic from "next/dynamic";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  addProducts,
-  resetScrollData,
-  setPage,
-} from "../store/infiniteScrollSlice";
+import Category from "../components/home/category";
 import Link from "next/link";
+import PromoSection from "../components/home/promoSection";
+import { FaLocationDot } from "react-icons/fa6";
+import Title from "../components/home/title";
+import electric from "../public/images/promo/electrodomesticos-saldos-saldomania.webp";
+import SocialVideoSwiper from "../components/home/socialVideoSwiper";
+import { videos } from "../data/videos";
 
-const CategoriesSwiper = dynamic(() =>
-  import("../components/home/categorySwiper")
-);
+const ProductsSwiper = dynamic(() => import("../components/productsSwiper"));
 
-const InfiniteScroll = dynamic(() =>
-  import("../components/home/infiniteScroll")
-);
+// Keep a set to avoid fetching the same page multiple times (optional)
+const alreadyFetchedNew = new Set();
 
-const alreadyFetchedRecomended = new Set(); // Track fetched pages
-const alreadyFetchedOffers = new Set(); // Track fetched pages
-const alreadyFetchedNew = new Set(); // Track fetched pages
-const alreadyFetchedUserProducts = new Set(); // Track fetched pages
+export default function ClientHome() {
+  const [newProductsPage, setNewProductsPage] = useState(0);
+  const [newProducts, setNewProducts] = useState([]);
+  const [newLoaded, setNewLoaded] = useState(false);
 
-//// Este componente cargará datos sólo cuando su sección esté en vista.
-export default function ClientHome({ recommendedData }) {
-  const dispatch = useDispatch();
-
-  const { products, page } = useSelector((state) => state.infiniteScroll);
-
-  const [newRecomendedProducts, setNewRecomendedProducts] =
-    useState(recommendedData);
-
-  const [newProducts3, setNewProducts3] = useState(products);
-  const [newLoaded3, setNewLoaded3] = useState(false);
-
-  const [recomendedProductsPage, setRecomendedProductsPage] = useState(0);
-
-  const [autoFetchEnabled, setAutoFetchEnabled] = useState(true);
-
-  const [hasMoreUserProducts, setHasMoreUserProducts] = useState(true);
-
-  const [autoFetchCount, setAutoFetchCount] = useState(0);
-
-  // Refs para cada categoría para disparar la carga al entrar en vista
-
-  const { ref: newRef, inView: newInView } = useInView();
-
-  const visitedProducts = useSelector((state) => state.userVisitedProducts);
-
+  // Clear our fetched set on mount so we always start fresh
   useEffect(() => {
-    alreadyFetchedRecomended.clear(); // Clear similar fetched pages
-    alreadyFetchedNew.clear(); // Clear similar fetched pages
-    alreadyFetchedOffers.clear(); // Clear related fetched pages
-    alreadyFetchedUserProducts.clear();
+    alreadyFetchedNew.clear();
   }, []);
 
-  // Función para manejar el click en "Ver más"
-  const handleClickVerMas = () => {
-    setAutoFetchEnabled(true);
-    setAutoFetchCount(0);
-  };
+  // Fetch runs automatically on newProductsPage changes
+  useEffect(() => {
+    if (alreadyFetchedNew.has(newProductsPage)) return;
 
-  // Función para cargar más productos relacionados con el usuario
-  const fetchMoreUserRelatedProducts = () => {
-    if (alreadyFetchedUserProducts.has(page)) return;
-
-    if (!autoFetchEnabled) return;
-    setNewLoaded3(true);
-
-    alreadyFetchedUserProducts.add(page);
-    fetch(`/api/products/userRelated?page=${page}`, {
-      cache: "no-store",
-      next: { revalidate: 5 },
-    })
+    alreadyFetchedNew.add(newProductsPage);
+    fetch(`/api/products/new?page=${newProductsPage}`)
       .then((res) => res.json())
       .then((data) => {
         if (data && data.length > 0) {
-          setNewProducts3((prev) => [...prev, ...data]);
-          dispatch(addProducts(data));
-          dispatch(setPage(page + 1));
-          setAutoFetchCount((prev) => {
-            const newCount = prev + 1;
-            if (newCount >= 7) {
-              // Change to 50 as per your requirement
-              setAutoFetchEnabled(false);
-            }
-            return newCount;
-          });
-          setNewLoaded3(false);
-        } else {
-          setHasMoreUserProducts(false);
-          setNewLoaded3(false);
+          setNewProducts((prev) => [...prev, ...data]);
         }
+        setNewLoaded(true);
       })
-      .catch((err) => {
-        console.error("Error fetching user related products", err);
-      });
-  };
+      .catch((err) => console.error("Error fetching new products:", err));
+  }, [newProductsPage]);
 
   return (
-    <div>
-      <div className={styles.home}>
-        <MainSwiper />
-        <div className={styles.container}>
-          {/* Sección newProducts (con ref para carga diferida) */}
-          <div ref={newRef}>
-            <Main
-              newRecomendedProducts={newRecomendedProducts}
-              setRecomendedProductsPage={setRecomendedProductsPage}
-            />
-          </div>
-
-          <CategoriesSwiper categories={categories} header={"Categorias"} />
-
-          {/* Promo Section - Electrodomésticos */}
+    <div className={styles.home}>
+      <MainSwiper />
+      <div className={styles.container}>
+        {/* Sección de categorías principales */}
+        <div className={styles.home__category}>
+          {categories.map((category, i) => (
+            <div key={i}>
+              <Category
+                header={category.name}
+                categories={categories}
+                background="#fff"
+              />
+            </div>
+          ))}
         </div>
-        <div className={styles.infinite}>
-          <InfiniteScroll
-            products={newProducts3}
-            fetchMoreProducts={fetchMoreUserRelatedProducts}
-            hasMore={hasMoreUserProducts}
-            isLoading={newLoaded3}
-            autoFetchEnabled={autoFetchEnabled}
-            onClickVerMas={handleClickVerMas}
-          />
-        </div>
+
+        <PromoSection
+          img="https://res.cloudinary.com/danfiejkv/image/upload/v1741897408/mongir-almacen-tienda-bebe-medellin-centro_k0vwve.jpg"
+          text={
+            <>
+              <span style={{ fontSize: "22px", fontWeight: "bold" }}>
+                ¡VISITANOS!
+              </span>
+              <br />
+              Estamos a una cuadra de la
+              <br />
+              estación San Antonio.
+              <br />
+              <br />
+              <p style={{ fontSize: "14px" }}>
+                <FaLocationDot /> Calle 46 # 52, Medellin, Antioquia
+              </p>
+            </>
+          }
+        />
+
+        {/* Title */}
+        <Title title="LO MÁS VENDIDO" />
+
+        {/* Sección Productos nuevos y destacados */}
+        <ProductsSwiper
+          header=""
+          products={newProducts}
+          newProducts
+          setNewProductsPage={setNewProductsPage}
+        />
+        {/* Title */}
+
+        <PromoSection
+          img="https://res.cloudinary.com/danfiejkv/image/upload/v1741898289/MONGIR-COMPRA-MAYORISTA-TIENDA-BEBE_ue6pxt.png"
+          text={
+            <>
+              <span>Emprende con Mongir</span> <br />
+              <span>VENTAS MAYORISTAS</span>
+              <br />
+              Contactanos - 300-123-1324
+            </>
+          }
+        />
+        <Title title="NUESTROS VIDEOS" />
+        <SocialVideoSwiper videos={videos} />
       </div>
       <div>
         <Link href="/browse">.</Link>

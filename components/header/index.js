@@ -2,9 +2,8 @@
 import Ad from "./Ad";
 import Main from "./Main";
 import styles from "./header.module.scss";
-import Top from "./Top";
 
-export default function Header({ country, searchHandler, searchParams }) {
+export default function Header({ searchHandler, searchParams }) {
   return (
     <header className={styles.header}>
       <div style={{ display: "none" }}>
@@ -27,7 +26,6 @@ export default function Header({ country, searchHandler, searchParams }) {
         </p>
       </div>
       <Ad />
-      <Top country={country} />
       <Main searchHandler={searchHandler} searchParams={searchParams} />
     </header>
   );

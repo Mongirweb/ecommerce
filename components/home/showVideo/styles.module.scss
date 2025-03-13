@@ -1,0 +1,43 @@
+.embedContainer {
+  /* Center the embed and optionally set a max width */
+  margin: 0 auto;
+  max-width: 600px;
+  /* Adjust to taste */
+  /* Adjust to taste */
+  height: 200px !important;
+}
+
+/*---------------------------
+    TikTok Minimal Embed
+  ----------------------------*/
+.tiktokEmbed {
+  /* Remove border, margin, etc. */
+  border: none !important;
+
+  /* Hide certain UI elements (share buttons, user info, etc.) 
+       The actual selectors can differ; you may need to inspect 
+       the rendered embed to fine-tune these rules. */
+  .tiktok-share-link,
+  .tiktok-follow-button,
+  .tiktok-avatar,
+  .tiktok-author-card,
+  .tiktok-username,
+  .tiktok-caption {
+    display: none !important;
+  }
+}
+
+/*---------------------------
+    Instagram Minimal Embed
+  ----------------------------*/
+.instagramEmbed {
+  border: none !important;
+
+  /* Similar approach to hide parts of the embed you don’t want. */
+  .EmbeddedMediaMeta,
+  .Caption,
+  footer,
+  header {
+    display: none !important;
+  }
+}

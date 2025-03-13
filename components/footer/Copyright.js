@@ -29,7 +29,7 @@ export default function Copyright() {
 
   return (
     <div className={styles.footer__copyright}>
-      <section>©2025 Somos el Hueco Medellín</section>
+      <section>©2025 Distribuidora Mongir</section>
       <section>
         <ul>
           {data?.map((link, i) => (

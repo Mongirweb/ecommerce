@@ -16,6 +16,12 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import CrossTabSync from "./components/CrossTabSync";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 export const generateMetadata = async () => {
   const title =
@@ -95,7 +101,7 @@ export default function RootLayout({ children }) {
   const nonce = headers().get("x-nonce");
 
   return (
-    <html lang="es" translate="no">
+    <html lang="es" translate="no" className={poppins.className}>
       <head>
         <meta name="google" content="notranslate" />
       </head>

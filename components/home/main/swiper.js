@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import styles from "./main.module.scss";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -30,10 +29,10 @@ export default function MainSwiper() {
         modules={[Autoplay, Pagination, Navigation]}
         className="mainSwiper"
       >
-        {[...Array(4)?.keys()]?.map((i) => (
+        {[...Array(1)?.keys()]?.map((i) => (
           <SwiperSlide key={i}>
             <Image
-              src={`/images/swiper/${i + 1}.avif`} // Update the src to start with a leading slash
+              src="https://res.cloudinary.com/danfiejkv/image/upload/v1741889736/Mongir-almacen-tienda-bebe-foto-portada_rvst5a.avif" // Update the src to start with a leading slash
               alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
               width={1200}
               height={1100}

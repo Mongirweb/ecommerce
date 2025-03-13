@@ -16,11 +16,11 @@ export const categories = [
   //   id: "66b6839dc2bd5f4688ba3e58",
   // },
   {
-    name: "Tecnología",
+    name: "Primer día",
     image:
-      "https://res.cloudinary.com/danfiejkv/image/upload/q_58/v1725329347/Productos-electronicos-saldomania_flbejh.avif",
+      "https://res.cloudinary.com/danfiejkv/image/upload/v1741548723/Mongir-tienda-primer-dia-bebe_bjf52h.avif",
     link: "/browse",
-    slug: "tecnologia",
+    slug: "primer-dia",
     id: "66b683eec2bd5f4688ba3e89",
     subCategories: [
       { name: "Cámaras y Accesorios" },
@@ -39,11 +39,11 @@ export const categories = [
     ],
   },
   {
-    name: "Belleza y Cuidado Personal",
+    name: "Ropa bebé",
     image:
-      "https://res.cloudinary.com/danfiejkv/image/upload/q_61/v1725329347/Productos-belleza-cuidado-personal-empresy_fgxppv.avif",
+      "https://res.cloudinary.com/danfiejkv/image/upload/v1741548723/Mongir-tienda-ropa-bebe_b3cwkh.avif",
     link: "/browse",
-    slug: "belleza-y-cuidado-personal",
+    slug: "ropa-bebe",
     id: "66b683c5c2bd5f4688ba3e71",
     subCategories: [
       { name: "Maquillaje" },
@@ -61,11 +61,11 @@ export const categories = [
   },
 
   {
-    name: "Hobbies, Juegos y Juguetes",
+    name: "Calzado",
     image:
-      "https://res.cloudinary.com/danfiejkv/image/upload/q_60/v1725329344/juguetes-juegos-saldomania_yrwwti.avif",
+      "https://res.cloudinary.com/danfiejkv/image/upload/v1741548723/Mongir-tienda-calzado-bebe_sru65m.avif",
     link: "/browse",
-    slug: "hobbies-juegos-y-juguetes",
+    slug: "calzado",
     id: "66b6840bc2bd5f4688ba3e9d",
     subCategories: [
       { name: "0-24 meses" },
@@ -79,11 +79,11 @@ export const categories = [
     ],
   },
   {
-    name: "Moda",
+    name: "Accesorios",
     image:
-      "https://res.cloudinary.com/danfiejkv/image/upload/q_59/v1725329348/Productos-Moda-ropa-accesorios-saldomania_ufhgch.avif",
+      "https://res.cloudinary.com/danfiejkv/image/upload/v1741548723/Mongir-tienda-accesorios-bebe_xlxhgs.avif",
     link: "/browse",
-    slug: "moda",
+    slug: "accesorios",
     id: "66b683b6c2bd5f4688ba3e67",
     subCategories: [
       { name: "Ropa" },
@@ -98,19 +98,19 @@ export const categories = [
     ],
   },
   {
-    name: "Arte, Papeleria y Manualidades",
+    name: "Cuidado",
     image:
-      "https://res.cloudinary.com/danfiejkv/image/upload/q_54/v1725329346/Productos-arte-papeleria-manualidades-empresy_vk0msy.avif",
+      "https://res.cloudinary.com/danfiejkv/image/upload/v1741548723/Mongir-tienda-higiene-bebe_gwlhdp.avif",
     link: "/browse",
     slug: "arte-papeleria-y-manualidades",
     id: "66b683a4c2bd5f4688ba3e5d",
   },
   {
-    name: "Piñatería y Fiestas",
+    name: "Trajes de baño",
     image:
-      "https://res.cloudinary.com/danfiejkv/image/upload/q_58/v1725329348/productos-pinateria-fiestas-saldomania_ckix4f.avif",
+      "https://res.cloudinary.com/danfiejkv/image/upload/v1741548723/Mongir-tienda-vestido-de-bano-bebe_oowf3y.avif",
     link: "/browse",
-    slug: "pinateria-y-fiestas",
+    slug: "trajes-de-bano",
     id: "66b6841dc2bd5f4688ba3eac",
     subCategories: [
       { name: "Perros" },
@@ -133,26 +133,26 @@ export const categories = [
   //   id: "66b683aac2bd5f4688ba3e62",
   // },
 
-  {
-    name: "Bebes y Niños",
-    image:
-      "https://res.cloudinary.com/danfiejkv/image/upload/q_59/v1725329346/Productos-Bebes-empresy_stnnup.avif",
-    link: "/browse",
-    slug: "bebes",
-    id: "66b683bfc2bd5f4688ba3e6c",
-    subCategories: [
-      { name: "Embarazo y Maternidad" },
-      { name: "Ropa y Accesorios" },
-      ,
-      { name: "Seguridad" },
-      ,
-      { name: "Coches, asientos y accesorios" },
-      ,
-      { name: "Mobiliario" },
-      { name: "Cuidado y Salud" },
-      { name: "Juguetes" },
-    ],
-  },
+  // {
+  //   name: "Bebes y Niños",
+  //   image:
+  //     "https://res.cloudinary.com/danfiejkv/image/upload/q_59/v1725329346/Productos-Bebes-empresy_stnnup.avif",
+  //   link: "/browse",
+  //   slug: "bebes",
+  //   id: "66b683bfc2bd5f4688ba3e6c",
+  //   subCategories: [
+  //     { name: "Embarazo y Maternidad" },
+  //     { name: "Ropa y Accesorios" },
+  //     ,
+  //     { name: "Seguridad" },
+  //     ,
+  //     { name: "Coches, asientos y accesorios" },
+  //     ,
+  //     { name: "Mobiliario" },
+  //     { name: "Cuidado y Salud" },
+  //     { name: "Juguetes" },
+  //   ],
+  // },
 
   // {
   //   name: "Carros, Motos y Otros",
@@ -240,52 +240,52 @@ export const categories = [
   //     { name: "Otros Electronicos" },
   //   ],
   // },
-  {
-    name: "Hogar, Mobiliario y Jardín",
-    image:
-      "https://res.cloudinary.com/danfiejkv/image/upload/q_56/v1725329349/Productos-Hogar-mobiliario-jardin-saldomania_xj9ss4.avif",
-    link: "/browse",
-    slug: "hogar-mobiliario-y-jardin",
-    id: "66b683f5c2bd5f4688ba3e8e",
-    subCategories: [
-      { name: "Cámaras y Accesorios" },
-      { name: "Celulares y Accesorios" },
-      ,
-      { name: "Computadores y Accesorios" },
-      ,
-      { name: "Consolas y Videojuegos" },
-      ,
-      { name: "Audio" },
-      { name: "Television y Proyectores" },
-      { name: "Seguridad y Vigilancia" },
-      { name: "Gps y Navegacion" },
-      { name: "Electronicos para autos y vehiculos" },
-      { name: "Otros Electronicos" },
-    ],
-  },
-  {
-    name: "Ferretería",
-    image:
-      "https://res.cloudinary.com/danfiejkv/image/upload/q_57/v1725329345/herramientas-saldomania_svnozd.avif",
-    slug: "ferreteria",
-    link: "/browse",
-    id: "66b683fcc2bd5f4688ba3e93",
-    subCategories: [
-      { name: "Cámaras y Accesorios" },
-      { name: "Celulares y Accesorios" },
-      ,
-      { name: "Computadores y Accesorios" },
-      ,
-      { name: "Consolas y Videojuegos" },
-      ,
-      { name: "Audio" },
-      { name: "Television y Proyectores" },
-      { name: "Seguridad y Vigilancia" },
-      { name: "Gps y Navegacion" },
-      { name: "Electronicos para autos y vehiculos" },
-      { name: "Otros Electronicos" },
-    ],
-  },
+  // {
+  //   name: "Hogar, Mobiliario y Jardín",
+  //   image:
+  //     "https://res.cloudinary.com/danfiejkv/image/upload/q_56/v1725329349/Productos-Hogar-mobiliario-jardin-saldomania_xj9ss4.avif",
+  //   link: "/browse",
+  //   slug: "hogar-mobiliario-y-jardin",
+  //   id: "66b683f5c2bd5f4688ba3e8e",
+  //   subCategories: [
+  //     { name: "Cámaras y Accesorios" },
+  //     { name: "Celulares y Accesorios" },
+  //     ,
+  //     { name: "Computadores y Accesorios" },
+  //     ,
+  //     { name: "Consolas y Videojuegos" },
+  //     ,
+  //     { name: "Audio" },
+  //     { name: "Television y Proyectores" },
+  //     { name: "Seguridad y Vigilancia" },
+  //     { name: "Gps y Navegacion" },
+  //     { name: "Electronicos para autos y vehiculos" },
+  //     { name: "Otros Electronicos" },
+  //   ],
+  // },
+  // {
+  //   name: "Ferretería",
+  //   image:
+  //     "https://res.cloudinary.com/danfiejkv/image/upload/q_57/v1725329345/herramientas-saldomania_svnozd.avif",
+  //   slug: "ferreteria",
+  //   link: "/browse",
+  //   id: "66b683fcc2bd5f4688ba3e93",
+  //   subCategories: [
+  //     { name: "Cámaras y Accesorios" },
+  //     { name: "Celulares y Accesorios" },
+  //     ,
+  //     { name: "Computadores y Accesorios" },
+  //     ,
+  //     { name: "Consolas y Videojuegos" },
+  //     ,
+  //     { name: "Audio" },
+  //     { name: "Television y Proyectores" },
+  //     { name: "Seguridad y Vigilancia" },
+  //     { name: "Gps y Navegacion" },
+  //     { name: "Electronicos para autos y vehiculos" },
+  //     { name: "Otros Electronicos" },
+  //   ],
+  // },
 
   // {
   //   name: "Libros, Revistas y Comics",
@@ -305,25 +305,25 @@ export const categories = [
   //     { name: "14 años y mayores" },
   //   ],
   // },
-  {
-    name: "Mascotas",
-    image:
-      "https://res.cloudinary.com/danfiejkv/image/upload/q_56/v1725329345/mascotas-saldomania_v9vlvh.avif",
-    link: "/browse",
-    slug: "mascotas",
-    id: "66b68418c2bd5f4688ba3ea7",
-    subCategories: [
-      { name: "Perros" },
-      { name: "Gatos" },
-      ,
-      { name: "Peces" },
-      ,
-      { name: "Aves" },
-      ,
-      { name: "Caballos" },
-      { name: "Animales Pequeños" },
-    ],
-  },
+  // {
+  //   name: "Mascotas",
+  //   image:
+  //     "https://res.cloudinary.com/danfiejkv/image/upload/q_56/v1725329345/mascotas-saldomania_v9vlvh.avif",
+  //   link: "/browse",
+  //   slug: "mascotas",
+  //   id: "66b68418c2bd5f4688ba3ea7",
+  //   subCategories: [
+  //     { name: "Perros" },
+  //     { name: "Gatos" },
+  //     ,
+  //     { name: "Peces" },
+  //     ,
+  //     { name: "Aves" },
+  //     ,
+  //     { name: "Caballos" },
+  //     { name: "Animales Pequeños" },
+  //   ],
+  // },
 
   // {
   //   name: "Salud y Equipamiento Médico",

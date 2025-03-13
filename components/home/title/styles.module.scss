@@ -1,0 +1,23 @@
+.title {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 24px;
+  font-weight: 600;
+  color: #0b233a;
+  @media (max-width: 570px) {
+    font-size: 18px;
+  }
+}
+
+.line {
+  flex: 1;
+  border-bottom: 3px solid #000; // Adjust color and thickness as needed
+  margin: 0 10px;
+  color: #0b233a;
+}
+
+.text {
+  white-space: nowrap;
+  color: #0b233a;
+}

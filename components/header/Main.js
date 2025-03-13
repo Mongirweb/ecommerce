@@ -2,11 +2,11 @@
 import Link from "next/link";
 import styles from "./header.module.scss";
 import { RiSearch2Line } from "react-icons/ri";
-import { FaShoppingCart } from "react-icons/fa";
+import { FiShoppingCart } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import image from "../../public/somos-el-hueco-medellin-logo-circulo.avif";
+import image from "../../public/MONGIR-LOGO.png";
 import Image from "next/image";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
@@ -74,69 +74,77 @@ export default function Main({ searchHandler }) {
     setQuery(""); // Optionally clear the query
   };
 
-  console.log(cart);
-
   return (
     <div className={styles.main} ref={modal}>
       <div className={styles.main__container}>
+        <div className={styles.main__container_options}>
+          <Link href="/browse">
+            <div className={styles.option}>Primer día</div>
+          </Link>
+          <div className={styles.option} onClick={() => handleOpenModal()}>
+            Ropa
+          </div>
+          <div className={styles.option} onClick={() => handleOpenModal()}>
+            Calzado
+          </div>
+          <div className={styles.option} onClick={() => handleOpenModal()}>
+            Accesorios
+          </div>
+          <div className={styles.option} onClick={() => handleOpenModal()}>
+            Ver más
+          </div>
+        </div>
         <Link href="/" legacyBehavior>
           <a className={styles.logo}>
             <Image
               src={image}
-              alt="somoselhueco-logo"
+              alt="mongir-logo"
               loading="lazy"
               width={100}
               height={100}
             />
           </a>
         </Link>
-        <Link href="/browse">
-          <div className={styles.option}>
-            <BsFire /> En Promo
-          </div>
-        </Link>
-        <div className={styles.option} onClick={() => handleOpenModal()}>
-          Categorias <IoIosArrowForward />
-        </div>
+        <div className={styles.main__container_options}>
+          <form onSubmit={(e) => handleSearch(e)} className={styles.search}>
+            <input
+              type="text"
+              placeholder="Busca en mongir..."
+              value={query}
+              onChange={handleInputChange}
+            />
 
-        <form onSubmit={(e) => handleSearch(e)} className={styles.search}>
-          <input
-            type="text"
-            placeholder="Busca en Somos el Hueco..."
-            value={query}
-            onChange={handleInputChange}
-          />
+            <button type="submit" className={styles.search__icon}>
+              <RiSearch2Line />
+            </button>
+          </form>
+          {suggestions.length > 0 && (
+            <SearchSuggestions
+              suggestions={suggestions}
+              query={searchQuery}
+              handleCloseSuggestions={handleCloseSuggestions}
+              handleSearch={handleSearch}
+            />
+          )}
 
-          <button type="submit" className={styles.search__icon}>
-            <RiSearch2Line />
-          </button>
-        </form>
-        {suggestions.length > 0 && (
-          <SearchSuggestions
-            suggestions={suggestions}
-            query={searchQuery}
-            handleCloseSuggestions={handleCloseSuggestions}
-            handleSearch={handleSearch}
-          />
-        )}
-
-        {/* <SearchDropdownComponent
+          {/* <SearchDropdownComponent
           setQuery={setQuery}
           handleSearch={handleSearch}
         /> */}
 
-        <div
-          className={styles.menu_menu}
-          onClick={() => setShowMenuMobile((prev) => !prev)}
-        >
-          <IoMenu />
+          <div
+            className={styles.menu_menu}
+            onClick={() => setShowMenuMobile((prev) => !prev)}
+          >
+            <IoMenu />
+          </div>
+          <Link href="/cart" legacyBehavior>
+            <a className={styles.cart}>
+              <FiShoppingCart />
+              <span>{cart?.cartItems?.length}</span>
+            </a>
+          </Link>
         </div>
-        <Link href="/cart" legacyBehavior>
-          <a className={styles.cart}>
-            <FaShoppingCart />
-            <span>{cart?.cartItems?.length}</span>
-          </a>
-        </Link>
       </div>
       {showMenuMobile ? (
         <MobileMenu

@@ -1,11 +1,13 @@
 .home {
   min-height: 100vh;
   background: $grey-color;
+
   &__category {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
-    margin-top: 20px;
+    margin-top: 40px;
+
     @media (max-width: 850px) {
       grid-template-columns: repeat(2, 1fr);
     }

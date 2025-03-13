@@ -1,7 +1,7 @@
 // components/Loading.jsx
 
 import Image from "next/image";
-import image from "../public/somos-el-hueco-medellin-logo-circulo.avif";
+import image from "../public/MONGIR-LOGO.png";
 import styles from "../styles/loading.module.scss"; // Adjust the path if necessary
 
 export default function Loading() {

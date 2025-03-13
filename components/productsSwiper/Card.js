@@ -175,7 +175,7 @@ export default function RecomendedCard({ product }) {
             ) : (
               <div className={styles.product_price_nodiscount}>
                 <span>$ {formattedOriginalPrice}</span>
-                <div className={styles.product_add}>
+                {/* <div className={styles.product_add}>
                   <Link
                     href={
                       subProducts?.sizes?.length > 1
@@ -188,12 +188,12 @@ export default function RecomendedCard({ product }) {
                     {" "}
                     <MdAddShoppingCart />
                   </Link>
-                </div>
+                </div> */}
               </div>
             )}
           </div>
         </div>
-        <div className={styles.product_rating}>
+        {/* <div className={styles.product_rating}>
           <Rating
             name="half-rating-read"
             defaultValue={product?.rating}
@@ -209,7 +209,7 @@ export default function RecomendedCard({ product }) {
               {product.numReviews === 1 ? "review" : "reviews"})
             </>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

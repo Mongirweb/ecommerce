@@ -110,10 +110,10 @@ export default function ProductsSwiper({
               slidesPerView: 4.2,
             },
             1232: {
-              slidesPerView: 5.2,
+              slidesPerView: 4.2,
             },
             1520: {
-              slidesPerView: 6.2,
+              slidesPerView: 5.2,
             },
           }}
         >

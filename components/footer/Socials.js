@@ -9,7 +9,7 @@ export default function Socials() {
         <ul>
           <li>
             <a
-              href="https://www.facebook.com/share/1KL1aSYk2D/?mibextid=wwXIfr"
+              href="https://www.facebook.com/almacenmongir/?locale=es_LA"
               target="_blank"
             >
               <FaFacebookF />
@@ -17,7 +17,7 @@ export default function Socials() {
           </li>
           <li>
             <a
-              href="https://www.instagram.com/somoselhuecomedellin?igsh=MTU0MWlpcTI0M2M3bQ%3D%3D&utm_source=qr"
+              href="https://www.instagram.com/almacenmongir/profilecard/?igsh=M3ZseGNtc2ptZTF"
               target="_blank"
             >
               <BsInstagram />
@@ -25,7 +25,7 @@ export default function Socials() {
           </li>
           <li>
             <a
-              href="https://www.tiktok.com/@somoselhueco?_t=ZS-8tCtZGcPiMi&_r=1"
+              href="https://www.tiktok.com/@almacenmongir?lang=en"
               target="_blank"
             >
               <FaTiktok />

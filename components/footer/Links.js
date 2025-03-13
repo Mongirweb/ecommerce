@@ -5,7 +5,7 @@ import { categories } from "../../data/categorie";
 export default function Links() {
   const links = [
     {
-      heading: "Somos el Hueco",
+      heading: "Distribuidora Mongir",
       links: [
         // { name: "Sobre SaldoManía", link: "" },
         // { name: "Vende en Somos el Hueco", link: "/newcommerce" },

@@ -122,20 +122,6 @@ export default async function HomePage() {
           mejores empresas del Hueco. Somos el Hueco
         </p>
       </div>
-      <div className={styles.container}>
-        <PromoSection
-          img={electric}
-          text={
-            <>
-              <span>ELECTRODOMESTICOS</span> <br />
-              <span>CON LOS MEJORES DESCUENTOS</span>
-              <br />
-              COMPRAR AQUÍ!!
-            </>
-          }
-        />
-      </div>
-
       <Footer />
     </div>
   );

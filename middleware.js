@@ -39,17 +39,17 @@ export async function middleware(req) {
 
   const cspHeader = `
     default-src 'self';
-    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval' https://www.googletagmanager.com https://checkout.wompi.co;
-    style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data: https://cdn.ipregistry.co https://res.cloudinary.com https://randomuser.me https://images.unsplash.com https://lh3.googleusercontent.com https://www.freeiconspng.com https://www.pngmart.com https://cdn.shopify.com https://cdn.shopifycdn.com https://cdn.shopifycdn.net;
+    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval' https://www.googletagmanager.com https://checkout.wompi.co https://www.tiktok.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com https://*.tiktok.com;
+    style-src 'self' 'unsafe-inline' https://sf16-website-login.neutral.ttwstatic.com https://*.tiktok.com;
+    img-src 'self' blob: data: https://cdn.ipregistry.co https://res.cloudinary.com https://randomuser.me https://images.unsplash.com https://lh3.googleusercontent.com https://www.freeiconspng.com https://www.pngmart.com https://cdn.shopify.com https://cdn.shopifycdn.com https://cdn.shopifycdn.net https://*.tiktok.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com https://*.tiktok.com;
     font-src 'self' data:;
     object-src 'none';
     base-uri 'self';
     form-action 'self';
-    frame-src 'self' https://checkout.wompi.co;
-    frame-ancestors 'none';
+    frame-src 'self' https://checkout.wompi.co https://www.tiktok.com https://www.instagram.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com https://*.tiktok.com;
+    frame-ancestors 'self';
     upgrade-insecure-requests; 
-    connect-src 'self' https://www.somoselhueco.com blob: ws: http://localhost:3000 https://amaua.myshopify.com https://aleko-comercializadora.myshopify.com;
+    connect-src 'self' https://www.somoselhueco.com blob: ws: http://localhost:3000 https://amaua.myshopify.com https://aleko-comercializadora.myshopify.com https://*.tiktok.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com;
   `;
 
   const contentSecurityPolicyHeaderValue = cspHeader

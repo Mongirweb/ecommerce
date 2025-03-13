@@ -15,6 +15,7 @@
   width: 130px;
   height: 130px;
   animation: grow-shrink 2s infinite ease-in-out;
+  object-fit: contain;
 }
 
 @keyframes grow-shrink {
