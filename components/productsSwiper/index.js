@@ -21,14 +21,10 @@ export default function ProductsSwiper({
   header,
   products,
   bg,
-  cool,
-  setRelatedPage,
-  relatedLoading,
   newProducts,
   setNewProductsPage,
-  setRelatedUserProductsPage,
 }) {
-  const isLoading = !products || products.length === 0 || relatedLoading;
+  const isLoading = !products || products.length === 0;
 
   const query449px = useMediaQuery({
     query: "(max-width:449px)",
@@ -37,22 +33,16 @@ export default function ProductsSwiper({
   const appearBullet = query449px; // This function will be called every time the user reaches the last slide.
   // Typically, you'd want to increment the page:
   const handleReachEnd = () => {
-    if (newProducts) {
+    if (products.length >= 6) {
       setNewProductsPage?.((prev) => prev + 1);
-    } else if (cool) {
-      setRelatedUserProductsPage?.((prev) => prev + 1);
     } else {
-      setRelatedPage?.((prev) => prev + 1);
+      return;
     }
   };
 
   return (
     <div className={styles.wrapper}>
-      {header && (
-        <div className={styles.header}>
-          {header} {cool ? <BiCool /> : null}
-        </div>
-      )}
+      {header && <div className={styles.header}>{header}</div>}
       {isLoading ? (
         <Swiper
           slidesPerView={2.2}

@@ -55,12 +55,7 @@ export const validateCreateProduct = (
   //   });
   // }
   for (var i = 0; i < sizes.length; i++) {
-    if (
-      sizes[i].qty == "" ||
-      sizes[i].price == "" ||
-      sizes[i].size == "" ||
-      sizes[i].wholesalePrice == ""
-    ) {
+    if (sizes[i].qty == "" || sizes[i].price == "" || sizes[i].size == "") {
       checks.push({
         msg: `Por favor completa toda la información en Precio / Cantidades.`,
         type: "error",

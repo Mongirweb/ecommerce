@@ -4,53 +4,50 @@
 }
 //AD---------------------------------------------------
 .ad {
-  height: 54px;
   width: 100%;
+  height: 54px;
   background: white;
+  overflow: hidden; /* Hide the scrolling overflow */
+  position: relative;
   display: flex;
-  color: #ccc;
-  justify-content: center;
   align-items: center;
-  text-align: center;
-  &__text_1 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-weight: bold;
-    svg {
-      color: #0b233a;
-    }
-    p {
-      color: black;
-      font-family: "Times New Roman", Times, serif;
-      font-size: 18px;
-    }
+}
+
+.marquee {
+  display: flex;
+  /* Two copies of content; each copy takes 100% of the container width */
+  width: 100%;
+  /* Animate the marquee container from 0 to -100% */
+  animation: scroll 30s linear infinite;
+}
+
+.marqueeContent {
+  flex: 0 0 100%; /* Each copy occupies 100% width of .ad */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  white-space: nowrap;
+
+  p {
+    color: black;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 18px;
+    margin: 0;
   }
-  &__text_2 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-weight: bold;
-    color: $new-blue;
-    svg {
-      font-size: 22px;
-    }
+
+  svg {
+    color: #0b233a;
   }
-  &__text_3 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-weight: bold;
-    color: $green-payment;
-    svg {
-      font-size: 22px;
-    }
+}
+
+/* Keyframes animate from 0 (start) to -100% (one full copy has scrolled off) */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
   }
-  @media (max-width: 570px) {
-    display: none;
+  100% {
+    transform: translateX(-100%);
   }
 }
 
@@ -250,6 +247,7 @@
 
     width: 100%;
     @media (max-width: 570px) {
+      grid-template-columns: 0.3fr 0.5fr 1fr;
       gap: 10px;
     }
     &_options {
@@ -258,6 +256,26 @@
       align-items: center;
       justify-content: center;
       gap: 30px;
+      @media (max-width: 570px) {
+        gap: 10px;
+      }
+      .menu_menu {
+        position: relative;
+        svg {
+          width: 40px;
+          height: 40px;
+          fill: #666;
+          cursor: pointer;
+          &:hover {
+            fill: $blue-color;
+          }
+
+          @media (max-width: 570px) {
+            width: 30px;
+            height: 30px;
+          }
+        }
+      }
     }
     .option {
       display: flex;
@@ -271,9 +289,6 @@
       &:hover {
         text-decoration: underline;
       }
-      @media (max-width: 580px) {
-        display: none;
-      }
     }
   }
   .logo {
@@ -283,9 +298,6 @@
     img {
       width: 120px;
       height: auto;
-      @media (max-width: 580px) {
-        width: 46px;
-      }
     }
   }
   .search {
@@ -366,9 +378,6 @@
     @media (max-width: 570px) {
       width: 30px;
       height: 30px;
-    }
-    @media (min-width: 570px) {
-      display: none;
     }
   }
   span {

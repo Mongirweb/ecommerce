@@ -9,16 +9,25 @@ const playfairDisplay = Playfair_Display({
 });
 
 export default function Ad() {
+  // Define your message once.
+  const message = (
+    <>
+      <FaRegHeart size={16} />
+      <p className={playfairDisplay.className}>
+        El amor que tu bebé te inspira es el mismo amor que encontrarás en esta
+        página
+      </p>
+      <FaRegHeart size={16} />
+    </>
+  );
+
   return (
     <Link href="/">
       <div className={styles.ad}>
-        <div className={styles.ad__text_1}>
-          <FaRegHeart size={16} />
-          <p className={playfairDisplay.className}>
-            El amor que tu bebé te inspira es el mismo amor que encontrarás en
-            esta página
-          </p>
-          <FaRegHeart size={16} />
+        <div className={styles.marquee}>
+          <div className={styles.marqueeContent}>{message}</div>
+          <div className={styles.marqueeContent}>{message}</div>
+          <div className={styles.marqueeContent}>{message}</div>
         </div>
       </div>
     </Link>

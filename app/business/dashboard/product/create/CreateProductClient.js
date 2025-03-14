@@ -34,7 +34,7 @@ const initialState = {
   description: "",
   brand: "",
   discount: "",
-  flashOffer: "",
+  flashOffer: "No",
   flashDiscount: "",
   chargeMarket: 10,
   images: [],
@@ -533,45 +533,6 @@ export default function CreateProductClient({ user, parents, categories }) {
               label="*Descuento %"
               name="discount"
               placeholder="Descuento del producto"
-              onChange={handleChange}
-            />
-
-            <div className={styles.header}>*Participar en Oferta Relampago</div>
-            <div style={{ display: "flex", gap: "10px" }}>
-              <label
-                htmlFor="flashOfferYes"
-                style={product.flashOffer === "Si" ? { color: "blue" } : null}
-              >
-                Sí
-              </label>
-              <input
-                type="radio"
-                name="flashOffer"
-                value="Si"
-                id="flashOfferYes"
-                onChange={handleChange}
-                checked={product.flashOffer === "Si"}
-              />
-              <label
-                htmlFor="flashOfferNo"
-                style={product.flashOffer === "No" ? { color: "blue" } : null}
-              >
-                No
-              </label>
-              <input
-                type="radio"
-                name="flashOffer"
-                value="No"
-                id="flashOfferNo"
-                onChange={handleChange}
-                checked={product.flashOffer === "No"}
-              />
-            </div>
-            <AdminInput
-              type="number"
-              label="% Flash"
-              name="flashDiscount"
-              placeholder="Descuento en oferta relampago"
               onChange={handleChange}
             />
 

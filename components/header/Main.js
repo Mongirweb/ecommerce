@@ -17,6 +17,7 @@ import { useModal } from "../../context/ModalContext";
 import useClickOutside from "../../utils/useClickOutside";
 import { SearchDropdownComponent } from "../home/main/SearchDropdownComponent";
 import SearchSuggestions from "./Suggestions";
+import { useMediaQuery } from "react-responsive";
 
 export default function Main({ searchHandler }) {
   const router = useRouter();
@@ -74,25 +75,75 @@ export default function Main({ searchHandler }) {
     setQuery(""); // Optionally clear the query
   };
 
+  const query650px = useMediaQuery({
+    query: "(min-width:650px)",
+  });
+
+  const query950px = useMediaQuery({
+    query: "(min-width:950px)",
+  });
+
+  const query850px = useMediaQuery({
+    query: "(min-width:850px)",
+  });
+  const query750px = useMediaQuery({
+    query: "(min-width:750px)",
+  });
+
   return (
     <div className={styles.main} ref={modal}>
       <div className={styles.main__container}>
         <div className={styles.main__container_options}>
-          <Link href="/browse">
-            <div className={styles.option}>Primer día</div>
-          </Link>
-          <div className={styles.option} onClick={() => handleOpenModal()}>
-            Ropa
-          </div>
-          <div className={styles.option} onClick={() => handleOpenModal()}>
-            Calzado
-          </div>
-          <div className={styles.option} onClick={() => handleOpenModal()}>
-            Accesorios
-          </div>
-          <div className={styles.option} onClick={() => handleOpenModal()}>
-            Ver más
-          </div>
+          {query850px ? (
+            <Link
+              href={{
+                pathname: `browse`,
+                query: { category: "67d3450902d26a8677f2e260" },
+              }}
+            >
+              <div className={styles.option}>Primer día</div>
+            </Link>
+          ) : null}
+          {query750px ? (
+            <Link
+              href={{
+                pathname: `browse`,
+                query: { category: "67d344eb02d26a8677f2e228" },
+              }}
+            >
+              <div className={styles.option}>Ropa</div>
+            </Link>
+          ) : null}
+          {query950px ? (
+            <Link
+              href={{
+                pathname: `browse`,
+                query: { category: "67d344f302d26a8677f2e236" },
+              }}
+            >
+              <div className={styles.option}>Calzado</div>
+            </Link>
+          ) : null}
+          {query650px ? (
+            <Link
+              href={{
+                pathname: `browse`,
+                query: { category: "67d344fa02d26a8677f2e244" },
+              }}
+            >
+              <div className={styles.option}>Accesorios</div>
+            </Link>
+          ) : null}
+          {query650px ? (
+            <div className={styles.option} onClick={() => handleOpenModal()}>
+              Ver más
+            </div>
+          ) : null}
+          {query650px ? null : (
+            <div className={styles.menu_menu} onClick={() => handleOpenModal()}>
+              <IoMenu />
+            </div>
+          )}
         </div>
         <Link href="/" legacyBehavior>
           <a className={styles.logo}>
@@ -132,12 +183,6 @@ export default function Main({ searchHandler }) {
           handleSearch={handleSearch}
         /> */}
 
-          <div
-            className={styles.menu_menu}
-            onClick={() => setShowMenuMobile((prev) => !prev)}
-          >
-            <IoMenu />
-          </div>
           <Link href="/cart" legacyBehavior>
             <a className={styles.cart}>
               <FiShoppingCart />

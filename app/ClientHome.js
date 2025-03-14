@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../styles/Home.module.scss";
 import { categories } from "../data/categorie";
 import MainSwiper from "../components/home/main/swiper";
@@ -9,13 +9,12 @@ import Link from "next/link";
 import PromoSection from "../components/home/promoSection";
 import { FaLocationDot } from "react-icons/fa6";
 import Title from "../components/home/title";
-import electric from "../public/images/promo/electrodomesticos-saldos-saldomania.webp";
 import SocialVideoSwiper from "../components/home/socialVideoSwiper";
 import { videos } from "../data/videos";
 
 const ProductsSwiper = dynamic(() => import("../components/productsSwiper"));
 
-// Keep a set to avoid fetching the same page multiple times (optional)
+// Global set to avoid duplicate fetches
 const alreadyFetchedNew = new Set();
 
 export default function ClientHome() {
@@ -23,12 +22,18 @@ export default function ClientHome() {
   const [newProducts, setNewProducts] = useState([]);
   const [newLoaded, setNewLoaded] = useState(false);
 
-  // Clear our fetched set on mount so we always start fresh
+  // Use a ref to guard against double initialization in development
+  const initializedRef = useRef(false);
+
+  // Only clear the fetched set once (even if Strict Mode causes double mount)
   useEffect(() => {
-    alreadyFetchedNew.clear();
+    if (!initializedRef.current) {
+      alreadyFetchedNew.clear();
+      initializedRef.current = true;
+    }
   }, []);
 
-  // Fetch runs automatically on newProductsPage changes
+  // Fetch products when newProductsPage changes
   useEffect(() => {
     if (alreadyFetchedNew.has(newProductsPage)) return;
 
@@ -91,8 +96,8 @@ export default function ClientHome() {
           newProducts
           setNewProductsPage={setNewProductsPage}
         />
-        {/* Title */}
 
+        {/* Promo Section */}
         <PromoSection
           img="https://res.cloudinary.com/danfiejkv/image/upload/v1741898289/MONGIR-COMPRA-MAYORISTA-TIENDA-BEBE_ue6pxt.png"
           text={
@@ -104,6 +109,7 @@ export default function ClientHome() {
             </>
           }
         />
+
         <Title title="NUESTROS VIDEOS" />
         <SocialVideoSwiper videos={videos} />
       </div>

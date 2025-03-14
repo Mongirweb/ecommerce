@@ -91,6 +91,7 @@ export default function CreateProductClient({ user, parents, categories }) {
   const [styleImage, setStyleImage] = useState("");
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [sobreflete, setSobreflete] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -581,6 +582,7 @@ export default function CreateProductClient({ user, parents, categories }) {
               sizes={product.sizes}
               product={product}
               setProduct={setProduct}
+              setSobreflete={setSobreflete}
             />
             {/* <Details
               details={product.details}

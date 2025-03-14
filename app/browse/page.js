@@ -330,17 +330,21 @@ export default async function Browse({ searchParams }) {
   let totalProducts = 0;
 
   if (searchQuery) {
+    const queryTokens = searchQuery.split(" ");
+    const mustClauses = queryTokens.map((token) => ({
+      text: {
+        query: token,
+        path: ["name", "description"], // or include other fields if desired
+        fuzzy: { maxEdits: 1 },
+      },
+    }));
     // Use Atlas Search for fuzzy search without category/subcategory filters
     const pipeline = [
       {
         $search: {
-          index: "Search_Index_Editor", // Your Atlas Search index name
-          text: {
-            query: searchQuery,
-            path: "name",
-            fuzzy: {
-              maxEdits: 2,
-            },
+          index: "default",
+          compound: {
+            must: mustClauses,
           },
         },
       },
@@ -388,7 +392,7 @@ export default async function Browse({ searchParams }) {
     const countPipeline = [
       {
         $search: {
-          index: "Search_Index_Editor",
+          index: "default",
           text: {
             query: searchQuery,
             path: "name",
