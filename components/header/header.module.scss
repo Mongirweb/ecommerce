@@ -19,6 +19,9 @@
   width: 100%;
   /* Animate the marquee container from 0 to -100% */
   animation: scroll 30s linear infinite;
+  @media (max-width: 570px) {
+    width: 150%;
+  }
 }
 
 .marqueeContent {
@@ -34,6 +37,9 @@
     font-family: "Times New Roman", Times, serif;
     font-size: 18px;
     margin: 0;
+    @media (max-width: 570px) {
+      font-size: 14px;
+    }
   }
 
   svg {
