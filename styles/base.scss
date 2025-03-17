@@ -368,14 +368,15 @@ $mongir-text: #0b233a;
     width: 100%;
   }
   .swiper-pagination-bullet {
-    width: 9px !important;
+    width: 20px !important;
     border-radius: 5px !important;
   }
   .swiper-pagination-bullet-active {
     background: $blue-color !important;
     background: $empresy-azul !important;
-    width: 13px !important;
+    width: 20px !important;
   }
+
   .swiper-button-next,
   .swiper-button-prev {
     background: #fff;
