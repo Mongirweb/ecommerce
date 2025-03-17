@@ -30,6 +30,9 @@
     justify-content: center;
     font-size: 18px;
     padding-bottom: 30px;
+    @media (max-width: 450px) {
+      padding-bottom: 4px;
+    }
     button {
       background: $mongir-blue;
       border-radius: 10px;
