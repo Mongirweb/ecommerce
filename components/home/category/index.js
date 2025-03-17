@@ -13,6 +13,7 @@ export default function Category({ header, products, background, categories }) {
   const [category, setCategory] = useState(null);
   const isMedium = useMediaQuery({ query: "(max-width:1300px)" });
   const isMobile = useMediaQuery({ query: "(max-width:550px)" });
+  const query400px = useMediaQuery({ query: "(max-width:400px)" });
   const isLoading = !products || products.length === 0 || !categories;
 
   useEffect(() => {
@@ -41,9 +42,8 @@ export default function Category({ header, products, background, categories }) {
           prefetch={true}
         >
           <button>
-            <div></div>
             {header}
-            <IoIosArrowForward size={22} />
+            {!query400px && <IoIosArrowForward size={22} />}
           </button>
         </Link>
       </div>
