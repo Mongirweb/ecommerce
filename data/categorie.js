@@ -78,7 +78,7 @@ export const categories = [
     ],
   },
   {
-    name: "Cuidado Personal",
+    name: "Cuidado",
     image:
       "https://res.cloudinary.com/danfiejkv/image/upload/v1741548723/Mongir-tienda-higiene-bebe_gwlhdp.avif",
     link: "/browse",

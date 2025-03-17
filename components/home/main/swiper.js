@@ -1,4 +1,3 @@
-import React, { useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -10,8 +9,10 @@ import "swiper/css/navigation";
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Image from "next/image";
+import { useMediaQuery } from "react-responsive";
 
 export default function MainSwiper() {
+  const query450px = useMediaQuery({ query: "(max-width:450px)" });
   return (
     <>
       <Swiper
@@ -39,6 +40,37 @@ export default function MainSwiper() {
               quality={70}
               loading="lazy"
             />
+            <div
+              style={
+                !query450px
+                  ? {
+                      position: "absolute",
+                      top: "90%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      backgroundColor: "#d7f3ff",
+                      padding: "10px 10px",
+                      borderRadius: "10px",
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                      fontWeight: "bold",
+                    }
+                  : {
+                      position: "absolute",
+                      top: "90%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      backgroundColor: "#d7f3ff",
+                      padding: "10px 10px",
+                      borderRadius: "10px",
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                      fontWeight: "bold",
+                      fontSize: "16px",
+                      width: "70%",
+                    }
+              }
+            >
+              SOMOS AMOR Y FAMILIA
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
