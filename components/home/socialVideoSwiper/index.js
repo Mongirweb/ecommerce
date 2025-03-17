@@ -29,6 +29,8 @@ export default function SocialVideoSwiper({ videos }) {
             : false
         }
         className="videos__swiper"
+        allowTouchMove={true}
+        grabCursor={true}
         breakpoints={{
           450: {
             slidesPerView: 1.2,
