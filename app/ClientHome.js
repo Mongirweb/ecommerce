@@ -2,17 +2,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../styles/Home.module.scss";
 import { categories } from "../data/categorie";
-import MainSwiper from "../components/home/main/swiper";
 import dynamic from "next/dynamic";
-import Category from "../components/home/category";
 import Link from "next/link";
-import PromoSection from "../components/home/promoSection";
 import { FaLocationDot } from "react-icons/fa6";
 import Title from "../components/home/title";
-import SocialVideoSwiper from "../components/home/socialVideoSwiper";
 import { videos } from "../data/videos";
 
 const ProductsSwiper = dynamic(() => import("../components/productsSwiper"));
+const SocialVideoSwiper = dynamic(() =>
+  import("../components/home/socialVideoSwiper")
+);
+const PromoSection = dynamic(() => import("../components/home/promoSection"));
+const Category = dynamic(() => import("../components/home/category"));
+const MainSwiper = dynamic(() => import("../components/home/main/swiper"));
 
 // Global set to avoid duplicate fetches
 const alreadyFetchedNew = new Set();
@@ -103,9 +105,13 @@ export default function ClientHome() {
           text={
             <>
               <span>Emprende con Mongir</span> <br />
-              <span>VENTAS MAYORISTAS</span>
+              <span style={{ fontSize: "22px", fontWeight: "bold" }}>
+                VENTAS MAYORISTAS
+              </span>
               <br />
-              Contactanos - 300-123-1324
+              <span style={{ fontSize: "14px" }}>
+                Contactanos - 300-123-1324
+              </span>
             </>
           }
         />
