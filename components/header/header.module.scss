@@ -247,8 +247,8 @@
 
     width: 100%;
     @media (max-width: 570px) {
-      grid-template-columns: 0.3fr 0.5fr 1fr;
-      gap: 10px;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 30px;
     }
     &_options {
       display: flex;
@@ -346,8 +346,8 @@
     }
 
     @media (max-width: 570px) {
-      width: 30px;
-      height: 30px;
+      width: 25px;
+      height: 25px;
     }
   }
   span {
@@ -362,6 +362,12 @@
     place-items: center;
     font-weight: 600;
     color: #fff;
+    @media (max-width: 570px) {
+      width: 20px;
+      height: 20px;
+      font-weight: 400;
+      font-size: 14px;
+    }
   }
 }
 .menu_menu {

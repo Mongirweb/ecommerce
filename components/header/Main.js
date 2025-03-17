@@ -18,6 +18,7 @@ import useClickOutside from "../../utils/useClickOutside";
 import { SearchDropdownComponent } from "../home/main/SearchDropdownComponent";
 import SearchSuggestions from "./Suggestions";
 import { useMediaQuery } from "react-responsive";
+import { IoMdSearch } from "react-icons/io";
 
 export default function Main({ searchHandler }) {
   const router = useRouter();
@@ -90,6 +91,10 @@ export default function Main({ searchHandler }) {
     query: "(min-width:750px)",
   });
 
+  const query570px = useMediaQuery({
+    query: "(max-width:570px)",
+  });
+
   return (
     <div className={styles.main} ref={modal}>
       <div className={styles.main__container}>
@@ -157,7 +162,23 @@ export default function Main({ searchHandler }) {
           </a>
         </Link>
         <div className={styles.main__container_options}>
-          <form onSubmit={(e) => handleSearch(e)} className={styles.search}>
+          {query570px ? (
+            <IoMdSearch fontSize={26} />
+          ) : (
+            <div className={styles.search}>
+              <input
+                type="text"
+                placeholder="Busca en mongir..."
+                value={query}
+                onChange={handleInputChange}
+              />
+
+              <button type="submit" className={styles.search__icon}>
+                <IoMdSearch fontSize={26} />
+              </button>
+            </div>
+          )}
+          {/* <form onSubmit={(e) => handleSearch(e)} className={styles.search}>
             <input
               type="text"
               placeholder="Busca en mongir..."
@@ -165,10 +186,9 @@ export default function Main({ searchHandler }) {
               onChange={handleInputChange}
             />
 
-            <button type="submit" className={styles.search__icon}>
-              <RiSearch2Line />
-            </button>
-          </form>
+            <button type="submit" className={styles.search__icon}></button>
+          </form> */}
+
           {suggestions.length > 0 && (
             <SearchSuggestions
               suggestions={suggestions}
