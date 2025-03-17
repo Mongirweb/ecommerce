@@ -24,20 +24,19 @@ const poppins = Poppins({
 });
 
 export const generateMetadata = async () => {
-  const title =
-    "Somos el Hueco | Compra a Precio del Hueco de Medellín con Envío Gratis";
+  const title = "Mongir | Todo para bebés";
   const description =
-    "Encuentra los Mejores Productos del Hueco de Medellin sin Salir de Casa  | Compra en línea";
-  const url = "https://www.somoselhueco.com";
+    "Encuentra los mejores productos y accesorios para bebés y niños. Ropa, juguetes, accesorios para el hogar y más, con la calidad que tu familia merece.";
+  const url = "https://www.mongir.com";
 
   // Structured Data for Schema.org
   const structuredData = {
     "@context": "http://schema.org",
     "@type": "WebSite",
-    name: "Somos el Hueco Medellín",
-    url: "https://www.somoselhueco.com",
+    name: "Mongir",
+    url: "https://www.mongir.com",
     description:
-      "Encuentra los Mejores Productos del Hueco de Medellin sin Salir de Casa  | Compra en línea",
+      "Encuentra los mejores productos y accesorios para bebés y niños. Ropa, juguetes, accesorios para el hogar y más, con la calidad que tu familia merece.",
   };
 
   // Breadcrumb Schema
@@ -49,7 +48,7 @@ export const generateMetadata = async () => {
         "@type": "ListItem",
         position: 1,
         name: "Inicio",
-        item: "https://www.somoselhueco.com",
+        item: "https://www.mongir.com",
       },
     ],
   };
@@ -58,18 +57,18 @@ export const generateMetadata = async () => {
     title,
     description,
     keywords:
-      "Somos el Hueco Medellín, El Hueco de Medellín, somoselhueco, somos el hueco, el hueco medellín, el hueco Colombia, comprar en el hueco somos el hueco, somoselhueco,  el hueco virtual, centro comercial el hueco, compras en línea el hueco, compra online el hueco, tienda en línea el hueco, compra al por mayor en el hueco, mayoristas en el hueco,tiendas en el hueco medellín,productos en el hueco medellín,mapa el hueco medellin, como comprar en el hueco,descuentos en el hueco, ofertas el hueco, promociones el hueco",
+      "Mongir, bebés, bebé, niños, niños, ropa, ropa, juguetes, juguetes, accesorios, accesorios, hogar, hogar, calidad, calidad, familia, familia, compra, compra, tienda, tienda, online, online, virtual, virtual, centro, centro, comercial, comercial, compras, compras, línea, línea, compra, compra, al por mayor, al por mayor, mayoristas, mayoristas, tiendas, tiendas, productos, productos, mapa, mapa, como, como, comprar, comprar, descuentos, descuentos, ofertas, ofertas, promociones, promociones",
     openGraph: {
       title,
       description,
       url,
-      siteName: "Somos el Hueco Medellín",
+      siteName: "Mongir",
       images: [
         {
-          url: "https://res.cloudinary.com/danfiejkv/image/upload/v1737325171/somos-el-hueco-medellin-logo-cuadrado_kfecc1.png",
+          url: "https://res.cloudinary.com/danfiejkv/image/upload/v1742231694/MONGIR-LOGO_jkpbgw.png",
           width: 200,
           height: 200,
-          alt: "Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco",
+          alt: "Mongir-logo-cuadrado",
         },
       ],
       locale: "es_CO",
@@ -77,12 +76,12 @@ export const generateMetadata = async () => {
     },
     twitter: {
       card: "summary_large_image",
-      site: "@somoselhueco",
-      creator: "@somoselhueco",
+      site: "@Mongir",
+      creator: "@Mongir",
       title,
       description,
       images: [
-        "https://res.cloudinary.com/danfiejkv/image/upload/v1737325171/somos-el-hueco-medellin-logo-cuadrado_kfecc1.png",
+        "https://res.cloudinary.com/danfiejkv/image/upload/v1742231694/MONGIR-LOGO_jkpbgw.png",
       ],
     },
     alternates: {
