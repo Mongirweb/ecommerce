@@ -1,5 +1,5 @@
 import styles from "./footer.module.scss";
-import { FaFacebookF, FaTiktok } from "react-icons/fa";
+import { FaFacebookF, FaTiktok, FaWhatsapp } from "react-icons/fa";
 import { BsInstagram, BsLinkedin } from "react-icons/bs";
 export default function Socials() {
   return (
@@ -31,7 +31,11 @@ export default function Socials() {
               <FaTiktok />
             </a>
           </li>
-
+          <li>
+            <a href="https://wa.me/573122222222" target="_blank">
+              <FaWhatsapp />
+            </a>
+          </li>
           {/* <li>
             <a href="https://www.linkedin.com/company/empresy/" target="_blank">
               <BsLinkedin />

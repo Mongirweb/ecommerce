@@ -49,7 +49,7 @@ export default function Category({ header, products, background, categories }) {
         >
           <button>
             {header}
-            {!query400px && <IoIosArrowForward size={22} />}
+            <IoIosArrowForward />
           </button>
         </Link>
       </div>
