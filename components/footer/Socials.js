@@ -5,7 +5,7 @@ export default function Socials() {
   return (
     <div className={styles.footer__socials}>
       <section>
-        {/* <h3>SIGUENOS</h3> */}
+        <b>SIGAMOS EN CONTACTO</b>
         <ul>
           <li>
             <a

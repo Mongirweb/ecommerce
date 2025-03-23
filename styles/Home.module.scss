@@ -5,7 +5,7 @@
   &__category {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 2rem;
     margin-top: 40px;
 
     @media (max-width: 850px) {

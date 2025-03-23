@@ -1,5 +1,5 @@
 .promo {
-  height: 220px;
+  height: 270px;
   border-radius: 10px;
   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
   margin-top: 20px;
@@ -46,7 +46,7 @@
   }
   img {
     height: 100%;
-    width: 40%;
+    width: 50%;
     object-fit: cover;
     border-radius: 10px 0 0px 10px;
     @media (max-width: 1025px) {
@@ -59,7 +59,7 @@
     }
   }
   .text {
-    width: 60%;
+    width: 50%;
     height: 100%;
     display: flex;
     align-items: center;

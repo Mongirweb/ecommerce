@@ -242,7 +242,7 @@
   height: 80px;
   display: flex;
   align-items: center;
-  background: #f9f9f9f9;
+  background: $mongir-dark-blue;
   &__container {
     max-width: 1200px;
     margin: 0 auto;
@@ -292,6 +292,7 @@
       cursor: pointer;
       font-size: 16px;
       white-space: nowrap;
+      color: white;
       &:hover {
         text-decoration: underline;
       }
@@ -347,6 +348,7 @@
     width: 30px;
     height: 30px;
     cursor: pointer;
+    color: white;
     &:hover {
       color: $mongir-orange;
     }

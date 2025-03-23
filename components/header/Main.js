@@ -6,11 +6,8 @@ import { FiShoppingCart } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import image from "../../public/MONGIR-LOGO.png";
+import image from "../../public/MONGIR-LOGO-TOP.png";
 import Image from "next/image";
-import { IoIosArrowForward } from "react-icons/io";
-import { IoIosArrowDown } from "react-icons/io";
-import { BsFire } from "react-icons/bs";
 import { IoMenu } from "react-icons/io5";
 import MobileMenu from "./MobileMenu";
 import { useModal } from "../../context/ModalContext";
@@ -146,7 +143,7 @@ export default function Main({ searchHandler }) {
           ) : null}
           {query650px ? null : (
             <div className={styles.menu_menu} onClick={() => handleOpenModal()}>
-              <IoMenu />
+              <IoMenu color="#fff" />
             </div>
           )}
         </div>
@@ -163,7 +160,7 @@ export default function Main({ searchHandler }) {
         </Link>
         <div className={styles.main__container_options}>
           {query570px ? (
-            <IoMdSearch fontSize={26} />
+            <IoMdSearch fontSize={26} color="#fff" />
           ) : (
             <div className={styles.search}>
               <input

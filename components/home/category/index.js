@@ -8,6 +8,7 @@ import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Category({ header, products, background, categories }) {
   const [category, setCategory] = useState(null);
@@ -15,6 +16,7 @@ export default function Category({ header, products, background, categories }) {
   const isMobile = useMediaQuery({ query: "(max-width:550px)" });
   const query400px = useMediaQuery({ query: "(max-width:400px)" });
   const isLoading = !products || products.length === 0 || !categories;
+  const router = useRouter();
 
   useEffect(() => {
     const matchedCategory = categories.find((cat) => cat.name === header);
@@ -23,8 +25,12 @@ export default function Category({ header, products, background, categories }) {
     }
   }, [categories, header]);
 
+  const handleOpenCategory = () => {
+    router.push(`browse?category=${category?.id}`);
+  };
+
   return (
-    <div className={styles.category}>
+    <div className={styles.category} onClick={handleOpenCategory}>
       <Image
         className={styles.img}
         src={category?.image}

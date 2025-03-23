@@ -36,28 +36,28 @@ export default function Links() {
         // { name: "Accesorios para Vehículos", link: "" },
         // { name: "Agro", link: "" },
         {
-          name: "Arte, Papelería y Manualidades",
-          link: "/browse?category=66b683a4c2bd5f4688ba3e5d",
+          name: "Primer día",
+          link: "/browse?category=67d3450902d26a8677f2e260",
         },
         // { name: "Alimentos y  Bebidas", link: "" },
-        { name: "Moda", link: "/browse?category=66b683b6c2bd5f4688ba3e67" },
-        { name: "Bebés", link: "/browse?category=66b683bfc2bd5f4688ba3e6c" },
         {
-          name: "Belleza y Cuidado Personal",
-          link: "/browse?category=66b683c5c2bd5f4688ba3e71",
+          name: "Ropa bebé",
+          link: "/browse?category=67d344eb02d26a8677f2e228",
+        },
+        { name: "Calzado", link: "/browse?category=67d344f302d26a8677f2e236" },
+        {
+          name: "Accesorios",
+          link: "/browse?category=67d344fa02d26a8677f2e244",
         },
         {
-          name: "Tecnología",
-          link: "/browse?category=66b683eec2bd5f4688ba3e89",
+          name: "Cuidado",
+          link: "/browse?category=67d3450102d26a8677f2e252",
         },
         {
-          name: "Electrodomésticos",
-          link: "/browse?category=66b92b71390d09edc19129eb",
+          name: "Trajes de baño",
+          link: "/browse?category=67d432cfcbc95777ceb121b0",
         },
-        {
-          name: "Ferretería",
-          link: "/browse?category=66b683fcc2bd5f4688ba3e93",
-        },
+
         // { name: "Agro", link: "" },
         // { name: "Arte, Papeleria y Manualidades", link: "" },
         // { name: "Accesorios para Vehículos", link: "" },

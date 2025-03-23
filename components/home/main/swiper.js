@@ -45,14 +45,14 @@ export default function MainSwiper() {
                 !query450px
                   ? {
                       position: "absolute",
-                      top: "90%",
+                      top: "88%",
                       left: "50%",
                       transform: "translate(-50%, -50%)",
                       backgroundColor: "#d7f3ff",
-                      padding: "10px 10px",
+                      padding: "10px 20px",
                       borderRadius: "10px",
                       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                      fontWeight: "bold",
+                      fontWeight: "900",
                     }
                   : {
                       position: "absolute",
@@ -69,7 +69,7 @@ export default function MainSwiper() {
                     }
               }
             >
-              SOMOS AMOR Y FAMILIA
+              Somos amor y familia
             </div>
           </SwiperSlide>
         ))}
