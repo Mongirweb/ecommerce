@@ -3,7 +3,7 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 import { useState } from "react";
 
-import image from "../../../public/somos-el-hueco-medellin-logo-circulo.avif";
+import image from "../../../public/mongir-logo.png";
 import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa";
 import { useRouter, useSearchParams } from "next/navigation";

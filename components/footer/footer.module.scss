@@ -100,11 +100,18 @@
       }
     }
     @media (max-width: 790px) {
-      margin-top: 2rem;
+      margin-top: 1rem;
       text-align: center;
       justify-content: center;
       font-size: 12px;
       gap: 2px;
+      section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 0.5rem !important;
+      }
     }
   }
   &__flex {

@@ -222,11 +222,13 @@
       height: fit-content;
 
       a {
+        align-self: center;
         color: #000; // Adjust as needed
         text-decoration: none;
         display: flex;
         flex-direction: row;
         align-items: center;
+        gap: 2rem;
 
         @media (max-width: 350px) {
           flex-direction: column;

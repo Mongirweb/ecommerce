@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/cart.module.scss";
-import Header from "../../components/cart/header";
+import Header from "../../components/header";
 import Empty from "../../components/cart/empty";
 import { getSession, signIn, useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
@@ -119,7 +119,7 @@ export default function Cart() {
   return (
     <>
       <Head>
-        <title> Somos el Hueco Medellín | Carrito</title>
+        <title> Mongir | Carrito</title>
       </Head>
       <Header />
 
