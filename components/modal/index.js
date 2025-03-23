@@ -5,6 +5,7 @@ import styles from "./styles.module.scss";
 import Link from "next/link";
 import Image from "next/image";
 import { categories } from "../../data/categorie";
+import { IoIosArrowForward } from "react-icons/io";
 
 export default function Modal({
   title = "Select a Token",
@@ -84,7 +85,7 @@ export default function Modal({
                       alt="somoselhueco-categoria"
                       loading="lazy"
                     />
-                    {cat.name}
+                    {cat.name} <IoIosArrowForward />
                   </Link>
                 </li>
               ))}
