@@ -4,12 +4,14 @@ import { IoMdClose } from "react-icons/io";
 import styles from "./styles.module.scss";
 import useClickOutside from "../../utils/useClickOutside";
 import { useMobileSearch } from "../../context/MobileSearchContext";
+import { useRouter } from "next/navigation";
 
 export default function SearchModal() {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const modalRef = useRef(null);
   const { isSearchOpen, closeSearch, modalData } = useMobileSearch();
+  const router = useRouter();
 
   // Close modal when clicking outside
   useClickOutside(modalRef, () => {
@@ -34,11 +36,17 @@ export default function SearchModal() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
-    // You can either call an onSearch callback or navigate
-    if (onSearch) onSearch(query);
-    closeSearch();
+    if (router.pathname !== "/browse") {
+      if (query.length > 1) {
+        router.push(`/browse?search=${query}`);
+        closeSearch();
+      }
+    } else {
+      searchHandler(query);
+      closeSearch();
+    }
   };
 
   if (!isSearchOpen) return null;
@@ -49,7 +57,7 @@ export default function SearchModal() {
         <button className={styles.closeButton} onClick={closeSearch}>
           <IoMdClose size={24} />
         </button>
-        <form onSubmit={handleSubmit} className={styles.searchForm}>
+        <form onSubmit={handleSearch} className={styles.searchForm}>
           <input
             type="text"
             placeholder="Busca en mongir..."
