@@ -16,6 +16,7 @@ import { SearchDropdownComponent } from "../home/main/SearchDropdownComponent";
 import SearchSuggestions from "./Suggestions";
 import { useMediaQuery } from "react-responsive";
 import { IoMdSearch } from "react-icons/io";
+import { useMobileSearch } from "../../context/MobileSearchContext";
 
 export default function Main({ searchHandler }) {
   const router = useRouter();
@@ -26,6 +27,7 @@ export default function Main({ searchHandler }) {
   const [showMenuMobile, setShowMenuMobile] = useState(false);
   const { openModal } = useModal();
   const [suggestions, setSuggestions] = useState([]);
+  const { openSearch } = useMobileSearch();
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -160,7 +162,11 @@ export default function Main({ searchHandler }) {
         </Link>
         <div className={styles.main__container_options}>
           {query570px ? (
-            <IoMdSearch fontSize={26} color="#fff" />
+            <IoMdSearch
+              fontSize={26}
+              color="#fff"
+              onClick={() => openSearch(true)}
+            />
           ) : (
             <div className={styles.search}>
               <input

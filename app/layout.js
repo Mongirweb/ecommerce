@@ -17,6 +17,8 @@ import { Analytics } from "@vercel/analytics/next";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import CrossTabSync from "./components/CrossTabSync";
 import { Poppins } from "next/font/google";
+import { MobileSearchProvider } from "../context/MobileSearchContext";
+import SearchModal from "../components/SearchModal";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -110,25 +112,28 @@ export default function RootLayout({ children }) {
           <SessionWrapper>
             <StoreProvider>
               <ModalProvider>
-                <ToastProvider>
-                  {" "}
-                  {/* Wrapping with ToastProvider */}
-                  {/* Google Tag Manager */}
-                  <GoogleAnalytics
-                    gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
-                    strategy="afterInteractive"
-                  />
-                  <GoogleTagManager
-                    gtmId={process.env.NEXT_PUBLIC_GTM_MEASUREMENT_ID}
-                  />
-                  <CrossTabSync />
-                  {/* Main application content */}
-                  {children}
-                  <Modal />
-                  <CustomDialog />
-                  <DialogModal />
-                  <Analytics />
-                </ToastProvider>
+                <MobileSearchProvider>
+                  <ToastProvider>
+                    {" "}
+                    {/* Wrapping with ToastProvider */}
+                    {/* Google Tag Manager */}
+                    <GoogleAnalytics
+                      gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
+                      strategy="afterInteractive"
+                    />
+                    <GoogleTagManager
+                      gtmId={process.env.NEXT_PUBLIC_GTM_MEASUREMENT_ID}
+                    />
+                    <CrossTabSync />
+                    {/* Main application content */}
+                    {children}
+                    <Modal />
+                    <SearchModal />
+                    <CustomDialog />
+                    <DialogModal />
+                    <Analytics />
+                  </ToastProvider>
+                </MobileSearchProvider>
               </ModalProvider>
             </StoreProvider>
           </SessionWrapper>
