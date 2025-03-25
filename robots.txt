@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-disallow: [/admin, /signin, /business, /messenger]
+disallow: [/admin, /signin, /business, /messenger, /cart, /newcommerce]
 Sitemap: https://www.mongir.com/sitemap
