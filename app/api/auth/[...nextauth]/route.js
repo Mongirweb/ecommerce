@@ -3,7 +3,7 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "../../../../models/User";
-import clientPromise from "../../../../old-pages/api/auth/lib/mongodb";
+import clientPromise from "../lib/mongodb";
 import bcrypt from "bcrypt";
 import db from "../../../../utils/db";
 import { sendWelcomeEmail } from "../../../../utils/sendWelcomeEmail";
