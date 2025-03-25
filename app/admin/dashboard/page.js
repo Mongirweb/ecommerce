@@ -9,7 +9,7 @@ import DashBoardPage from "./DashBoardPage";
 import db from "../../../utils/db";
 
 export const metadata = {
-  title: "Somos el Hueco Medellín - Admin Dashboard",
+  title: "Mongir - Admin Dashboard",
 };
 
 export default async function Dashboard() {

@@ -7,7 +7,7 @@ export default function PromoSection({ img, text }) {
     <div className={styles.promo}>
       <Image
         src={img}
-        alt="promo-somoselhueco"
+        alt="Mongir Logo"
         loading="lazy"
         width={300}
         height={300}

@@ -5,7 +5,7 @@ import { authOptions } from "../../../../api/auth/[...nextauth]/route";
 import Layout from "../../../../../components/admin/layout";
 
 export const metadata = {
-  title: "Somos el Hueco Medellín - Mis Productos",
+  title: "Mongir - Mis Productos",
 };
 
 export default async function AllProductsPage() {

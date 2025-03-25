@@ -9,7 +9,7 @@ import SubCategory2 from "../../../../../models/SubCategory2";
 import SubCategory3 from "../../../../../models/SubCategory3";
 
 export const metadata = {
-  title: "Somos el Hueco Medellín - Crear Producto",
+  title: "Mongir - Subir Productos",
 };
 
 export default async function CreateProductPage() {

@@ -69,12 +69,12 @@ export default function Product({ product, selected, setSelected, session }) {
       <div className={styles.product__header}>
         <Image
           src="/images/store.webp"
-          alt="cart-item-somoselhueco"
+          alt="Mongir Logo"
           width={300}
           height={300}
           loading="lazy"
         />
-        Somos el Hueco Marketplace
+        Almacen Mongir
       </div>
       <div className={styles.product__image}>
         <div></div>
@@ -86,7 +86,7 @@ export default function Product({ product, selected, setSelected, session }) {
             height={300}
             loading="lazy"
             src={product?.images[0].url}
-            alt="producto-product-somoselhueco-saldo-saldos"
+            alt="Mongir Logo"
           />
         </Link>
         <div className={styles.col}>
@@ -115,7 +115,7 @@ export default function Product({ product, selected, setSelected, session }) {
               width={300}
               height={300}
               src={product.color.image}
-              alt="somoselhueco-saldo-producto-style"
+              alt="Mongir Logo"
               loading="lazy"
             />
             {product.size && <span>{product.size}</span>}

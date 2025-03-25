@@ -331,7 +331,7 @@ export default function EnhancedTable({ rows }) {
                       >
                         <Image
                           src={row.image}
-                          alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                          alt="Mongir Logo"
                           className={styles.table__img}
                           loading="lazy"
                           width={50} // or your desired width
@@ -344,13 +344,13 @@ export default function EnhancedTable({ rows }) {
                         {row.verified ? (
                           <img
                             src="../../../images/verified.png"
-                            alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                            alt="Mongir Logo"
                             className={styles.ver}
                           />
                         ) : (
                           <img
                             src="../../../images/unverified.png"
-                            alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                            alt="Mongir Logo"
                             className={styles.ver}
                           />
                         )}
@@ -359,13 +359,13 @@ export default function EnhancedTable({ rows }) {
                         {row.role == "admin" ? (
                           <img
                             src="../../../images/verified.png"
-                            alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                            alt="Mongir Logo"
                             className={styles.ver}
                           />
-                        ) : ( 
+                        ) : (
                           <img
                             src="../../../images/unverified.png"
-                            alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                            alt="Mongir Logo"
                             className={styles.ver}
                           />
                         )}

@@ -12,7 +12,7 @@ import CheckoutClient from "./CheckoutClient";
 
 // **Add the metadata export**
 export const metadata = {
-  title: "Somos el Hueco Medellín | Checkout",
+  title: "Mongir | Checkout",
 };
 
 export default async function Checkout() {

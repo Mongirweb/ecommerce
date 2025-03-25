@@ -46,13 +46,13 @@ function Row(props) {
           {row.isPaid ? (
             <img
               src="../../../images/verified.png"
-              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+              alt="Mongir Logo"
               className={styles.ver}
             />
           ) : (
             <img
               src="../../../images/unverified.png"
-              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+              alt="Mongir Logo"
               className={styles.ver}
             />
           )}
@@ -109,7 +109,7 @@ function Row(props) {
                       <img
                         src={row?.user?.image}
                         className={styles.table__img}
-                        alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                        alt="Mongir Logo"
                       />
                     </TableCell>
                     <TableCell>{row?.user?.name}</TableCell>
@@ -166,7 +166,7 @@ function Row(props) {
                           >
                             <Image
                               src={p.image}
-                              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                              alt="Mongir Logo"
                               className={styles.table__productImg}
                               width={100}
                               height={100}

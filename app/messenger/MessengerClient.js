@@ -40,7 +40,7 @@ export default function MessengerClient({ session, orders, user }) {
       <div className={styles.header}>
         <Image
           src={session.user.image}
-          alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+          alt="Mongir Logo"
           width={80}
           height={80}
         />

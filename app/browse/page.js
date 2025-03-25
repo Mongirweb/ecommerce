@@ -37,30 +37,29 @@ export async function generateMetadata({ searchParams }) {
   await db.connectDb();
 
   const title = searchQuery
-    ? `Buscar "${searchQuery}" en Somos el Hueco Medellín`
+    ? `Buscar "${searchQuery}" en Mongir`
     : categoryObj
-    ? `${categoryObj.name} - Saldos y Ofertas en Somos el Hueco Medellín`
-    : "Explora las Categorías - Somos el Hueco Medellín";
+    ? `${categoryObj.name} - Lo Mejor para tu bebe en Mongir`
+    : "Explora las Categorías - Mongir";
 
   const description = searchQuery
-    ? `Explora productos relacionados con "${searchQuery}" en Somos el Hueco Medellín. Ofrecemos increíbles saldos y ofertas en moda, electrónicos, hogar y más. Pago en línea rápido y seguro.`
+    ? `Explora productos relacionados con "${searchQuery}" en Mongir. Ofrecemos increíbles saldos y ofertas en moda, electrónicos, hogar y más. Pago en línea rápido y seguro.`
     : categoryObj
-    ? `Descubre increíbles saldos y ofertas en ${categoryObj.name} en Somos el Hueco Medellín. Encuentra productos de alta calidad a precios bajos con envío rápido y seguro.`
-    : "Explora las mejores ofertas en moda, electrónicos, hogar y más en Somos el Hueco Medellín. Ofrecemos productos de alta calidad con pagos seguros.";
+    ? `Descubre increíbles saldos y ofertas en ${categoryObj.name} en Mongir. Encuentra productos de alta calidad a precios bajos con envío rápido y seguro.`
+    : "Explora las mejores ofertas en moda, electrónicos, hogar y más en Mongir. Ofrecemos productos de alta calidad con pagos seguros.";
 
   const imageUrl = categoryObj?.image;
 
   const keywords = [
     categoryObj?.name || "",
     searchQuery || "",
-    "Somos el Hueco Medellín",
-    "El Hueco de Medellín",
-    "somoselhueco",
-    "somos el hueco",
-    "el hueco medellín",
-    "el hueco Colombia",
-    "comprar en el hueco somos el hueco",
-    "somoselhueco",
+    "Mongir",
+    "Mongir Medellín",
+    "mongir",
+    "mongir medellin",
+    "mongir Colombia",
+    "comprar en el hueco bebe el hueco",
+    "mongir",
     "el hueco virtual",
     "centro comercial el hueco",
     "compras en línea el hueco",
@@ -78,10 +77,10 @@ export async function generateMetadata({ searchParams }) {
   ].filter((keyword) => typeof keyword === "string" && keyword.trim() !== ""); // Ensure only non-empty strings are included
 
   const canonicalUrl = searchQuery
-    ? `https://www.somoselhueco.com/browse?search=${searchQuery}`
+    ? `https://www.mongir.com/browse?search=${searchQuery}`
     : categoryObj
-    ? `https://www.somoselhueco.com/browse?category=${categoryObj.id}`
-    : "https://www.somoselhueco.com/browse";
+    ? `https://www.mongir.com/browse?category=${categoryObj.id}`
+    : "https://www.mongir.com/browse";
 
   await db.disconnectDb();
 

@@ -29,7 +29,7 @@ export default function Main({ searchHandler }) {
       <div className={styles.main__container}>
         <Link href="/" legacyBehavior prefetch={true}>
           <a className={styles.logo}>
-            <Image src={image} alt="somoselhueco-logo" loading="lazy" />
+            <Image src={image} alt="Mongir Logo" loading="lazy" />
           </a>
         </Link>
         <div className={styles.main__container_text}>

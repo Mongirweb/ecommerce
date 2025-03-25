@@ -10,10 +10,7 @@ export default function Review({ review }) {
           <h4>
             {name?.slice(0, 1)}***{name.slice(name.length - 1, name.length)}
           </h4>
-          <img
-            src={image}
-            alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
-          />
+          <img src={image} alt="Mongir Logo" />
         </div>
         <div className={styles.review__review}>
           <Rating
@@ -47,11 +44,7 @@ export default function Review({ review }) {
         <div className={styles.review__images}>
           {review?.images?.length > 0 &&
             review?.images?.map((img, i) => (
-              <img
-                src={img?.url}
-                alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
-                key={i}
-              />
+              <img src={img?.url} alt="Mongir Logo" key={i} />
             ))}
         </div>
         <div className={styles.review__extra}>

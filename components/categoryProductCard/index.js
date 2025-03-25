@@ -74,7 +74,7 @@ export default function RecomendedCard({ product }) {
             <Image
               width={200}
               height={300}
-              alt="categorias-somoselhueco-moda-electronica-electronicos-hogar-jardin-saldos"
+              alt="Mongir Logo"
               src={images?.[0]?.url}
               loading="lazy"
             />
@@ -135,7 +135,7 @@ export default function RecomendedCard({ product }) {
                       setActive(i);
                     }}
                     loading="lazy"
-                    alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                    alt="Mongir Logo"
                   />
                 ) : (
                   <span

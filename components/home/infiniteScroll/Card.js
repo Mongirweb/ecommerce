@@ -78,7 +78,7 @@ export default function InfiniteCard({ product }) {
               loading="lazy"
               width={500}
               height={300}
-              alt="somoselhueco-saldo-mania-relacionado"
+              alt="Mongir Logo"
             />
           </div>
         </Link>
@@ -134,7 +134,7 @@ export default function InfiniteCard({ product }) {
                       setImages(product?.subProducts[i]?.images);
                       setActive(i);
                     }}
-                    alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                    alt="Mongir Logo"
                   />
                 ) : (
                   <span

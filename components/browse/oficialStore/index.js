@@ -27,7 +27,10 @@ export default function OficialStores({ brands, brandHandler, replaceQuery }) {
                 }`}
                 onClick={() => brandHandler(check.result)}
               >
-                <img src={`../../../images/brands/${brand}.png`} alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco" />
+                <img
+                  src={`../../../images/brands/${brand}.png`}
+                  alt="Mongir Logo"
+                />
               </button>
             );
           })}

@@ -31,13 +31,13 @@ export async function generateMetadata({ params, searchParams }) {
       return notFound();
     }
 
-    const title = `${product.name} - Compra ahora en Somos el Hueco Medellín`;
+    const title = `${product.name} - Compra ahora en Almecen Mongir`;
     const description =
       product.description ||
-      "Encuentra los Mejores Productos del Hueco de Medellin sin Salir de Casa | Compra en línea";
+      "Encuentra los Mejores Productos para tu Bebé en Almacen Mongir sin Salir de Casa | Compra en línea";
     const imageUrl =
       product.subProducts?.[0]?.images?.[0]?.url ||
-      "https://res.cloudinary.com/danfiejkv/image/upload/v1737325171/somos-el-hueco-medellin-logo-cuadrado_kfecc1.png";
+      "https://res.cloudinary.com/danfiejkv/image/upload/v1737325171/mongir-logo-cuadrado_kfecc1.png";
 
     // Create keywords as a comma-separated string
     const keywords = [
@@ -46,14 +46,13 @@ export async function generateMetadata({ params, searchParams }) {
       ...(product?.subCategories?.map((sub) => sub?.name) || ""),
       ...(product?.subCategorie2?.map((sub) => sub?.name) || ""),
       ...(product?.subCategorie3?.map((sub) => sub?.name) || ""),
-      "Somos el Hueco Medellín",
-      "El Hueco de Medellín",
-      "somoselhueco",
-      "somos el hueco",
-      "el hueco medellín",
-      "el hueco Colombia",
-      "comprar en el hueco somos el hueco",
-      "somoselhueco",
+      "Mongir",
+      "Mongir Medellín",
+      "mongir",
+      "mongir medellin",
+      "mongir Colombia",
+      "comprar en el hueco mongir",
+      "mongir",
       "el hueco virtual",
       "centro comercial el hueco",
       "compras en línea el hueco",
@@ -72,7 +71,7 @@ export async function generateMetadata({ params, searchParams }) {
       .filter(Boolean)
       .join(", ");
 
-    const canonicalUrl = `https://www.somoselhueco.com/product/${product?.slug}`;
+    const canonicalUrl = `https://www.mongir.com/product/${product?.slug}`;
 
     // Optional: Build structured data for the product using schema.org's Product type.
     const structuredData = {
@@ -100,7 +99,7 @@ export async function generateMetadata({ params, searchParams }) {
         title,
         description,
         url: canonicalUrl,
-        siteName: "Somos el Hueco Medellín",
+        siteName: "Mongir",
         images: [
           {
             url: imageUrl,

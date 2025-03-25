@@ -121,7 +121,7 @@ export default function OrderClientPage({ orderData }) {
                         width={300}
                         height={200}
                         src={product.color.image}
-                        alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                        alt="Mongir Logo"
                         loading="lazy"
                       />{" "}
                       {product.size ? `/ ${product.size}` : null}
@@ -201,7 +201,7 @@ export default function OrderClientPage({ orderData }) {
                     width={300}
                     height={200}
                     src={orderData.user.image}
-                    alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                    alt="Mongir Logo"
                     loading="lazy"
                   />
                   <div>

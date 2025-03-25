@@ -25,12 +25,7 @@ export default function MobileSwiper({ images }) {
       >
         {images?.map((image, i) => (
           <SwiperSlide key={i}>
-            <Image
-              src={image.url}
-              alt="somoselhueco-saldo-mania-relacionado"
-              priority
-              fill={true}
-            />
+            <Image src={image.url} alt="Mongir Logo" priority fill={true} />
           </SwiperSlide>
         ))}
       </Swiper>

@@ -2,7 +2,7 @@ import db from "../../utils/db";
 import Category from "../../models/Category"; // Adjust based on your structure
 import Product from "../../models/Product"; // Adjust for your Product model
 
-const BASE_URL = "https://www.somoselhueco.com";
+const BASE_URL = "https://www.mongir.com";
 
 function generateSiteMap(categories, products) {
   return `<?xml version="1.0" encoding="UTF-8"?>

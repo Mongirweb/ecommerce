@@ -49,7 +49,7 @@ export async function middleware(req) {
     frame-src 'self' https://checkout.wompi.co https://www.tiktok.com https://www.instagram.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com https://*.tiktok.com;
     frame-ancestors 'self';
     upgrade-insecure-requests; 
-    connect-src 'self' https://www.somoselhueco.com blob: ws: http://localhost:3000 https://amaua.myshopify.com https://aleko-comercializadora.myshopify.com https://*.tiktok.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com;
+    connect-src 'self' https://www.mongir.com blob: ws: http://localhost:3000 https://amaua.myshopify.com https://aleko-comercializadora.myshopify.com https://*.tiktok.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com;
   `;
 
   const contentSecurityPolicyHeaderValue = cspHeader
@@ -94,7 +94,7 @@ export async function middleware(req) {
   // response.headers.set("Cross-Origin-Embedder-Policy", "require-corp");
   response.headers.set(
     "Access-Control-Allow-Origin",
-    "https://somoselhueco.com"
+    "https://mongir.com"
   );
   response.headers.set("Access-Control-Allow-Credentials", "true");
   response.headers.set(

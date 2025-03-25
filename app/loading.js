@@ -10,7 +10,7 @@ export default function Loading() {
       <Image
         className={styles.logo}
         src={image}
-        alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+        alt="Mongir Logo"
         width={200}
         height={200}
         priority

@@ -40,10 +40,7 @@ export default function Colors({
       >
         <div className={styles.flex}>
           {meta.error[name] && (
-            <img
-              src="../../../images/warning.png"
-              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
-            />
+            <img src="../../../images/warning.png" alt="Mongir Logo" />
           )}
           Pick a product color
         </div>

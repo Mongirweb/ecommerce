@@ -51,7 +51,7 @@ export default function Sidebar() {
             width={300}
             height={200}
             src={session?.user?.image}
-            alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+            alt="Mongir Logo"
             loading="lazy"
           />
           <div className={styles.show}>

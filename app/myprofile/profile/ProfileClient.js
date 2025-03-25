@@ -9,7 +9,7 @@ export default function ProfileClient({ session, tab, provider, hasPassword }) {
   return (
     <Layout session={session} tab={tab}>
       <Head>
-        <title>Mi Perfil - Somos el Hueco Medellín</title>
+        <title>Mi Perfil - Mongir</title>
       </Head>
       <div className={styles.header}>
         <h1>Mi Perfil</h1>

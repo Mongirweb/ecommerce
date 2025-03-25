@@ -418,7 +418,7 @@ const EditProductClient = ({ product, categories, index }) => {
                   height={300}
                   src={editedProduct.subProducts[index]?.color?.image}
                   className={styles.image_span}
-                  alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                  alt="Mongir Logo"
                   loading="lazy"
                 />
               )}

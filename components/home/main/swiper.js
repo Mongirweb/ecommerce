@@ -34,7 +34,7 @@ export default function MainSwiper() {
           <SwiperSlide key={i}>
             <Image
               src="https://res.cloudinary.com/danfiejkv/image/upload/v1741889736/Mongir-almacen-tienda-bebe-foto-portada_rvst5a.avif" // Update the src to start with a leading slash
-              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+              alt="Mongir Logo"
               width={1200}
               height={1100}
               quality={70}

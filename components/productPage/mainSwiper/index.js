@@ -15,7 +15,7 @@ export default function MainSwiper({ images, activeImg }) {
           src={activeImg || images[active]?.url}
           width={300}
           height={300}
-          alt="somoselhueco"
+          alt="Mongir Logo"
         />
       </div>
       <div className={styles.swiper__list}>
@@ -31,7 +31,7 @@ export default function MainSwiper({ images, activeImg }) {
               src={img?.url}
               width={500}
               height={300}
-              alt="somoselhueco-saldo-mania-relacionado"
+              alt="Mongir Logo"
               priority
             />
           </div>

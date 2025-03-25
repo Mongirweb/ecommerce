@@ -77,7 +77,7 @@ export default function RecomendedCard({ product }) {
               loading="lazy"
               width={500}
               height={300}
-              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+              alt="Mongir Logo"
             />
           </div>
         </Link>
@@ -133,7 +133,7 @@ export default function RecomendedCard({ product }) {
                       setImages(product?.subProducts[i]?.images);
                       setActive(i);
                     }}
-                    alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                    alt="Mongir Logo"
                   />
                 ) : (
                   <span

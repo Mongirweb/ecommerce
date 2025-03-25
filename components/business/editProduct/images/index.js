@@ -112,7 +112,7 @@ export default function Images({
               width={100}
               height={100}
               src="../../../images/warning.png"
-              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+              alt="Mongir Logo"
               loading="lazy"
             />
           )}
@@ -173,7 +173,7 @@ export default function Images({
                   width={200}
                   height={200}
                   src={img?.url || img}
-                  alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                  alt="Mongir Logo"
                   loading="lazy"
                 />
                 <div className={styles.images__main_grid_actions}>

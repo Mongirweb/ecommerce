@@ -401,7 +401,7 @@ export default function CreateProductClient({ user, parents, categories }) {
                   height={300}
                   src={product.color.image}
                   className={styles.image_span}
-                  alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                  alt="Mongir Logo"
                   loading="lazy"
                 />
               )}

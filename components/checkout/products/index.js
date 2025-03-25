@@ -22,7 +22,7 @@ export default function Products({ cart }) {
             <div className={styles.product__img}>
               <Image
                 src={product.image}
-                alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                alt="Mongir Logo"
                 width={300}
                 height={300}
                 loading="lazy"
@@ -32,7 +32,7 @@ export default function Products({ cart }) {
                   width={300}
                   height={200}
                   src={product.color.image}
-                  alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                  alt="Mongir Logo"
                   loading="lazy"
                 />
                 <span>{product.size}</span>

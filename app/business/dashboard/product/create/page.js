@@ -8,7 +8,7 @@ import { authOptions } from "../../../../../app/api/auth/[...nextauth]/route";
 import CreateProductClient from "./CreateProductClient";
 
 export const metadata = {
-  title: "Somos el Hueco Medellín - Crear Producto",
+  title: "Mongir - Crear Producto",
 };
 
 export default async function CreateProductPage() {

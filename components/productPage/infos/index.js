@@ -200,7 +200,7 @@ export default function Infos({ product, setActiveImg, company }) {
                   src={company?.image}
                   width={50}
                   height={50}
-                  alt="somoselhueco-company"
+                  alt="Mongir Company"
                   loading="lazy"
                 />
                 <span>{company?.businessName || company?.name}</span>
@@ -260,7 +260,7 @@ export default function Infos({ product, setActiveImg, company }) {
                     >
                       <Image
                         src={color.image}
-                        alt="somoselhueco-color-producto"
+                        alt="Mongir Logo"
                         width={300}
                         height={300}
                         loading="lazy"

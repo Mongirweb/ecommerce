@@ -82,7 +82,7 @@ export default function Modal({
                       width={100}
                       height={100}
                       src={cat.image}
-                      alt="somoselhueco-categoria"
+                      alt="Mongir Logo"
                       loading="lazy"
                     />
                     {cat.name} <IoIosArrowForward />

@@ -9,7 +9,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../api/auth/[...nextauth]/route"; // Adjust the path as needed
 
 export const metadata = {
-  title: "Somos el Hueco Medellín | Orden",
+  title: "Mongir | Orden",
 };
 
 export default async function OrderPageWrapper({ params }) {

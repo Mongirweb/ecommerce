@@ -69,7 +69,7 @@ export default function OrdersClient({ session, tab, orders, ordersLinks }) {
                     <Image
                       src={p.image}
                       key={p._id}
-                      alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                      alt="Mongir Logo"
                       width={50}
                       height={50}
                       loading="lazy"

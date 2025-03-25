@@ -70,7 +70,9 @@ export default function Style({
         className={`${styles.header} ${meta.error ? styles.header__error : ""}`}
       >
         <div className={styles.flex}>
-          {meta.error && <img src="../../../images/warning.png" alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco" />}
+          {meta.error && (
+            <img src="../../../images/warning.png" alt="Mongir Logo" />
+          )}
           Escoge una imagen del estilo del producto
         </div>
         <span>

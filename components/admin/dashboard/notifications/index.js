@@ -30,10 +30,7 @@ export default function Notifications({}) {
                   }
                   key={i}
                 >
-                  <img
-                    src={n.image}
-                    alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
-                  />
+                  <img src={n.image} alt="Mongir Logo" />
                   <p>
                     <span>{n.user}</span> has created a new order, total of{" "}
                     {n.total} $
@@ -46,7 +43,7 @@ export default function Notifications({}) {
                   }
                   key={i}
                 >
-                  <img src={n.image} alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco" />
+                  <img src={n.image} alt="Mongir Logo" />
                   <span>{n.user}</span> new Account created.
                 </div>
               )}

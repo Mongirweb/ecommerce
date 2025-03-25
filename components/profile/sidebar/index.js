@@ -11,7 +11,7 @@ export default function Sidebar({ data }) {
           width={50}
           height={50}
           src={data.image || "/default-image.png"} // Provide a default image if undefined
-          alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+          alt="Mongir Logo"
           className={styles.userImage}
           loading="lazy"
         />

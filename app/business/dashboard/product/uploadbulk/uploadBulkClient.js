@@ -744,7 +744,7 @@ export default function UploadBulkClient({
                                     <Image
                                       key={idx}
                                       src={url.trim()}
-                                      alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                                      alt="Mongir Logo"
                                       width={100}
                                       height={100}
                                     />

@@ -72,7 +72,7 @@ export default function RecomendedCard({ product }) {
               src={images?.[0]?.url}
               loading="lazy"
               objectFit="cover"
-              alt="somoselhueco-recomendados-products-productos-saldos-saldo"
+              alt="Mongir Logo"
             />
           </div>
         </Link>
@@ -118,7 +118,7 @@ export default function RecomendedCard({ product }) {
                       setImages(product?.subProducts[i]?.images);
                       setActive(i);
                     }}
-                    alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                    alt="Mongir Logo"
                     loading="lazy"
                   />
                 ) : (

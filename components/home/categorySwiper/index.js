@@ -82,7 +82,7 @@ export default function CategoriesSwiper({ categories, bg }) {
                     width={300}
                     src={categorie.image}
                     loading="lazy"
-                    alt="categorias-saldos-moda-somoselhueco-hogar-jardineria-herramnientas-hogar-saldo-accesorios"
+                    alt="Mongir Logo"
                   />
                 </div>
                 <div className={styles.product__infos}>

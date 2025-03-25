@@ -76,7 +76,7 @@ export default function SimilarCard({ product }) {
               loading="lazy"
               width={500}
               height={300}
-              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+              alt="Mongir Logo"
             />
           </div>
         </a>
@@ -132,7 +132,7 @@ export default function SimilarCard({ product }) {
                       setImages(product?.subProducts[i]?.images);
                       setActive(i);
                     }}
-                    alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                    alt="Mongir Logo"
                   />
                 ) : (
                   <span

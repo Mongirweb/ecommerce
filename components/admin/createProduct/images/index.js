@@ -85,10 +85,7 @@ export default function Images({
       >
         <div className={styles.flex}>
           {meta.error && (
-            <img
-              src="../../../images/warning.png"
-              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
-            />
+            <img src="../../../images/warning.png" alt="Mongir Logo" />
           )}
           {header}
         </div>
@@ -127,18 +124,12 @@ export default function Images({
           }`}
         >
           {!images.length ? (
-            <img
-              src="../../../images/no_image.png"
-              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
-            />
+            <img src="../../../images/no_image.png" alt="Mongir Logo" />
           ) : (
             images.map((img, i) => (
               <div className={styles.images__main_grid_wrap} key={i}>
                 <div className={styles.blur}></div>
-                <img
-                  src={img}
-                  alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
-                />
+                <img src={img} alt="Mongir Logo" />
                 <div className={styles.images__main_grid_actions}>
                   <button onClick={() => handleRemove(img)}>
                     <RiDeleteBin7Fill />
