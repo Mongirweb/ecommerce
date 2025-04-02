@@ -109,9 +109,7 @@ export default function ClientHome() {
                 VENTAS MAYORISTAS
               </span>
               <br />
-              <span style={{ fontSize: "14px" }}>
-                Contactanos - 300-123-1324
-              </span>
+              <span style={{ fontSize: "14px" }}>Contactanos - 3174049573</span>
             </>
           }
         />

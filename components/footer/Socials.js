@@ -32,7 +32,11 @@ export default function Socials() {
             </a>
           </li>
           <li>
-            <a href="https://wa.me/573122222222" target="_blank">
+            <a
+              href="https://wa.me/573156907083
+"
+              target="_blank"
+            >
               <FaWhatsapp />
             </a>
           </li>
