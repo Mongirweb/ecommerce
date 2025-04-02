@@ -7,6 +7,7 @@ import Link from "next/link";
 import { FaLocationDot } from "react-icons/fa6";
 import Title from "../components/home/title";
 import { videos } from "../data/videos";
+import { FaWhatsapp } from "react-icons/fa";
 
 const ProductsSwiper = dynamic(() => import("../components/productsSwiper"));
 const SocialVideoSwiper = dynamic(() =>
@@ -109,7 +110,17 @@ export default function ClientHome() {
                 VENTAS MAYORISTAS
               </span>
               <br />
-              <span style={{ fontSize: "14px" }}>Contactanos - 3174049573</span>
+              <span
+                style={{
+                  fontSize: "14px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  justifyContent: "center",
+                }}
+              >
+                <FaWhatsapp size={16} /> Contactanos
+              </span>
             </>
           }
         />
