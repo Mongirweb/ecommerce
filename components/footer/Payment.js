@@ -23,17 +23,17 @@ export default function Payment() {
         <Image
           width={300}
           height={200}
-          src="/images/payment/mastercard.webp"
+          src="/images/payment/mastercard.png"
           alt="MasterCard"
           loading="lazy"
         />
-        <Image
+        {/* <Image
           width={300}
           height={200}
           src="/images/payment/paypal.webp"
           alt="PayPal"
           loading="lazy"
-        />
+        /> */}
         <Image
           width={300}
           height={200}

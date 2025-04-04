@@ -83,7 +83,7 @@ export default function ClientHome() {
               <br />
               <br />
               <p style={{ fontSize: "14px" }}>
-                <FaLocationDot /> Calle 46 # 52, Medellin, Antioquia
+                <FaLocationDot /> Calle 46 # 52, Medellín, Antioquia
               </p>
             </>
           }
@@ -119,7 +119,7 @@ export default function ClientHome() {
                   justifyContent: "center",
                 }}
               >
-                <FaWhatsapp size={16} /> Contactanos
+                <FaWhatsapp size={16} /> Contáctanos
               </span>
             </>
           }

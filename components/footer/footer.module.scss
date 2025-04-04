@@ -154,11 +154,12 @@
     margin-top: 1rem;
     img:nth-child(1) {
       width: 180px;
+      object-fit: cover;
     }
     img {
       width: 60px;
       height: 36px;
-      object-fit: cover;
+      object-fit: contain;
     }
   }
   &__copyright {
