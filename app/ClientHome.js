@@ -74,7 +74,7 @@ export default function ClientHome() {
           text={
             <>
               <span style={{ fontSize: "22px", fontWeight: "bold" }}>
-                ¡VISITANOS!
+                ¡VISÍTANOS!
               </span>
               <br />
               Estamos a una cuadra de la
