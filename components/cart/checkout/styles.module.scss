@@ -1,7 +1,19 @@
 @import "../base";
 .cart {
+  &__message {
+    &_line {
+      margin-top: 0px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: rgb(4, 165, 4);
+      background: #e6f3e5;
+      padding: 5px;
+    }
+  }
   &__checkout {
-    max-height: 300px;
+    max-height: fit-content;
     &_line {
       font-size: 14px;
       display: flex;
@@ -21,7 +33,7 @@
   }
 }
 .submit {
-  margin-top: 2rem;
+  margin-top: 1rem;
   button {
     background: $blue-color;
     border-radius: 5px;

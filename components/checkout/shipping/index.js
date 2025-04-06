@@ -94,12 +94,27 @@ export default function Shipping({ user, profile, addresses, setAddresses }) {
   // ------------- HANDLERS -------------
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setShipping({ ...shipping, [name]: value });
 
-    // If "state" changed, update city dropdown
-    if (name === "state") {
-      const selectedState = departaments.find((d) => d.name === value);
-      setCities(selectedState ? selectedState.cities : []);
+    if (name === "country") {
+      // 'value' is the string "Colombia"
+      // find the object so you can also store its code
+      const found = countries.find((c) => c.name === value) || {};
+      setShipping({
+        ...shipping,
+        country: found.name, // "Colombia"
+        countryCode: found.code, // "CO" (if found)
+      });
+    } else if (name === "state") {
+      // Store the entire state object and update cities accordingly
+      const found = departaments.find((c) => c.name === value) || {};
+      setShipping({ ...shipping, [name]: found.name, stateCode: found.code });
+      setCities(found?.cities || []);
+    } else if (name === "city") {
+      // Similarly for city if needed
+      const found = cities.find((c) => c.name === value) || {};
+      setShipping({ ...shipping, [name]: found.name, cityCode: found.zipCode });
+    } else {
+      setShipping({ ...shipping, [name]: value });
     }
   };
 
@@ -135,6 +150,10 @@ export default function Shipping({ user, profile, addresses, setAddresses }) {
 
   const changeActiveHandler = async (id) => {
     try {
+      const activeAdress = addresses.find((a) => a.active === true);
+      if (activeAdress?._id === id) {
+        return;
+      }
       const res = await changeActiveAddress(id);
       setAddresses(res.addresses);
       toast.success("Dirección elegida con exito!");

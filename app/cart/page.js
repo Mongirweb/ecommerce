@@ -63,18 +63,14 @@ export default function Cart() {
 
   // Recalculate totals for ALL items in the cart.
   useEffect(() => {
-    const shipping = cart?.cartItems?.reduce(
-      (acc, item) => acc + Number(item.shipping || 0),
-      0
-    );
     const sub = cart?.cartItems?.reduce(
       (acc, item) => acc + item.price * item.qty,
       0
     );
-    setShippingFee(shipping.toFixed(2));
+    setShippingFee(sub.toFixed(2) < 89900 ? 12000 : 6000);
     setSubtotal(sub.toFixed(2));
-    setTotal((sub + shipping).toFixed(2));
-  }, [cart?.cartItems]);
+    setTotal((sub + shippingFee).toFixed(2));
+  }, [cart?.cartItems, cart, shippingFee]);
 
   // -----------------------
   const saveCartToDbHandler = async () => {

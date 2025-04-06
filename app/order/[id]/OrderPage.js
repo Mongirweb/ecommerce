@@ -26,6 +26,7 @@ import { IoMdArrowBack } from "react-icons/io";
 import { useWindowSize } from "react-use";
 import Confetti from "react-confetti-boom";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -156,8 +157,7 @@ export default function OrderPage({ orderData, paypal_client_id }) {
           const transaction = result.transaction;
           if (transaction.status === "APPROVED") {
             dispatchRedux(emptyCart());
-
-            window.location.href = `/order/${orderData._id}`;
+            router.replace(`/order/${orderData._id}`);
           }
         });
       } else {
@@ -167,6 +167,8 @@ export default function OrderPage({ orderData, paypal_client_id }) {
       console.error("Error generating Wompi payment:", error);
     }
   };
+
+  const shipping = orderData.totalBeforeDiscount >= 89900 ? 6000 : 12000;
 
   return (
     <>
@@ -185,10 +187,10 @@ export default function OrderPage({ orderData, paypal_client_id }) {
       <div className={styles.order}>
         <div className={styles.container}>
           <div className={styles.order__infos}>
-            <div className={styles.goBack} onClick={() => router.back()}>
+            <Link className={styles.goBack} href="/">
               <IoMdArrowBack />
               Volver
-            </div>
+            </Link>
             {/* Order Header */}
             <div className={styles.order__header}>
               <div className={styles.order__header_head}>
@@ -211,39 +213,49 @@ export default function OrderPage({ orderData, paypal_client_id }) {
                     <CheckCircleOutlineIcon sx={{ color: green[500] }} />
                   </span>
                 ) : (
-                  <PendingOutlinedIcon sx={{ color: yellow[500] }} />
+                  "Pendiente de pago"
                 )}
               </div>
               <div className={styles.order__header_status}>
                 Estado de la Orden :
                 <span
                   className={
-                    orderData.status === "Not Processed"
-                      ? styles.not_processed
-                      : orderData.status === "Processing"
+                    orderData.status === "Procesando"
                       ? styles.processing
-                      : orderData.status === "Dispatched"
+                      : orderData.status === "Exitoso"
                       ? styles.dispatched
-                      : orderData.status === "Cancelled"
+                      : orderData.status === "Cancelado"
                       ? styles.cancelled
-                      : orderData.status === "Completed"
+                      : orderData.status === "Exitoso"
                       ? styles.completed
                       : ""
                   }
                 >
-                  {orderData.status === "Not Processed"
-                    ? "Pendiente de Pago"
-                    : orderData.status === "Processing"
+                  {orderData.status === "Procesando"
                     ? "Procesando"
-                    : orderData.status === "Dispatched"
-                    ? "Enviado"
-                    : orderData.status === "Cancelled"
+                    : orderData.status === "Cancelado"
                     ? "Cancelado"
-                    : orderData.status === "Completed"
+                    : orderData.status === "Exitoso"
                     ? "Completado"
                     : orderData.status}
                 </span>
               </div>
+              {orderData?.trackingInfo?.trackingUrl && (
+                <div className={styles.order__header_status}>
+                  Estado del envío :
+                  <span
+                    style={{ fontWeight: "bold", textDecoration: "underline" }}
+                  >
+                    <a
+                      href={orderData.trackingInfo.trackingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Revisar
+                    </a>
+                  </span>
+                </div>
+              )}
             </div>
             {/* Order Products */}
             <div className={styles.order__products}>
@@ -274,7 +286,7 @@ export default function OrderPage({ orderData, paypal_client_id }) {
                         width={300}
                         height={200}
                         src={product.color.image}
-                        alt="Mongir Logo"
+                        alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                         loading="lazy"
                       />{" "}
                       {product.size ? `/ ${product.size}` : null}
@@ -282,7 +294,7 @@ export default function OrderPage({ orderData, paypal_client_id }) {
                     <div style={{ display: "flex", gap: "8px" }}>
                       {product.price !== Number(product.originalPrice) && (
                         <span className={styles.priceBefore}>
-                          COP${formatPrice(product?.originalPrice)}
+                          ${formatPrice(product?.originalPrice)}
                         </span>
                       )}
                       {product.discount > 0 && (
@@ -292,10 +304,10 @@ export default function OrderPage({ orderData, paypal_client_id }) {
                       )}
                     </div>
                     <div className={styles.product__infos_priceQty}>
-                      COP ${formatPrice(product.price)} x {product.qty}
+                      ${formatPrice(product.price)} x {product.qty}
                     </div>
                     <div className={styles.product__infos_total}>
-                      COP ${formatPrice(product.price * product.qty)}
+                      ${formatPrice(product.price * product.qty)}
                     </div>
                   </div>
                 </div>
@@ -333,11 +345,56 @@ export default function OrderPage({ orderData, paypal_client_id }) {
                   </>
                 ) : (
                   <>
+                    <div className={styles.order__products_total_sub}>
+                      <span>Envío</span>
+                      {shipping === 6000 && (
+                        <span
+                          style={{
+                            color: "#1b5e20",
+                            display: "flex",
+                            gap: "5px",
+                            alignItems: "center",
+                          }}
+                        >
+                          ${formatPrice(shipping)}
+                          <p
+                            style={{
+                              color: "#f6f6f6f",
+                              textDecoration: "line-through",
+                              fontSize: "12px",
+                            }}
+                          >
+                            15.000
+                          </p>
+                        </span>
+                      )}
+                      {shipping === 12000 && (
+                        <span
+                          style={{
+                            color: "#1b5e20",
+                            display: "flex",
+                            gap: "5px",
+                            alignItems: "center",
+                          }}
+                        >
+                          ${formatPrice(shipping)}
+                          <p
+                            style={{
+                              color: "#f6f6f6f",
+                              textDecoration: "line-through",
+                              fontSize: "12px",
+                            }}
+                          >
+                            15.000
+                          </p>
+                        </span>
+                      )}
+                    </div>
                     <div
                       className={`${styles.order__products_total_sub} ${styles.bordertop}`}
                     >
                       <span>Total:</span>
-                      <b>COP ${formatPrice(orderData.total)}</b>
+                      <b>${formatPrice(orderData.total)}</b>
                     </div>
                   </>
                 )}
@@ -354,7 +411,7 @@ export default function OrderPage({ orderData, paypal_client_id }) {
                     width={300}
                     height={200}
                     src={orderData.user.image}
-                    alt="Mongir Logo"
+                    alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                     loading="lazy"
                   />
                   <div>
@@ -378,7 +435,7 @@ export default function OrderPage({ orderData, paypal_client_id }) {
                 <span>{orderData.shippingAddress.zipCode}</span>
                 <span>{orderData.shippingAddress.country}</span>
               </div>
-              <div className={styles.order__address_shipping}>
+              {/* <div className={styles.order__address_shipping}>
                 <h2>Dirección de facturación</h2>
                 <span>
                   {orderData.shippingAddress.firstName}{" "}
@@ -392,7 +449,7 @@ export default function OrderPage({ orderData, paypal_client_id }) {
                 </span>
                 <span>{orderData.shippingAddress.zipCode}</span>
                 <span>{orderData.shippingAddress.country}</span>
-              </div>
+              </div> */}
             </div>
             {!orderData.isPaid && (
               <div className={styles.order__payment}>

@@ -50,7 +50,10 @@ export default function Summary({
         products: cart.products,
         shippingAddress: selectedAddress,
         paymentMethod,
-        total: totalAfterDiscount !== "" ? totalAfterDiscount : cart.cartTotal,
+        total:
+          totalAfterDiscount !== ""
+            ? totalAfterDiscount
+            : cart.cartTotal + shipping,
         wholeSaleTotal: cart.wholeSaleTotal,
         totalBeforeDiscount: cart.cartTotal,
         couponApplied: coupon,
@@ -65,6 +68,8 @@ export default function Summary({
   const formatPrice = (price) => {
     return new Intl.NumberFormat("de-DE").format(price);
   };
+
+  const shipping = cart.cartTotal >= 89900 ? 6000 : 12000;
 
   return (
     <div className={styles.summary}>
@@ -93,7 +98,7 @@ export default function Summary({
               </button> */}
               <div className={styles.infos}>
                 <span>
-                  Total : <b>COP ${formatPrice(cart.cartTotal)}</b>{" "}
+                  Total : <b>${formatPrice(cart.cartTotal + shipping)}</b>{" "}
                 </span>
                 {discount > 0 && (
                   <span className={styles.coupon_span}>

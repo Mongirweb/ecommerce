@@ -30,7 +30,7 @@ export default async function Checkout() {
 
   // Fetch user and cart data
   const user = await User.findById(session.user.id);
-  const cart = await Cart.findOne({ user: user._id });
+  const cart = await Cart.findOne({ user: user._id }).sort({ updatedAt: -1 });
 
   await db.disconnectDb();
 
