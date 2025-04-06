@@ -4,7 +4,7 @@ import { IoMdClose } from "react-icons/io";
 import styles from "./styles.module.scss";
 import useClickOutside from "../../utils/useClickOutside";
 import { useMobileSearch } from "../../context/MobileSearchContext";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function SearchModal() {
   const [query, setQuery] = useState("");
@@ -12,6 +12,8 @@ export default function SearchModal() {
   const modalRef = useRef(null);
   const { isSearchOpen, closeSearch, modalData } = useMobileSearch();
   const router = useRouter();
+  const pathname = usePathname();
+  console.log(pathname);
 
   // Close modal when clicking outside
   useClickOutside(modalRef, () => {
@@ -22,33 +24,36 @@ export default function SearchModal() {
     const value = e.target.value;
     setQuery(value);
     // Example: Fetch suggestions from an API when at least 2 characters
-    if (value.length >= 2) {
-      try {
-        const res = await fetch(`/api/search-products?search=${value}`);
-        const data = await res.json();
-        setSuggestions(data);
-      } catch (error) {
-        console.error("Error fetching suggestions:", error);
-        setSuggestions([]);
-      }
-    } else {
-      setSuggestions([]);
-    }
+    // if (value.length >= 2) {
+    //   try {
+    //     const res = await fetch(`/api/search-products?search=${value}`);
+    //     const data = await res.json();
+    //     setSuggestions(data);
+    //   } catch (error) {
+    //     console.error("Error fetching suggestions:", error);
+    //     setSuggestions([]);
+    //   }
+    // } else {
+    //   setSuggestions([]);
+    // }
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (router.pathname !== "/browse") {
-      if (query.length > 1) {
-        router.push(`/browse?search=${query}`);
-        closeSearch();
-      }
+    if (query.length < 2) return; // require at least 2 chars
+
+    if (pathname !== "/browse") {
+      // If not on /browse, navigate there
+      router.push(`/browse?search=${query}`);
+      closeSearch();
     } else {
-      searchHandler(query);
+      // If already on /browse, call any local "searchHandler" you have
+      // For example, if you had a function in context or props
+      // searchHandler(query);
+      router.push(`/browse?search=${query}`);
       closeSearch();
     }
   };
-
   if (!isSearchOpen) return null;
 
   return (
