@@ -17,6 +17,8 @@ import SearchSuggestions from "./Suggestions";
 import { useMediaQuery } from "react-responsive";
 import { IoMdSearch } from "react-icons/io";
 import { useMobileSearch } from "../../context/MobileSearchContext";
+import debounce from "lodash/debounce";
+import { useCallback } from "react";
 
 export default function Main({ searchHandler }) {
   const router = useRouter();
@@ -29,6 +31,30 @@ export default function Main({ searchHandler }) {
   const [suggestions, setSuggestions] = useState([]);
   const { openSearch } = useMobileSearch();
 
+  useEffect(() => {
+    return () => {
+      debouncedFetchSuggestions.cancel();
+    };
+  }, []);
+
+  const debouncedFetchSuggestions = useCallback(
+    debounce(async (value) => {
+      if (value.length >= 2) {
+        try {
+          const res = await fetch(`/api/search-products?search=${value}`);
+          const data = await res.json();
+          setSuggestions(data);
+        } catch (error) {
+          console.error("Error fetching suggestions:", error);
+          setSuggestions([]);
+        }
+      } else {
+        setSuggestions([]);
+      }
+    }, 300), // 300ms debounce
+    []
+  );
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (router.pathname !== "/browse") {
@@ -40,24 +66,13 @@ export default function Main({ searchHandler }) {
     }
   };
 
-  const handleInputChange = async (e) => {
+  const handleInputChange = (e) => {
     const value = e.target.value;
-    setQuery(value); // Correctly updating the `query` state
+    setQuery(value);
 
-    if (router.pathname === "/browse") return; // Accessing `router.pathname` instead of undefined `pathname`
+    if (router.pathname === "/browse") return;
 
-    if (value.length >= 2) {
-      try {
-        const res = await fetch(`/api/search-products?search=${value}`);
-        const data = await res.json();
-        setSuggestions(data); // Updating suggestions with the fetched data
-      } catch (error) {
-        console.error("Error fetching suggestions:", error); // Add error logging for debugging
-        setSuggestions([]); // Reset suggestions on error
-      }
-    } else {
-      setSuggestions([]); // Clear suggestions if input is less than 2 characters
-    }
+    debouncedFetchSuggestions(value);
   };
 
   const handleOpenModal = () => {
@@ -168,18 +183,19 @@ export default function Main({ searchHandler }) {
               onClick={() => openSearch(true)}
             />
           ) : (
-            <div className={styles.search}>
+            <form onSubmit={(e) => handleSearch(e)} className={styles.search}>
               <input
                 type="text"
                 placeholder="Busca en mongir..."
                 value={query}
                 onChange={handleInputChange}
+                autoCorrect="off"
               />
 
               <button type="submit" className={styles.search__icon}>
                 <IoMdSearch fontSize={26} />
               </button>
-            </div>
+            </form>
           )}
           {/* <form onSubmit={(e) => handleSearch(e)} className={styles.search}>
             <input
