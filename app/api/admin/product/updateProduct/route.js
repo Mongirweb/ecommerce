@@ -31,8 +31,6 @@ export async function PUT(req) {
     // 3) Parse and sanitize the request body
     const body = await req.json();
 
-    console.log(body);
-
     const { _id, parent, name } = body;
 
     // Example: sanitize known string fields

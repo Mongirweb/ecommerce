@@ -130,8 +130,6 @@ export default function ProductCard({ product }) {
     });
   };
 
-  console.log(product);
-
   return (
     <div className={styles.product}>
       <h1 className={styles.product__name}>{product?.name}</h1>

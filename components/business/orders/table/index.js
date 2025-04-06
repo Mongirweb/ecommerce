@@ -42,8 +42,6 @@ function Row(props) {
     return created.format("DD/MM/YYYY");
   };
 
-  console.log(row);
-
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>

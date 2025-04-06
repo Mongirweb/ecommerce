@@ -38,7 +38,22 @@ const EditProductClient = ({ product, categories, index }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  console.log(editedProduct);
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (query.length < 2) return; // require at least 2 chars
+
+    if (pathname !== "/browse") {
+      // If not on /browse, navigate there
+      router.push(`/browse?search=${query}`);
+      closeSearch();
+    } else {
+      // If already on /browse, call any local "searchHandler" you have
+      // For example, if you had a function in context or props
+      // searchHandler(query);
+      router.push(`/browse?search=${query}`);
+      closeSearch();
+    }
+  };
 
   useEffect(() => {
     const getSubs = async () => {

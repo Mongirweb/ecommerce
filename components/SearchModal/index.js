@@ -13,7 +13,6 @@ export default function SearchModal() {
   const { isSearchOpen, closeSearch, modalData } = useMobileSearch();
   const router = useRouter();
   const pathname = usePathname();
-  console.log(pathname);
 
   // Close modal when clicking outside
   useClickOutside(modalRef, () => {

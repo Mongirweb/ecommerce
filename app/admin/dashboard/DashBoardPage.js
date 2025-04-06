@@ -81,44 +81,37 @@ export default function DashBoardPage({ session, orders, products }) {
                 </tr>
               </thead>
               <tbody>
-                {orders.map(
-                  (order, i) => (
-                    console.log(order),
-                    (
-                      <tr key={i}>
-                        <td>{order?.user?.name}</td>
-                        <td>${order.total.toLocaleString("es-CO")}</td>
-                        <td>
-                          {order.isPaid ? <p>Pagado</p> : <p>No Pagado</p>}
-                        </td>
-                        <td>
-                          <div
-                            className={`${styles.status} ${
-                              order?.status === "Not Processed"
-                                ? styles.not_processed
-                                : order.status === "Processing"
-                                ? styles.processing
-                                : order.status === "Dispatched"
-                                ? styles.dispatched
-                                : order.status === "Cancelled"
-                                ? styles.cancelled
-                                : order.status === "Completed"
-                                ? styles.completed
-                                : ""
-                            }`}
-                          >
-                            {order.status}
-                          </div>
-                        </td>
-                        <td>
-                          <Link href={`/order/${order._id}`}>
-                            <SlEye />
-                          </Link>
-                        </td>
-                      </tr>
-                    )
-                  )
-                )}
+                {orders.map((order, i) => (
+                  <tr key={i}>
+                    <td>{order?.user?.name}</td>
+                    <td>${order.total.toLocaleString("es-CO")}</td>
+                    <td>{order.isPaid ? <p>Pagado</p> : <p>No Pagado</p>}</td>
+                    <td>
+                      <div
+                        className={`${styles.status} ${
+                          order?.status === "Not Processed"
+                            ? styles.not_processed
+                            : order.status === "Processing"
+                            ? styles.processing
+                            : order.status === "Dispatched"
+                            ? styles.dispatched
+                            : order.status === "Cancelled"
+                            ? styles.cancelled
+                            : order.status === "Completed"
+                            ? styles.completed
+                            : ""
+                        }`}
+                      >
+                        {order.status}
+                      </div>
+                    </td>
+                    <td>
+                      <Link href={`/order/${order._id}`}>
+                        <SlEye />
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
