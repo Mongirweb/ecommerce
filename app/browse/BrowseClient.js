@@ -403,7 +403,7 @@ export default function BrowseClient(props) {
           replaceQuery={replaceQuery}
         /> */}
             <PriceFilters priceHandler={priceHandler} />
-            <DiscountFilter discountHandler={discountHandler} />
+            {/* <DiscountFilter discountHandler={discountHandler} /> */}
 
             {/* <ColorsFilter
             colors={colors}
@@ -426,7 +426,7 @@ export default function BrowseClient(props) {
             materialHandler={materialHandler}
             replace Query={replaceQuery}
           /> */}
-            <OficialStores
+            {/* <OficialStores
               brands={brands}
               brandHandler={brandHandler}
               replaceQuery={replaceQuery}
@@ -435,7 +435,7 @@ export default function BrowseClient(props) {
               brands={brands}
               brandHandler={brandHandler}
               replaceQuery={replaceQuery}
-            />
+            /> */}
             {sizes && sizes.length > 0 && (
               <SizesFilter sizes={sizes} sizeHandler={sizeHandler} />
             )}

@@ -7,7 +7,14 @@ import SubCategory from "../../../models/SubCategory";
 import slugify from "slugify";
 import { remove as removeDiacritics } from "diacritics";
 
-/* helpers */
+/* ─── helpers de texto ─── */
+const normalize = (s = "") =>
+  removeDiacritics(s)
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
 const capEach = (s = "") =>
   s
     .split(/\s+/)
@@ -21,22 +28,27 @@ async function uniqueSlug(base) {
   return c;
 }
 
-const norm = (s = "") =>
-  removeDiacritics(s)
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
+/* busca el _id con coincidencia parcial */
+function findClosestId(tag, list) {
+  const tagNorm = normalize(tag);
+  for (const { normName, _id } of list) {
+    if (tagNorm === normName) return _id; // exacto
+  }
+  for (const { normName, _id } of list) {
+    if (tagNorm.includes(normName) || normName.includes(tagNorm)) return _id; // parcial
+  }
+  return null;
+}
 
 /* clave de variante */
 function keyVar(img = "", color = "", parentImg = "") {
-  const colorKey = color ? color.trim().toLowerCase() : "";
-  if (!colorKey) return "default"; // ⇒ sólo tallas
+  const colorKey = color ? normalize(color) : "";
+  if (!colorKey) return "default"; // solo tallas
   const imgKey = !img || img === parentImg ? "" : img.trim().toLowerCase();
   return `${imgKey}|${colorKey}`;
 }
 
-/* endpoint */
+/* ─── endpoint ─── */
 export async function POST(req) {
   try {
     await db.connectDb();
@@ -44,19 +56,21 @@ export async function POST(req) {
     if (!Array.isArray(rows) || !rows.length)
       throw new Error("Request body must be a non‑empty array");
 
-    /* mapear tags → IDs */
-    const catTags = [...new Set(rows.map((r) => r.tag1).filter(Boolean))];
-    const subTags = [...new Set(rows.map((r) => r.tag0).filter(Boolean))];
-
+    /* 1) Cargar TODAS las categorías y subcategorías */
     const [cats, subs] = await Promise.all([
-      Category.find({ name: { $in: catTags } }).lean(),
-      SubCategory.find({ name: { $in: subTags } }).lean(),
+      Category.find({}).lean(),
+      SubCategory.find({}).lean(),
     ]);
+    const catList = cats.map((c) => ({
+      normName: normalize(c.name),
+      _id: c._id,
+    }));
+    const subList = subs.map((s) => ({
+      normName: normalize(s.name),
+      _id: s._id,
+    }));
 
-    const catMap = Object.fromEntries(cats.map((c) => [norm(c.name), c._id]));
-    const subMap = Object.fromEntries(subs.map((s) => [norm(s.name), s._id]));
-
-    /* agrupar por padre */
+    /* 2) Agrupar por producto padre */
     const grouped = {};
     for (const r of rows) {
       const key = r.parentSku || r.sku;
@@ -68,8 +82,8 @@ export async function POST(req) {
           price: r.price,
           image: r.image,
           variants: new Map(), // keyVar → {images:Set,color,sizes[]}
-          categoryId: catMap[norm(r.tag1)] || null,
-          subCategoryId: subMap[norm(r.tag0)] || null,
+          categoryId: findClosestId(r.tag0, catList),
+          subCategoryId: findClosestId(r.tag1, subList),
           Alto: r.Alto,
           Ancho: r.Ancho,
           Largo: r.Largo,
@@ -87,7 +101,7 @@ export async function POST(req) {
           });
         }
         const v = grouped[key].variants.get(k);
-        if (k !== "default" && r.image) v.images.add(r.image); // ← solo si no es default
+        if (k !== "default" && r.image) v.images.add(r.image);
         v.sizes.push({
           size: r.size,
           sku: r.sku || grouped[key].sku,
@@ -96,7 +110,7 @@ export async function POST(req) {
       }
     }
 
-    /* insertar / actualizar */
+    /* 3) Insertar / actualizar */
     const companyId = "67b6850eb14a2d3a0b58e220";
     const slugOpts = { lower: true, strict: true, remove: /[*+~.()'"!:@,]/g };
     let imported = 0;
