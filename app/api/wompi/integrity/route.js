@@ -9,7 +9,7 @@ export async function POST(req) {
 
     // Wompi  secret for generating the hash
     const integritySecret =
-      process.env.NEXT_SECRET_TECNIC_INTEGRATION_INTEGRITY_TEST;
+      process.env.NEXT_SECRET_TECNIC_INTEGRATION_INTEGRITY;
 
     // Concatenate the values in the correct order
     let concatenatedString = `${transactionReference}${amountInCents}${currency}${integritySecret}`;

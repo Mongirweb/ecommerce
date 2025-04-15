@@ -44,8 +44,7 @@ export async function POST(req) {
 function validateWompiEvent(event, providedChecksum) {
   const properties = event.signature.properties;
   const timestamp = event.timestamp;
-  const integritySecret =
-    process.env.NEXT_SECRET_TECNIC_INTEGRATION_EVENTS_TEST;
+  const integritySecret = process.env.NEXT_SECRET_TECNIC_INTEGRATION_EVENTS;
 
   if (!providedChecksum || !integritySecret) {
     return false;

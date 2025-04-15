@@ -39,17 +39,17 @@ export async function middleware(req) {
 
   const cspHeader = `
     default-src 'self';
-    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval' https://www.googletagmanager.com https://checkout.wompi.co https://www.tiktok.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com https://*.tiktok.com;
+    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval' https://www.googletagmanager.com https://checkout.wompi.co https://www.tiktok.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com https://*.tiktok.com https://s3.amazonaws.com;
     style-src 'self' 'unsafe-inline' https://sf16-website-login.neutral.ttwstatic.com https://*.tiktok.com;
-    img-src 'self' blob: data: https://cdn.ipregistry.co https://res.cloudinary.com https://randomuser.me https://images.unsplash.com https://lh3.googleusercontent.com https://www.freeiconspng.com https://www.pngmart.com https://cdn.shopify.com https://cdn.shopifycdn.com https://cdn.shopifycdn.net https://*.tiktok.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com https://*.tiktok.com;
+    img-src 'self' blob: data: https://cdn.ipregistry.co https://res.cloudinary.com https://randomuser.me https://images.unsplash.com https://lh3.googleusercontent.com https://www.freeiconspng.com https://www.pngmart.com https://cdn.shopify.com https://cdn.shopifycdn.com https://cdn.shopifycdn.net https://*.tiktok.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com https://*.tiktok.com https://s3.amazonaws.com;
     font-src 'self' data:;
     object-src 'none';
     base-uri 'self';
     form-action 'self';
-    frame-src 'self' https://checkout.wompi.co https://www.tiktok.com https://www.instagram.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com https://*.tiktok.com;
+    frame-src 'self' https://checkout.wompi.co https://www.tiktok.com https://www.instagram.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com https://*.tiktok.com https://s3.amazonaws.com;
     frame-ancestors 'self';
     upgrade-insecure-requests; 
-    connect-src 'self' https://www.mongir.com blob: ws: http://localhost:3000 https://amaua.myshopify.com https://aleko-comercializadora.myshopify.com https://*.tiktok.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com;
+    connect-src 'self' https://www.mongir.com blob: ws: http://localhost:3000 https://amaua.myshopify.com https://aleko-comercializadora.myshopify.com https://*.tiktok.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com https://s3.amazonaws.com;
   `;
 
   const contentSecurityPolicyHeaderValue = cspHeader
@@ -92,10 +92,7 @@ export async function middleware(req) {
     "same-origin-allow-popups"
   );
   // response.headers.set("Cross-Origin-Embedder-Policy", "require-corp");
-  response.headers.set(
-    "Access-Control-Allow-Origin",
-    "https://mongir.com"
-  );
+  response.headers.set("Access-Control-Allow-Origin", "https://mongir.com");
   response.headers.set("Access-Control-Allow-Credentials", "true");
   response.headers.set(
     "Strict-Transport-Security",

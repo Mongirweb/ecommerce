@@ -148,7 +148,7 @@ export default function OrderPage({ orderData, paypal_client_id }) {
           currency: "COP",
           amountInCents,
           reference: transactionReference,
-          publicKey: process.env.NEXT_PUBLIC_PUB_TEST,
+          publicKey: process.env.NEXT_PUBLIC_PUB_PROD,
           signature: { integrity: integritySignature },
           redirectUrl: `${window.location.origin}/order/${orderData._id}`,
         });
