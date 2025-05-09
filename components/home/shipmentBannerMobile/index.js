@@ -11,7 +11,7 @@ const promos = [
   {
     id: "free-over",
     // icon: <LocalShippingIcon fontSize="small" />,
-    title: "💸 Ahorras a precios de El Hueco",
+    title: "59 años en el mercado",
     subtitle: "", // not shown in compact mode
   },
   {
