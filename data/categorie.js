@@ -18,7 +18,7 @@ export const categories = [
   {
     name: "Primer día",
     image:
-      "https://res.cloudinary.com/danfiejkv/image/upload/q_50/v1746366939/Mongir-tienda-primer-dia-bebe-3_jh4xvu.webp",
+      "https://res.cloudinary.com/danfiejkv/image/upload/q_50/v1746813892/Mongir-tienda-primer-dia-bebe_fbuspo.webp",
     link: "/browse",
     slug: "primer-dia",
     id: "67d3450902d26a8677f2e260",
@@ -26,7 +26,7 @@ export const categories = [
   {
     name: "Ropa bebé",
     image:
-      "https://res.cloudinary.com/danfiejkv/image/upload/q_50/v1746366941/Mongir-tienda-ropa-bebe-3_c5c1e8.webp",
+      "https://res.cloudinary.com/danfiejkv/image/upload/q_50/v1746813892/Mongir-tienda-ropa-bebe_lkrxmt.webp",
     link: "/browse",
     slug: "ropa-bebe",
     id: "67d344eb02d26a8677f2e228",
@@ -48,7 +48,7 @@ export const categories = [
   {
     name: "Calzado",
     image:
-      "https://res.cloudinary.com/danfiejkv/image/upload/q_50/v1746366931/Mongir-tienda-calzado-bebe-3_pvcqwc.webp",
+      "https://res.cloudinary.com/danfiejkv/image/upload/q_50/v1746813892/Mongir-tienda-calzado-bebe_kguqpt.webp",
     link: "/browse",
     slug: "calzado",
     id: "67d344f302d26a8677f2e236",
@@ -56,7 +56,7 @@ export const categories = [
   {
     name: "Accesorios",
     image:
-      "https://res.cloudinary.com/danfiejkv/image/upload/q_50/v1746366929/Mongir-tienda-accesorios-bebe-3_tzeegz.webp",
+      "https://res.cloudinary.com/danfiejkv/image/upload/q_50/v1746813892/Mongir-tienda-accesorios-bebe_uvdwlq.webp",
     link: "/browse",
     slug: "accesorios",
     id: "67d344fa02d26a8677f2e244",
@@ -80,7 +80,7 @@ export const categories = [
   {
     name: "Cuidado",
     image:
-      "https://res.cloudinary.com/danfiejkv/image/upload/q_50/v1746366939/Mongir-tienda-higiene-bebe-4_d0i9s2.webp",
+      "https://res.cloudinary.com/danfiejkv/image/upload/q_50/v1746813894/Mongir-tienda-higiene-bebe_zfdeby.webp",
     link: "/browse",
     slug: "cuidado-personal",
     id: "67d3450102d26a8677f2e252",
@@ -97,7 +97,7 @@ export const categories = [
   {
     name: "Trajes de baño",
     image:
-      "https://res.cloudinary.com/danfiejkv/image/upload/q_50/v1746366941/Mongir-tienda-vestido-de-bano-bebe-3_qoda36.webp",
+      "https://res.cloudinary.com/danfiejkv/image/upload/q_50/v1746813892/Mongir-tienda-vestido-de-bano-bebe_rabzn2.webp",
     link: "/browse",
     slug: "trajes-de-bano",
     id: "67d432cfcbc95777ceb121b0",
