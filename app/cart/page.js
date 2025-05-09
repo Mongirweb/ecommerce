@@ -169,7 +169,7 @@ export default function Cart() {
   return (
     <>
       <Head>
-        <title> Somos el Hueco Medellín | Carrito</title>
+        <title> Mongir | Carrito</title>
       </Head>
       <Header />
 

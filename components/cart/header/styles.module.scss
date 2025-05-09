@@ -115,12 +115,11 @@
     }
   }
   .logo {
-    height: 90%;
     img {
-      width: 44px;
+      width: 70px;
       height: auto;
       @media (max-width: 580px) {
-        width: 46px;
+        width: 50px;
       }
     }
   }

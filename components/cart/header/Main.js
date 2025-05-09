@@ -3,7 +3,7 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 import { useState } from "react";
 
-import image from "../../../public/somos-el-hueco-medellin-logo-circulo.avif";
+import image from "../../../public/MONGIR-LOGO.png";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { usePathname } from "next/navigation";
