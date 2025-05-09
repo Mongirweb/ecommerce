@@ -1,8 +1,6 @@
 import { purchaseSuccedEmailTemplate } from "../emails/purchaseSuccedEmailTemplateSomos";
 import sendgrid from "@sendgrid/mail";
-sendgrid.setApiKey(
-  "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"
-);
+sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 const { EMAIL } = process.env;
 
 export async function sendPurchaseConfirmationEmailSomos(order, user) {
