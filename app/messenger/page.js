@@ -40,6 +40,7 @@ export default async function MessengerPage() {
         messengerId: messengerId,
       },
       {
+        isPaid: true,
         messengerStatus: {
           $nin: ["Entregado a transportador", "Cancelado"],
         },

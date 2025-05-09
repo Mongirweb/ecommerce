@@ -23,7 +23,7 @@ export default function Payment() {
         <Image
           width={300}
           height={200}
-          src="/images/payment/mastercard.png"
+          src="/images/payment/mastercard.webp"
           alt="MasterCard"
           loading="lazy"
         />

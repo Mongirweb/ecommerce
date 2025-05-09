@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from "./header.module.scss";
-import { FaRegHeart } from "react-icons/fa";
+import { Heart } from "lucide-react";
 import { Playfair_Display } from "next/font/google";
 
 const playfairDisplay = Playfair_Display({
@@ -12,12 +12,12 @@ export default function Ad() {
   // Define your message once.
   const message = (
     <>
-      <FaRegHeart size={16} />
+      <Heart size={16} />
       <p className={playfairDisplay.className}>
         El amor que tu bebé te inspira es el mismo amor que encontrarás en esta
         página
       </p>
-      <FaRegHeart size={16} />
+      <Heart size={16} />
     </>
   );
 

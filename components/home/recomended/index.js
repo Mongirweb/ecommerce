@@ -1,21 +1,37 @@
+"use client";
 import styles from "./styles.module.scss";
-
 import React, { useRef, useState } from "react";
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-import { FaArrowRight } from "react-icons/fa";
-import { BsFire } from "react-icons/bs";
+import { SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 // import required modules
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import Link from "next/link";
-import RecomendedCard from "./card";
+import { Pagination, Navigation } from "swiper/modules";
+
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
+import { ChevronRight } from "lucide-react";
+import dynamic from "next/dynamic";
+
+const RecomendedCard = dynamic(() => import("./card"), {
+  ssr: false,
+  loading: () => (
+    <div className={styles.product}>
+      <div className={styles.product__container}>
+        <Skeleton height={170} width="100%" borderRadius={8} />
+        <Skeleton width="80%" style={{ marginTop: 8 }} />
+        <Skeleton width="60%" />
+      </div>
+    </div>
+  ),
+});
+
+const Swiper = dynamic(() => import("swiper/react").then((m) => m.Swiper), {
+  ssr: false,
+});
 
 export default function Recomended({ products, setRecomendedProductsPage }) {
   const isLoading = !products || products.length === 0;
@@ -28,12 +44,8 @@ export default function Recomended({ products, setRecomendedProductsPage }) {
     <div className={styles.offers}>
       <div className={styles.offers__text}>
         <div></div>
-        <span>
-          <BsFire /> Productos recomendados
-        </span>
-        <Link href="/browse?sort=topReviewed" prefetch={true}>
-          Ver todo <FaArrowRight />
-        </Link>
+        <span> Recomendados</span>
+        <div></div>
       </div>
 
       {isLoading ? (
@@ -78,7 +90,6 @@ export default function Recomended({ products, setRecomendedProductsPage }) {
           className="offers_swiper"
           freeMode={true}
           direction="horizontal"
-          onReachEnd={handleFetchRecomendedProducts}
           mousewheel={true}
           breakpoints={{
             450: { slidesPerView: 2.2 },

@@ -61,7 +61,7 @@ export default function Sidebar() {
             width={300}
             height={200}
             src={session?.user?.image || "/default-image.png"} // Provide a default image if undefined
-            alt="Mongir Logo"
+            alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
             className={styles.userImage}
             loading="lazy"
           />
@@ -151,15 +151,15 @@ export default function Sidebar() {
                   Carga masiva de productos
                 </span>
               </Link>
-            </li>
+            </li> */}
             <li className={route === "product/imageurl" ? styles.active : ""}>
-              <Link href="">
+              <Link href="/business/dashboard/product/imageurl">
                 <MdImageSearch style={{ fill: "gray" }} />
                 <span className={styles.show} style={{ color: "gray" }}>
                   Obtener URL de las imagenes
                 </span>
               </Link>
-            </li> */}
+            </li>
           </ul>
         </div>
         {/* Other dropdowns are commented out */}

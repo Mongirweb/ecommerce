@@ -67,7 +67,7 @@ export default function Images({ images, setImages }) {
           images.map((img, i) => (
             <span key={i}>
               <MdOutlineRemoveCircle onClick={() => removeImage(img)} />
-              <img src={img} alt="Mongir Logo" />
+              <img src={img} alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco" />
             </span>
           ))}
       </div>

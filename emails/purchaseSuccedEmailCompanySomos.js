@@ -232,7 +232,7 @@ export const purchaseSuccedEmailCompany = ({ orderNumber, name }) => {
                                         <tbody>
                                           <tr>
                                             <td align="center" bgcolor="#3ab3ff" class="inner-td" style="border-radius:6px; font-size:16px; text-align:center; background-color:inherit;">
-                                              <a href="" style="background-color:#3ab3ff; border:1px solid #3ab3ff; border-color:#3ab3ff; border-radius:50px; border-width:1px; color:#ffffff; display:inline-block; font-size:18px; font-weight:700; letter-spacing:0px; line-height:normal; padding:12px 18px 12px 18px; text-align:center; text-decoration:none; border-style:solid; font-family:arial,helvetica,sans-serif;" target="_blank">Ir a Mis Órdenes</a>
+                                              <a href="https://www.somoselhueco.com/business/dashboard" style="background-color:#3ab3ff; border:1px solid #3ab3ff; border-color:#3ab3ff; border-radius:50px; border-width:1px; color:#ffffff; display:inline-block; font-size:18px; font-weight:700; letter-spacing:0px; line-height:normal; padding:12px 18px 12px 18px; text-align:center; text-decoration:none; border-style:solid; font-family:arial,helvetica,sans-serif;" target="_blank">Ir a Mis Órdenes</a>
                                             </td>
                                           </tr>
                                         </tbody>

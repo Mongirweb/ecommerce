@@ -146,7 +146,7 @@ export default function ProductCard({ product }) {
             <div className={styles.product__item_img}>
               <Image
                 src={p?.images[0]?.url}
-                alt="Mongir Logo"
+                alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                 width={300}
                 height={300}
                 loading="lazy"

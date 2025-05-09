@@ -97,9 +97,11 @@ export default function ProductCard({ product }) {
                       setActive(i);
                     }}
                     alt={product.name}
-                    width={300}
-                    height={400}
+                    width={200}
+                    height={200}
                     loading="lazy"
+                    blurDataURL={style?.image}
+                    placeholder="blur"
                   />
                 ) : (
                   <span

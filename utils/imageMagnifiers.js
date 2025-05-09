@@ -46,6 +46,9 @@ export default function ImageMagnifiers({
         onMouseEnter={mouseEnter}
         onMouseLeave={mouseLeave}
         onMouseMove={mouseMove}
+        priority={true}
+        blurDataURL={src}
+        placeholder="blur"
       />
       <div
         style={{

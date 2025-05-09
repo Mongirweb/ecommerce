@@ -23,7 +23,7 @@ export default function Top({ country }) {
               width={300}
               height={200}
               src="https://cdn.ipregistry.co/flags/emojitwo/co.svg"
-              alt="Mongir Logo"
+              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
               loading="lazy"
             />
             <span>COL / COP</span>
@@ -60,7 +60,7 @@ export default function Top({ country }) {
                     width={300}
                     height={200}
                     src={session?.user?.image}
-                    alt="Mongir Logo"
+                    alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                     loading="lazy"
                   />
                   <span>{session?.user?.name}</span>

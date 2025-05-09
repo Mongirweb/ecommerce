@@ -1,17 +1,47 @@
 // "use client";
 // import React, { useEffect, useState } from "react";
-// import { getProducts } from "../../utils/shopifyImport";
+// import { getAllProducts } from "../../utils/shopifyImport";
 
 // export default function GetAllProducts() {
 //   const [products, setProducts] = useState([]);
 
 //   useEffect(() => {
-//     getProducts().then((data) => {
-//       console.log(data.products.edges);
-//       setProducts(data);
-//     });
+//     async function fetchAll() {
+//       try {
+//         const all = await getAllProducts();
+//         setProducts(all);
+//         console.log("Fetched total products:", all.length);
+//       } catch (error) {
+//         console.error("Error fetching products:", error);
+//       }
+//     }
+
+//     fetchAll();
 //   }, []);
-//   return <div></div>;
+
+//   console.log(products);
+//   const SHIPPING_PHRASE =
+//     "INCLUYE ENVÍO GRATIS A TODA COLOMBIA Y CERTIFICADO DE GARANTÍA";
+
+//   // si solo quieres quitarla, usa esta función
+//   const stripShippingPhrase = (text) =>
+//     text
+//       .replace(new RegExp(SHIPPING_PHRASE, "gi"), "") // elimina la frase (may/min)
+//       .replace(/\s{2,}/g, " ") // colapsa espacios dobles
+//       .trim(); // quita espacios iniciales/finales
+
+//   return (
+//     <div>
+//       <h1>All Products ({products.length})</h1>
+//       {products.map((product) => (
+//         <div key={product.id} style={{ margin: "1rem 0" }}>
+//           <h2>{product.title}</h2>
+//           <p>{stripShippingPhrase(product.description)}</p>
+//           <p>Vendor: {product.vendor}</p>
+//         </div>
+//       ))}
+//     </div>
+//   );
 // }
 
 // "use client";

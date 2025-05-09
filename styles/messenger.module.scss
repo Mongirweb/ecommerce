@@ -5,6 +5,7 @@
   padding: 20px;
   font-family: "Arial", sans-serif;
   background: #f8f9fa;
+  padding-bottom: 60px;
 }
 
 // Header
@@ -273,5 +274,34 @@
       background: #28a745;
       color: white;
     }
+  }
+}
+/* Loader overlay that covers the page */
+.loaderOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 9999; /* ensure it's on top of everything else */
+}
+
+/* Simple spinner style */
+.spinner {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #565656;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }

@@ -9,22 +9,23 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../api/auth/[...nextauth]/route"; // Adjust the path as needed
 
 export const metadata = {
-  title: "Mongir | Orden",
+  title: "Somos el Hueco Medellín | Orden",
 };
 
 export default async function OrderPageWrapper({ params }) {
   // Authenticate the user
   const session = await getServerSession(authOptions);
 
-  if (!session) {
-    redirect("/signin");
-  }
+  // if (!session) {
+  //   redirect("/signin");
+  // }
 
   const { id } = params;
   await db.connectDb();
 
   const order = await Order.findById(id)
     .populate({ path: "user", model: User })
+    .populate({ path: "guestToken" })
     .lean();
 
   await db.disconnectDb();

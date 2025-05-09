@@ -155,7 +155,12 @@ export default function Sizes({
           alignItems: "flex-start",
         }}
       >
-        Talla / *Cantidad Stock / *Precio al detal / SKU / Código Barras
+        Talla / *Cantidad Stock / *Precio Mayorista / *Precio al detal / SKU /
+        Código Barras
+        <span>
+          El precio mayorista no sera mostrado al usuario, solo sera visible el
+          precio del producto
+        </span>
       </div>
       <>
         <button
@@ -299,11 +304,24 @@ export default function Sizes({
                       }
                     }}
                   />
-
+                  <input
+                    type="number"
+                    name="wholesalePrice"
+                    placeholder={"Precio Mayorista"}
+                    min={1}
+                    value={size.wholesalePrice}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (/^\d*$/.test(value)) {
+                        // Allow only digits
+                        handleSize(i, e);
+                      }
+                    }}
+                  />
                   <input
                     type="number"
                     name="price"
-                    placeholder={noSize ? "Precio producto" : "Precio producto"}
+                    placeholder={noSize ? "Precio al detal" : "Precio al detal"}
                     min={1}
                     value={size.price}
                     onChange={(e) => {
@@ -350,6 +368,75 @@ export default function Sizes({
                     </div>
                   ) : null}
                 </div>
+                {price > 0 && (
+                  <div className={styles.clicktoadd__charges}>
+                    <div>
+                      {/* Display original price and discounted price if discount exists */}
+                      {product.discount && product.discount > 0 ? (
+                        <>
+                          Precio original: {formatCurrency(price)}
+                          <br />
+                          Precio con descuento ({product.discount}%):{" "}
+                          {formatCurrency(discountedPrice)}
+                          <br />
+                        </>
+                      ) : null}
+                      Cargo por venta (10%): {formatCurrency(charge)}
+                      <br />
+                      {shippingCost &&
+                        `Gestión envío: ${formatCurrency(
+                          shippingCost
+                        )} + ${formatCurrency(sobreflete)} (sobreflete)`}
+                      <br />
+                      <div>
+                        Total Cargo por Venta: {formatCurrency(totalToCharge)}
+                      </div>
+                      <div>
+                        Recibirás por la venta de este producto:{" "}
+                        {formatCurrency(discountedPrice - totalToCharge)}
+                      </div>
+                      {product.flashOffer === "Si" &&
+                      product.flashDiscount > 0 ? (
+                        <>
+                          <br />
+                          <div
+                            style={{
+                              width: "50%",
+                              borderBottom: "1px solid black",
+                              marginTop: "10px",
+                            }}
+                          ></div>
+                          Precio con descuento flash ({product.flashDiscount}%):{" "}
+                          {formatCurrency(flashDiscountPrice)}
+                          <br />
+                          Cargo por venta (10%): {formatCurrency(chargeFlash)}
+                          <br />
+                          {shippingCost &&
+                            `Gestión envío: ${formatCurrency(
+                              shippingCost
+                            )} + ${formatCurrency(
+                              sobrefleteFlash
+                            )} (sobreflete)`}
+                          <br />
+                          <div>
+                            Total Cargo por Venta:{" "}
+                            {formatCurrency(totalToChargeFlash)}
+                          </div>
+                          <div>
+                            Recibirás por la venta de este producto en oferta
+                            flash:{" "}
+                            {formatCurrency(
+                              flashDiscountPrice -
+                                sobreflete -
+                                chargeFlash -
+                                shippingCost
+                            )}
+                          </div>
+                        </>
+                      ) : null}
+                    </div>
+                  </div>
+                )}
               </div>
             );
           })

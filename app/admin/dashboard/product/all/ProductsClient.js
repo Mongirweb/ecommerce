@@ -3,19 +3,24 @@
 import { useEffect, useState } from "react";
 import styles from "../../../../../styles/products.module.scss";
 import ProductCard from "../../../../../components/admin/products/productCard";
+import SingularSelect from "../../../../../components/selects/SingularSelect";
+import { Form, Formik } from "formik";
 
-const PAGE_SIZE = 25; // match your API default "limit=6"
+const PAGE_SIZE = 25; // match your API default "limit=25"
 
-export default function ProductsClient({ companyId }) {
+export default function ProductsClient({ companyId, companies }) {
   const [myProducts, setMyProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [allCompanies, setAllCompanies] = useState(companies || []);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   // ----- Search -----
   const [query, setQuery] = useState("");
+  const [querySku, setQuerySku] = useState("");
+  const [queryCompany, setQueryCompany] = useState("");
   const [searching, setSearching] = useState(false);
 
   // ---------------------------
@@ -24,7 +29,6 @@ export default function ProductsClient({ companyId }) {
   const fetchProducts = async (page) => {
     setLoading(true);
     setError(null);
-
     try {
       const response = await fetch(
         `/api/admin/allProducts?page=${page}&limit=${PAGE_SIZE}`
@@ -33,8 +37,6 @@ export default function ProductsClient({ companyId }) {
         throw new Error(`Error fetching page ${page}: ${response.statusText}`);
       }
       const data = await response.json();
-      // Expecting: { products: [...], totalPages: N }
-
       if (data.products) {
         setMyProducts(data.products);
         setTotalPages(data.totalPages || 1);
@@ -51,13 +53,14 @@ export default function ProductsClient({ companyId }) {
   };
 
   // ---------------------------
-  // 2) Search Handler
+  // 2) Search Handlers
   // ---------------------------
   const handleSearchProd = async () => {
-    if (query.length < 2) return; // optional guard
+    if (query.length < 2) return;
     setLoading(true);
     setError(null);
-
+    setQuerySku("");
+    setQueryCompany("");
     try {
       const res = await fetch(
         `/api/admin/searchProduct?query=${encodeURIComponent(query)}`
@@ -67,12 +70,68 @@ export default function ProductsClient({ companyId }) {
       }
       const data = await res.json();
       setSearching(true);
+      setMyProducts(data.products || []);
+      setTotalPages(1);
+    } catch (err) {
+      console.error("Error searching products:", err);
+      setError("Error searching. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearchSku = async () => {
+    if (querySku.length < 2) return;
+    setLoading(true);
+    setError(null);
+    setQuery("");
+    setQueryCompany("");
+    try {
+      const res = await fetch(
+        `/api/admin/searchProductBySku?query=${encodeURIComponent(querySku)}`
+      );
+      if (!res.ok) {
+        throw new Error(`Error searching: ${res.statusText}`);
+      }
+      const data = await res.json();
+      setSearching(true);
+      setMyProducts(data.products || []);
+      setTotalPages(1);
+    } catch (err) {
+      console.error("Error searching products:", err);
+      setError("Error searching. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Modified: accept companyId as parameter
+  const handleSearchCompany = async (selectedCompany) => {
+    if (!selectedCompany || selectedCompany.length < 2) return;
+    setLoading(true);
+    setError(null);
+    setQuery("");
+    setQuerySku("");
+
+    try {
+      const res = await fetch(
+        `/api/admin/searchProductsByCompany?query=${encodeURIComponent(
+          selectedCompany
+        )}&page=${currentPage}&limit=${PAGE_SIZE}`
+      );
+      if (!res.ok) {
+        throw new Error(`Error searching: ${res.statusText}`);
+      }
+      const data = await res.json();
+
       if (data.products) {
         setMyProducts(data.products);
+        setTotalPages(data.totalPages || 1);
       } else {
         setMyProducts([]);
+        setTotalPages(1);
       }
-      setTotalPages(1); // For simplicity, no pagination on search results
+      setSearching(true);
     } catch (err) {
       console.error("Error searching products:", err);
       setError("Error searching. Please try again later.");
@@ -86,8 +145,9 @@ export default function ProductsClient({ companyId }) {
   // ---------------------------
   const handleClearQuery = () => {
     setQuery("");
+    setQuerySku("");
+    setQueryCompany("");
     setSearching(false);
-    // Reset to page 1 of normal products
     setCurrentPage(1);
   };
 
@@ -95,30 +155,21 @@ export default function ProductsClient({ companyId }) {
   // 4) On Mount & Page changes
   // ---------------------------
   useEffect(() => {
-    if (!searching) {
+    if (queryCompany) {
+      handleSearchCompany(queryCompany);
+    } else if (!searching) {
       fetchProducts(currentPage);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, searching]);
-
-  // If you want searching to be triggered on Enter press only,
-  // then you don’t need to re-fetch on query change automatically.
-
-  // If you want to automatically re-fetch as user types, remove the Enter key logic
-  // and call handleSearchProd inside onChange. But you might also want to throttle it.
+  }, [currentPage, queryCompany, searching]);
 
   useEffect(() => {
-    // Scroll to top on initial mount
     window.scrollTo(0, 0);
-
-    // Also handle 'pageshow' event for bfcache
     function handlePageShow(e) {
-      // e.persisted indicates bfcache was used
       if (e.persisted) {
         window.scrollTo(0, 0);
       }
     }
-
     window.addEventListener("pageshow", handlePageShow);
     return () => window.removeEventListener("pageshow", handlePageShow);
   }, [currentPage]);
@@ -130,20 +181,66 @@ export default function ProductsClient({ companyId }) {
     <>
       <div className={styles.header}>Todos los productos</div>
 
-      {/* Search Bar */}
+      {/* Search Bars */}
       <div className={styles.search}>
         <input
           type="text"
           placeholder="Buscar producto por nombre"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              handleSearchProd();
-            }
-          }}
+          onKeyDown={(e) => e.key === "Enter" && handleSearchProd()}
         />
         {query && (
+          <button
+            type="button"
+            className={styles.clearButton}
+            onClick={handleClearQuery}
+          >
+            X
+          </button>
+        )}
+      </div>
+      <div className={styles.search}>
+        <input
+          type="text"
+          placeholder="Buscar producto por SKU"
+          value={querySku}
+          onChange={(e) => setQuerySku(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSearchSku()}
+        />
+        {querySku && (
+          <button
+            type="button"
+            className={styles.clearButton}
+            onClick={handleClearQuery}
+          >
+            X
+          </button>
+        )}
+      </div>
+
+      {/* Company Select */}
+      <div className={styles.search}>
+        <select
+          placeholder="Buscar productos por empresa"
+          value={queryCompany}
+          onChange={(e) => {
+            const selectedCompany = e.target.value;
+            setQueryCompany(selectedCompany);
+            // Immediately execute search when an option is selected.
+            if (selectedCompany) {
+              handleSearchCompany(selectedCompany);
+            }
+          }}
+        >
+          <option value="">Selecciona una empresa</option>
+          {allCompanies.map((company) => (
+            <option key={company._id} value={company._id}>
+              {company.name}
+            </option>
+          ))}
+        </select>
+        {queryCompany && (
           <button
             type="button"
             className={styles.clearButton}
@@ -169,7 +266,7 @@ export default function ProductsClient({ companyId }) {
       {error && <div className={styles.error}>{error}</div>}
 
       {/* Pagination: only show if not searching */}
-      {!searching && (
+      {(!searching || queryCompany) && (
         <div className={styles.pagination}>
           <button
             onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}

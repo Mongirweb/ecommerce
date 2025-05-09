@@ -13,7 +13,7 @@ export default function AddressClient({ session, tab, address }) {
         <h1>Mis Direcciones</h1>
       </div>
       <Shipping
-        user={session.user}
+        user={session?.user}
         addresses={addresses}
         setAddresses={setAddresses}
         profile

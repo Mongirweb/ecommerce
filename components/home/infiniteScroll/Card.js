@@ -2,23 +2,16 @@
 import Link from "next/link";
 import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
-import { MdAddShoppingCart } from "react-icons/md";
 import { Rating } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
 import Image from "next/image";
+import { cldThumb } from "../../../utils/cloudinary";
+import { useRouter } from "next/navigation";
+import { Heart } from "lucide-react";
 
-export default function InfiniteCard({ product }) {
-  const query450px = useMediaQuery({
-    query: "(max-width:450px)",
-  });
+export default function InfiniteCard({ product, priority }) {
   const query690px = useMediaQuery({
     query: "(max-width:690px)",
-  });
-  const query991px = useMediaQuery({
-    query: "(max-width:991px)",
-  });
-  const query1133px = useMediaQuery({
-    query: "(max-width:1133px)",
   });
   const [active, setActive] = useState(0);
 
@@ -31,7 +24,7 @@ export default function InfiniteCard({ product }) {
     subProducts[active]?.sizes?.map((s) => s.price).sort((a, b) => a - b) || []
   );
   const [styless, setStyless] = useState(subProducts.map((p) => p.color) || []);
-  const [discount, setDiscount] = useState(subProducts[active]?.discount || 0);
+  const [discount, setDiscount] = useState(subProducts[active]?.discount || 15);
 
   useEffect(() => {
     if (subProducts[active]) {
@@ -41,7 +34,6 @@ export default function InfiniteCard({ product }) {
           .map((s) => s.price)
           .sort((a, b) => a - b) || []
       );
-      setDiscount(subProducts[active].discount || 0);
     }
   }, [active, subProducts, product]);
 
@@ -52,7 +44,7 @@ export default function InfiniteCard({ product }) {
   };
 
   const calculateDiscountedPrice = (price, discount) => {
-    const discountedPrice = price - (price * discount) / 100;
+    const discountedPrice = price * (1 + discount / 100);
     return formatPrice(Math.round(discountedPrice));
   };
 
@@ -60,54 +52,66 @@ export default function InfiniteCard({ product }) {
   const formattedOriginalPrice = formatPrice(Math.round(originalPrice));
   const discountedPrice = calculateDiscountedPrice(originalPrice, discount);
 
+  const [randomMessage] = useState(() => {
+    const messages = [
+      "CASI AGOTADO",
+      "PARA TU BEBÉ",
+      <>
+        CON AMOR <Heart size={12} />
+      </>,
+      "COMPRALO YA!",
+      "ESPECIAL PARA TU BEBÉ",
+      "MEJOR PRECIO SIEMPRE!",
+    ];
+    return messages[Math.floor(Math.random() * messages.length)];
+  });
+
+  const [randomStars] = useState(() => {
+    return Math.floor(Math.random() * 1.5) + 4;
+  });
+  const [randomReviews] = useState(() => {
+    return Math.floor(Math.random() * 80) + 1;
+  });
+  const router = useRouter();
+
+  const openProduct = () => {
+    const url =
+      subProducts?.sizes?.length > 1
+        ? `/product/${product.slug}?style=${active}`
+        : `/product/${product.slug}?style=${active}&size=0`;
+
+    // next/router or next/navigation's router.push does NOT do new‑tab for you
+    if (query690px) {
+      // same tab
+      router.prefetch(url);
+      router.push(url);
+    } else {
+      // new tab
+      router.prefetch(url);
+      window.open(url, "_blank");
+    }
+  };
+
   return (
-    <div className={styles.product}>
+    <div className={styles.product} onClick={openProduct}>
       <div className={styles.product__container}>
-        <Link
-          href={
-            subProducts?.sizes?.length > 1
-              ? `/product/${product.slug}?style=${active}`
-              : `/product/${product.slug}?style=${active}&size=0`
-          }
-          prefetch={true}
-          target={query690px ? "_self" : "_blank"}
-        >
-          <div>
-            <Image
-              src={images?.[0]?.url}
-              loading="lazy"
-              width={500}
-              height={300}
-              alt="Mongir Logo"
-            />
-          </div>
-        </Link>
-        {discount > 0 && (
+        <div>
+          <Image
+            src={cldThumb(images?.[0]?.url)}
+            width={200}
+            height={200}
+            alt="somoselhueco-relacionado"
+            sizes="(max-width: 450px) 50vw, (max-width: 991px) 33vw, 20vw"
+            priority={priority}
+            style={{ objectFit: "contain" }}
+          />
+        </div>
+        {/* {discount > 0 && (
           <div className={styles.product__discount}>-{discount}%</div>
-        )}
+        )} */}
         <div className={styles.product__infos}>
           <div className={styles.product_name}>
-            <span>
-              {query450px
-                ? product?.name?.length > 20
-                  ? `${product?.name?.substring(0, 20)}...`
-                  : product?.name
-                : query690px
-                ? product?.name?.length > 20
-                  ? `${product?.name?.substring(0, 18)}...`
-                  : product?.name
-                : query991px
-                ? product?.name?.length > 20
-                  ? `${product?.name?.substring(0, 12)}...`
-                  : product?.name
-                : query1133px
-                ? product?.name?.length > 20
-                  ? `${product?.name?.substring(0, 18)}...`
-                  : product?.name
-                : product?.name?.length > 20
-                ? `${product?.name?.substring(0, 18)}...`
-                : product?.name}
-            </span>
+            <span>{product?.name}</span>
           </div>
 
           <div className={styles.product_brand}>
@@ -123,7 +127,7 @@ export default function InfiniteCard({ product }) {
             {styless &&
               styless.map((style, i) =>
                 style?.image ? (
-                  <img
+                  <Image
                     key={i}
                     src={
                       style?.image ||
@@ -134,7 +138,10 @@ export default function InfiniteCard({ product }) {
                       setImages(product?.subProducts[i]?.images);
                       setActive(i);
                     }}
-                    alt="Mongir Logo"
+                    loading="lazy"
+                    width={500}
+                    height={300}
+                    alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                   />
                 ) : (
                   <span
@@ -153,9 +160,9 @@ export default function InfiniteCard({ product }) {
             {discount > 0 ? (
               <div className={styles.product_price_discount}>
                 <div className={styles.product_price_discount_price}>
-                  <span>$ {discountedPrice}</span>
+                  <span>${formattedOriginalPrice}</span>
                   <p>
-                    <del>${formattedOriginalPrice}</del>
+                    <del>$ {discountedPrice}</del>
                   </p>
                 </div>
                 <div className={styles.product_add}>
@@ -169,7 +176,17 @@ export default function InfiniteCard({ product }) {
                     prefetch={true}
                   >
                     {" "}
-                    <MdAddShoppingCart />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M0 1h4.764l3 11h10.515l3.089-9.265l1.897.633L19.72 14H7.78l-.5 2H22v2H4.72l1.246-4.989L3.236 3H0zm14 1v3h3v2h-3v3h-2V7H9V5h3V2zM4 21a2 2 0 1 1 4 0a2 2 0 0 1-4 0m14 0a2 2 0 1 1 4 0a2 2 0 0 1-4 0"
+                      />
+                    </svg>
                   </Link>
                 </div>
               </div>
@@ -189,25 +206,54 @@ export default function InfiniteCard({ product }) {
                     title={`View details of ${product.name}`}
                   >
                     {" "}
-                    <MdAddShoppingCart />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M0 1h4.764l3 11h10.515l3.089-9.265l1.897.633L19.72 14H7.78l-.5 2H22v2H4.72l1.246-4.989L3.236 3H0zm14 1v3h3v2h-3v3h-2V7H9V5h3V2zM4 21a2 2 0 1 1 4 0a2 2 0 0 1-4 0m14 0a2 2 0 1 1 4 0a2 2 0 0 1-4 0"
+                      />
+                    </svg>
                   </Link>
                 </div>
               </div>
             )}
           </div>
         </div>
-        <div className={styles.product_rating}>
+        <div className={styles.product_box}>
+          <span
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "5px",
+            }}
+          >
+            {!query690px ? randomMessage : randomMessage}
+          </span>
+        </div>
+        {/* <div className={styles.product_message}>
+          {!query690px
+            ? randomMessage
+            : randomMessage.charAt(0).toUpperCase() +
+              randomMessage.slice(1).toLowerCase()}
+        </div> */}
+        {/* <div className={styles.product_rating}>
           <Rating
             name="half-rating-read"
-            defaultValue={product?.rating}
+            defaultValue={randomStars}
             precision={0.5}
             readOnly
-            style={{ color: "#FACF19" }}
+            style={{ color: "black" }}
             size="large"
             sx={{ border: "1px", width: "90px" }}
           />
+          {randomReviews > 0 && <>({randomReviews})</>}
           {product.numReviews > 0 && <>({product.numReviews})</>}
-        </div>
+        </div> */}
       </div>
     </div>
   );

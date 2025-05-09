@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import db from "../../../../utils/db";
 import Order from "../../../../models/Order";
+import GuestCart from "../../../../models/GuestCart";
 import Product from "../../../../models/Product";
 import User from "../../../../models/User";
 import { sendPurchaseConfirmationEmailSomos } from "../../../../utils/sendPurchaseConfirmationEmailSomos";
@@ -13,12 +14,8 @@ export async function POST(req) {
   try {
     const event = await req.json();
 
-    // Log the received event to check its structure
-    console.log("Received Wompi Event:", JSON.stringify(event, null, 2));
-
     // Extract the X-Event-Checksum from the headers
     const providedChecksum = req.headers.get("x-event-checksum");
-    console.log("Received X-Event-Checksum:", providedChecksum);
 
     // Validate the event signature
     const isValid = validateWompiEvent(event, providedChecksum);
@@ -44,7 +41,8 @@ export async function POST(req) {
 function validateWompiEvent(event, providedChecksum) {
   const properties = event.signature.properties;
   const timestamp = event.timestamp;
-  const integritySecret = process.env.NEXT_SECRET_TECNIC_INTEGRATION_EVENTS;
+  const integritySecret =
+    process.env.NEXT_SECRET_TECNIC_INTEGRATION_EVENTS_TEST;
 
   if (!providedChecksum || !integritySecret) {
     return false;
@@ -116,7 +114,6 @@ async function handleTransactionUpdated(transaction) {
     order.paymentResult.id === transactionId &&
     order.paymentResult.status === status
   ) {
-    console.log(`Transaction ${transactionId} already processed.`);
     return;
   }
 
@@ -188,8 +185,73 @@ async function handleTransactionUpdated(transaction) {
           ` sold +${item.qty}, quantity -${item.qty}`
       );
     }
+
+    try {
+      // Assuming order is an object with shipping details.
+      let guestToken = "";
+      let userId = order.user;
+      let user = await User.findById(userId);
+
+      if (!user) {
+        guestToken = order.guestToken;
+        const guest = await GuestCart.findOne({ token: guestToken });
+        if (!guest) {
+          console.error("Guest not found or missing email");
+          return;
+        }
+        user = guest;
+      }
+      const shipmentPayload = {
+        email: user.email,
+        shippingAddress: order.shippingAddress,
+      };
+
+      const shipmentResponse = await fetch(
+        `${process.env.NEXTAUTH_URL}/api/envia/quote`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(shipmentPayload),
+        }
+      );
+      if (!shipmentResponse.ok) {
+        console.error(
+          "Error from /api/envia/quote:",
+          await shipmentResponse.text()
+        );
+      }
+      const data = await shipmentResponse.json();
+      order.trackingInfo.carrier = data.carrier;
+      order.trackingInfo.service = data.service;
+      order.trackingInfo.price = data.price;
+      order.trackingInfo.email = data.email;
+      order.trackingInfo.trackingNumber =
+        data.genrateResponse.data[0].trackingNumber;
+      order.trackingInfo.trackingUrl = data.genrateResponse.data[0].trackUrl;
+      order.trackingInfo.trackingLabel = data.genrateResponse.data[0].label;
+      await order.save();
+      // Save the tracking/shipping number in your order record.
+      order.trackingNumber = data.trackingNumber; // adjust according to Envia's response structure.
+      await order.save();
+      console.log("Envia shipment created:", shipmentResponse);
+    } catch (error) {
+      // Handle errors (e.g., log, notify admin, retry later)
+      console.error("Error syncing shipping data with Envia:", error);
+    }
+
+    let guestToken = "";
     let userId = order.user;
     let user = await User.findById(userId);
+
+    if (!user) {
+      guestToken = order.guestToken;
+      const guest = await GuestCart.findOne({ token: guestToken });
+      if (!guest) {
+        console.error("Guest not found or missing email");
+        return;
+      }
+      user = guest;
+    }
     await sendPurchaseConfirmationEmailSomos(order, user);
 
     // Fetch and send emails to companies involved in the order

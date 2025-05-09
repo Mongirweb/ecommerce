@@ -1,0 +1,28 @@
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.info__option {
+  display: flex;
+  flex-direction: column;
+
+  span {
+    font-size: 12px;
+    color: #666;
+  }
+}
+
+.info__option_first {
+  display: flex;
+  gap: 5px;
+  color: #0a8800;
+  font-size: 14px;
+  font-weight: 600;
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}

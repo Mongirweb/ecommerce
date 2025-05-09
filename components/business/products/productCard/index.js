@@ -90,9 +90,6 @@ export default function ProductCard({ product }) {
                 // Hide dialog and refresh
                 dispatch(hideDialog());
                 toast.success("Producto eliminado con éxito");
-                setTimeout(() => {
-                  router.refresh();
-                }, 1500);
               } catch (error) {
                 console.error(error);
                 dispatch(
@@ -150,7 +147,7 @@ export default function ProductCard({ product }) {
             <div className={styles.product__item_img}>
               <Image
                 src={p?.images[0]?.url}
-                alt="Mongir Logo"
+                alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                 width={300}
                 height={300}
                 loading="lazy"

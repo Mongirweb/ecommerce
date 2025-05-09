@@ -30,14 +30,14 @@
     &__img {
       height: 140px;
       width: 140px;
-      border-radius: 50%;
+
       margin-top: 10px;
       box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
       overflow: hidden;
       img {
         height: 100%;
         width: 100%;
-        border-radius: 50%;
+
         object-fit: cover;
         transition: transform 0.2s ease;
         object-fit: cover;
@@ -58,12 +58,13 @@
     }
     &__infos {
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
+      flex-direction: row;
+      align-items: center;
 
       p {
-        font-size: 16px;
+        font-size: 14px;
         color: #222;
+        font-weight: 600;
         @media (max-width: 450px) {
           font-size: 12px;
         }

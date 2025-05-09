@@ -36,9 +36,7 @@ export default function User() {
         </div>
         <div className={styles.user__infos}>
           <LuPackageCheck />
-          <span>
-            ¡Envío gratis en compras desde $50.000 en productos seleccionados!
-          </span>
+          <span>¡Envío por solo $6.000 en compras desde $89.900!</span>
         </div>
         <div className={styles.buttons}>
           <button className={styles.button1}>Registrarme</button>

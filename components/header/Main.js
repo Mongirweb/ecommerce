@@ -1,24 +1,22 @@
 "use client";
 import Link from "next/link";
 import styles from "./header.module.scss";
-import { RiSearch2Line } from "react-icons/ri";
-import { FiShoppingCart } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import image from "../../public/MONGIR-LOGO-TOP.png";
 import Image from "next/image";
-import { IoMenu } from "react-icons/io5";
 import MobileMenu from "./MobileMenu";
 import { useModal } from "../../context/ModalContext";
 import useClickOutside from "../../utils/useClickOutside";
-import { SearchDropdownComponent } from "../home/main/SearchDropdownComponent";
 import SearchSuggestions from "./Suggestions";
-import { useMediaQuery } from "react-responsive";
-import { IoMdSearch } from "react-icons/io";
-import { useMobileSearch } from "../../context/MobileSearchContext";
 import debounce from "lodash/debounce";
 import { useCallback } from "react";
+import { Search } from "lucide-react";
+import { ChevronRight } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
+import { Menu } from "lucide-react";
+import { useCart } from "../../context/CartContext";
 
 export default function Main({ searchHandler }) {
   const router = useRouter();
@@ -29,7 +27,7 @@ export default function Main({ searchHandler }) {
   const [showMenuMobile, setShowMenuMobile] = useState(false);
   const { openModal } = useModal();
   const [suggestions, setSuggestions] = useState([]);
-  const { openSearch } = useMobileSearch();
+  const { openCart } = useCart();
 
   useEffect(() => {
     return () => {
@@ -90,145 +88,74 @@ export default function Main({ searchHandler }) {
     setQuery(""); // Optionally clear the query
   };
 
-  const query650px = useMediaQuery({
-    query: "(min-width:650px)",
-  });
-
-  const query950px = useMediaQuery({
-    query: "(min-width:950px)",
-  });
-
-  const query850px = useMediaQuery({
-    query: "(min-width:850px)",
-  });
-  const query750px = useMediaQuery({
-    query: "(min-width:750px)",
-  });
-
-  const query570px = useMediaQuery({
-    query: "(max-width:570px)",
-  });
-
   return (
     <div className={styles.main} ref={modal}>
       <div className={styles.main__container}>
-        <div className={styles.main__container_options}>
-          {query850px ? (
-            <Link
-              href={{
-                pathname: `browse`,
-                query: { category: "67d3450902d26a8677f2e260" },
-              }}
-            >
-              <div className={styles.option}>Primer día</div>
-            </Link>
-          ) : null}
-          {query750px ? (
-            <Link
-              href={{
-                pathname: `browse`,
-                query: { category: "67d344eb02d26a8677f2e228" },
-              }}
-            >
-              <div className={styles.option}>Ropa</div>
-            </Link>
-          ) : null}
-          {query950px ? (
-            <Link
-              href={{
-                pathname: `browse`,
-                query: { category: "67d344f302d26a8677f2e236" },
-              }}
-            >
-              <div className={styles.option}>Calzado</div>
-            </Link>
-          ) : null}
-          {query650px ? (
-            <Link
-              href={{
-                pathname: `browse`,
-                query: { category: "67d344fa02d26a8677f2e244" },
-              }}
-            >
-              <div className={styles.option}>Accesorios</div>
-            </Link>
-          ) : null}
-          {query650px ? (
-            <div className={styles.option} onClick={() => handleOpenModal()}>
-              Ver más
-            </div>
-          ) : null}
-          {query650px ? null : (
-            <div className={styles.menu_menu} onClick={() => handleOpenModal()}>
-              <IoMenu color="#fff" />
-            </div>
-          )}
-        </div>
         <Link href="/" legacyBehavior>
           <a className={styles.logo}>
             <Image
               src={image}
-              alt="mongir-logo"
+              alt="somoselhueco-logo"
               loading="lazy"
               width={100}
               height={100}
             />
           </a>
         </Link>
-        <div className={styles.main__container_options}>
-          {query570px ? (
-            <IoMdSearch
-              fontSize={26}
-              color="#fff"
-              onClick={() => openSearch(true)}
-            />
-          ) : (
-            <form onSubmit={(e) => handleSearch(e)} className={styles.search}>
-              <input
-                type="text"
-                placeholder="Busca en mongir..."
-                value={query}
-                onChange={handleInputChange}
-                autoCorrect="off"
-              />
+        {/* <Link href="/browse">
+          <div className={styles.option}>
+            <BsFire /> En Promo
+          </div>
+        </Link> */}
+        <div className={styles.option} onClick={() => handleOpenModal()}>
+          Categorías <ChevronRight />
+        </div>
 
-              <button type="submit" className={styles.search__icon}>
-                <IoMdSearch fontSize={26} />
-              </button>
-            </form>
-          )}
-          {/* <form onSubmit={(e) => handleSearch(e)} className={styles.search}>
-            <input
-              type="text"
-              placeholder="Busca en mongir..."
-              value={query}
-              onChange={handleInputChange}
-            />
+        <form onSubmit={(e) => handleSearch(e)} className={styles.search}>
+          <input
+            type="text"
+            placeholder="Busca en Mongir..."
+            value={query}
+            onChange={handleInputChange}
+            autoCorrect="off"
+          />
 
-            <button type="submit" className={styles.search__icon}></button>
-          </form> */}
+          <button type="submit" className={styles.search__icon}>
+            <Search />
+          </button>
+        </form>
+        {suggestions.length > 0 && (
+          <SearchSuggestions
+            suggestions={suggestions}
+            query={searchQuery}
+            handleCloseSuggestions={handleCloseSuggestions}
+            handleSearch={handleSearch}
+          />
+        )}
 
-          {suggestions.length > 0 && (
-            <SearchSuggestions
-              suggestions={suggestions}
-              query={searchQuery}
-              handleCloseSuggestions={handleCloseSuggestions}
-              handleSearch={handleSearch}
-            />
-          )}
-
-          {/* <SearchDropdownComponent
+        {/* <SearchDropdownComponent
           setQuery={setQuery}
           handleSearch={handleSearch}
         /> */}
 
-          <Link href="/cart" legacyBehavior>
-            <a className={styles.cart}>
-              <FiShoppingCart />
-              <span>{cart?.cartItems?.length}</span>
-            </a>
-          </Link>
+        <div
+          className={styles.menu_menu}
+          onClick={() => setShowMenuMobile((prev) => !prev)}
+        >
+          <Menu />
         </div>
+        <Link href="/cart" legacyBehavior>
+          <a className={styles.cart}>
+            <ShoppingCart />
+            <span>{cart?.cartItems?.length}</span>
+          </a>
+        </Link>
+        {/* <a onClick={() => openCart()}>
+          <div className={styles.cart}>
+            <ShoppingCart />
+            <span>{cart?.cartItems?.length}</span>
+          </div>
+        </a> */}
       </div>
       {showMenuMobile ? (
         <MobileMenu

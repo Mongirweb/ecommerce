@@ -4,6 +4,8 @@ export const purchaseSuccedEmailTemplate = ({
   products,
   total,
   shippingAddress,
+  shipping,
+  trackingUrl,
 }) => {
   // Build product rows dynamically
   const productRows = products
@@ -287,7 +289,19 @@ export const purchaseSuccedEmailTemplate = ({
                                               </tr>
                                             </thead>
                                             <tbody>
+                                              <!-- Shipping Row -->
+                                              
                                               ${productRows}
+                                              <tr class="total-row">
+                                                <td colspan="3" style="text-align: right; padding: 10px;">
+                                                  Envío:
+                                                </td>
+                                                <td style="text-align: right; padding: 10px;">
+                                                  $${shipping.toLocaleString(
+                                                    "es-CO"
+                                                  )}
+                                                </td>
+                                              </tr>
                                               <!-- Total Row -->
                                               <tr class="total-row">
                                                 <td colspan="3" style="text-align: right; padding: 10px;">
@@ -309,6 +323,13 @@ export const purchaseSuccedEmailTemplate = ({
                                           ${shippingAddress.address1}, ${
     shippingAddress.city
   }, ${shippingAddress.state}, ${shippingAddress.country}
+                                        </p>
+                                        <br />
+                                        <p style="font-size: 18px; margin: 0; text-align: justify;">
+                                          <strong>Reastrea tu pedido:</strong>
+                                          <a href="${trackingUrl}"
+                                                style=""
+                                                target="_blank">Ver Estado de Envío</a>
                                         </p>
                                       </div>
                                     </td>

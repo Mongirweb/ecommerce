@@ -7,12 +7,12 @@ import { useMediaQuery } from "react-responsive";
 import Top from "./Top";
 import Main from "./Main";
 import Ad from "../../header/Ad";
-export default function Header() {
+export default function Header({ session }) {
   return (
     <header className={styles.header}>
       <Ad />
       <Top />
-      <Main />
+      <Main session={session} />
     </header>
   );
 }

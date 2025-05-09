@@ -1,0 +1,87 @@
+/* ShipmentBannerMobile.css */
+.banner {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: rgb(4, 165, 4);
+  background: $mongir-orange;
+  border: 1px solid $mongir-orange;
+  padding: 20px;
+  margin-bottom: 1rem;
+  text-align: justify;
+  border-radius: 10px 10px 0 0;
+  font-weight: 500;
+}
+/* --------------------------------------------------------------
+   VerticalBenefitTicker  —  SCSS‑module skin
+   -------------------------------------------------------------- */
+
+// ❶ Design tokens – tweak here
+$height-two-line: 56px;
+$height-one-line: 48px;
+$radius: 10px;
+
+$bg-beige: #f9efe3; // default (two‑line variant)
+$bg-green: $mongir-orange; // example alt background
+
+$text-dark: #fff;
+$text-muted: #666;
+
+// ❷ Root wrapper
+.benefitTicker {
+  margin-top: 2rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: $radius;
+  height: $height-two-line;
+  background: $bg-green;
+  margin-bottom: 1rem;
+
+  /* compact (one‑line) modifier */
+  &.compact {
+    height: $height-one-line;
+  }
+
+  /* optional colour modifier (use with className) */
+  &.green {
+    background: $bg-green;
+  }
+}
+
+/* ❸ Sliding panel */
+.benefitSlide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 16px;
+}
+
+/* ❹ Icon */
+.benefitIcon {
+  font-size: 20px; // tune to your icon set
+  flex-shrink: 0;
+}
+
+/* ❺ Text block */
+.benefitText {
+  display: flex;
+  flex-direction: column;
+}
+
+.benefitTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-dark;
+  line-height: 1.1;
+}
+
+.benefitSubtitle {
+  font-size: 12px;
+  color: $text-muted;
+  margin-top: 2px;
+}

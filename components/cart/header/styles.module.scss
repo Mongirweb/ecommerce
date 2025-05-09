@@ -98,20 +98,27 @@
       font-size: 14px;
       display: flex;
       align-items: center;
+      justify-content: center;
+      p {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
       &:hover {
         text-decoration: underline;
       }
     }
   }
   .logo {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 90%;
     img {
-      width: 80px;
+      width: 44px;
       height: auto;
-      object-fit: cover;
       @media (max-width: 580px) {
         width: 46px;
       }

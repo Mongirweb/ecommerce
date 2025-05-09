@@ -1,6 +1,5 @@
 // app/product/[slug]/page.js
 
-export const dynamic = "force-dynamic";
 import db from "../../../utils/db";
 import Product from "../../../models/Product";
 import Category from "../../../models/Category";
@@ -8,9 +7,14 @@ import SubCategory from "../../../models/SubCategory";
 import SubCategory2 from "../../../models/SubCategory2";
 import SubCategory3 from "../../../models/SubCategory3";
 import User from "../../../models/User";
-import ProductPageContent from "./ProductPageContent";
-import { customMetaDataGenerator } from "../../components/customMetaDataGenerator";
 import { notFound } from "next/navigation";
+import dynamic from "next/dynamic";
+import MainSwiperSkeleton from "../../../components/skeletons/MainSwiperSkeleton";
+
+const ProductPageContent = dynamic(() => import("./ProductPageContent"), {
+  ssr: true,
+  loading: () => <MainSwiperSkeleton />,
+});
 
 export async function generateMetadata({ params, searchParams }) {
   const { slug } = params;
@@ -28,16 +32,20 @@ export async function generateMetadata({ params, searchParams }) {
       .lean();
 
     if (!product) {
-      return notFound();
+      return {
+        title: "Producto no encontrado | Somos el Hueco Medellín",
+        description: "El producto solicitado no existe.",
+        robots: { index: false },
+      };
     }
 
-    const title = `${product.name} - Compra ahora en Almecen Mongir`;
+    const title = `${product.name} - Compra ahora en Somos el Hueco Medellín`;
     const description =
       product.description ||
-      "Encuentra los Mejores Productos para tu Bebé en Almacen Mongir sin Salir de Casa | Compra en línea";
+      "Encuentra los Mejores Productos del Hueco de Medellin sin Salir de Casa | Compra en línea";
     const imageUrl =
       product.subProducts?.[0]?.images?.[0]?.url ||
-      "https://res.cloudinary.com/danfiejkv/image/upload/v1737325171/mongir-logo-cuadrado_kfecc1.png";
+      "https://res.cloudinary.com/danfiejkv/image/upload/v1737325171/somos-el-hueco-medellin-logo-cuadrado_kfecc1.png";
 
     // Create keywords as a comma-separated string
     const keywords = [
@@ -46,13 +54,14 @@ export async function generateMetadata({ params, searchParams }) {
       ...(product?.subCategories?.map((sub) => sub?.name) || ""),
       ...(product?.subCategorie2?.map((sub) => sub?.name) || ""),
       ...(product?.subCategorie3?.map((sub) => sub?.name) || ""),
-      "Mongir",
-      "Mongir Medellín",
-      "mongir",
-      "mongir medellin",
-      "mongir Colombia",
-      "comprar en el hueco mongir",
-      "mongir",
+      "Somos el Hueco Medellín",
+      "El Hueco de Medellín",
+      "somoselhueco",
+      "somos el hueco",
+      "el hueco medellín",
+      "el hueco Colombia",
+      "comprar en el hueco somos el hueco",
+      "somoselhueco",
       "el hueco virtual",
       "centro comercial el hueco",
       "compras en línea el hueco",
@@ -71,7 +80,7 @@ export async function generateMetadata({ params, searchParams }) {
       .filter(Boolean)
       .join(", ");
 
-    const canonicalUrl = `https://www.mongir.com/product/${product?.slug}`;
+    const canonicalUrl = `https://www.somoselhueco.com/product/${product?.slug}`;
 
     // Optional: Build structured data for the product using schema.org's Product type.
     const structuredData = {
@@ -84,10 +93,16 @@ export async function generateMetadata({ params, searchParams }) {
       offers: {
         "@type": "Offer",
         url: canonicalUrl,
+        availability: "https://schema.org/InStock",
         priceCurrency: "COP",
-        // Assumes that product.subProducts[0].sizes is an array and you pick a price by index
+        lowPrice: product.subProducts?.[0]?.sizes?.[size]?.price || "0",
+        highPrice: product.subProducts?.[0]?.sizes?.[size]?.price || "0",
         price: product.subProducts?.[0]?.sizes?.[size]?.price || "0",
-        availability: "https://schema.org/InStock", // Adjust based on your stock data
+        priceSpecification: {
+          "@type": "PriceSpecification",
+          priceCurrency: "COP",
+          price: product.subProducts?.[0]?.sizes?.[size]?.price || "0",
+        },
       },
     };
 
@@ -99,7 +114,7 @@ export async function generateMetadata({ params, searchParams }) {
         title,
         description,
         url: canonicalUrl,
-        siteName: "Mongir",
+        siteName: "Somos el Hueco Medellín",
         images: [
           {
             url: imageUrl,
@@ -129,8 +144,9 @@ export async function generateMetadata({ params, searchParams }) {
       },
     };
   } catch (error) {
-    console.error("Error in generateMetadata:", error);
-    throw new Error("500");
+    if (error?.digest === "NEXT_NOT_FOUND") throw error;
+    console.error("Error in ProductPage:", error);
+    throw new Error("500 - Internal Server Error");
   } finally {
     await db.disconnectDb();
   }
@@ -193,7 +209,7 @@ export default async function ProductPage({ params, searchParams }) {
       style,
       images: subProduct?.images,
       sizes: subProduct?.sizes,
-      discount: subProduct?.discount,
+      discount: subProduct?.discount || 15,
       sku: subProduct?.sku,
       colors: product?.subProducts?.map((p) => {
         return { ...p?.color, variant: p?.variant };
@@ -215,7 +231,7 @@ export default async function ProductPage({ params, searchParams }) {
               (subProduct?.sizes[size]?.price * subProduct?.discount) / 100
             )?.toFixed(2)
           : subProduct?.sizes[size]?.price,
-      priceBefore: subProduct?.sizes[size]?.price,
+      priceBefore: subProduct?.sizes[size]?.price * (1 + 15 / 100),
       quantity: subProduct?.sizes[size]?.qty,
       ratings: [
         { percentage: calculatePercentage("5", product?.reviews) },
@@ -252,9 +268,8 @@ export default async function ProductPage({ params, searchParams }) {
       />
     );
   } catch (error) {
+    if (error?.digest === "NEXT_NOT_FOUND") throw error;
     console.error("Error in ProductPage:", error);
-    // Throwing an error with a 500-like message triggers
-    // your custom error page at app/error.js
     throw new Error("500 - Internal Server Error");
   } finally {
     await db.disconnectDb();

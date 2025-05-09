@@ -1,5 +1,13 @@
+"use client";
+import React, { useRef, useState } from "react";
+import styles from "./main.module.scss";
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import { SwiperSlide } from "swiper/react";
+import dynamic from "next/dynamic";
+
+const Swiper = dynamic(() => import("swiper/react").then((m) => m.Swiper), {
+  ssr: false,
+});
 
 // Import Swiper styles
 import "swiper/css";
@@ -9,10 +17,21 @@ import "swiper/css/navigation";
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Image from "next/image";
+
 import { useMediaQuery } from "react-responsive";
 
+const bgImage = [
+  "https://res.cloudinary.com/danfiejkv/image/upload/q_50/v1746368097/MONGIR-TIENDA-BEBE-MAYORISTA_v5tas5.webp",
+];
+
+const bgImageMobile = [
+  "https://res.cloudinary.com/danfiejkv/image/upload/q_50/v1746196695/mogir-tienda-bebe-mobil_gungzz.webp",
+];
+
 export default function MainSwiper() {
-  const query450px = useMediaQuery({ query: "(max-width:450px)" });
+  const query1050px = useMediaQuery({
+    query: "(max-width:1050px)",
+  });
   return (
     <>
       <Swiper
@@ -23,56 +42,49 @@ export default function MainSwiper() {
           clickable: true,
         }}
         autoplay={{
-          delay: 3500,
+          delay: 10500,
           disableOnInteraction: false,
         }}
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
         className="mainSwiper"
+        effect="fade"
       >
-        {[...Array(1)?.keys()]?.map((i) => (
-          <SwiperSlide key={i}>
-            <Image
-              src="https://res.cloudinary.com/danfiejkv/image/upload/v1741889736/Mongir-almacen-tienda-bebe-foto-portada_rvst5a.avif" // Update the src to start with a leading slash
-              alt="Mongir Logo"
-              width={1200}
-              height={1100}
-              quality={70}
-              loading="lazy"
-            />
-            <div
-              style={
-                !query450px
-                  ? {
-                      position: "absolute",
-                      top: "88%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      backgroundColor: "#d7f3ff",
-                      padding: "10px 20px",
-                      borderRadius: "10px",
-                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                      fontWeight: "900",
-                    }
-                  : {
-                      position: "absolute",
-                      top: "90%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      backgroundColor: "#d7f3ff",
-                      padding: "10px 10px",
-                      borderRadius: "10px",
-                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                      fontWeight: "bold",
-                      fontSize: "16px",
-                      width: "70%",
-                    }
-              }
-            >
-              Somos amor y familia
-            </div>
-          </SwiperSlide>
-        ))}
+        {query1050px
+          ? bgImageMobile?.map((i) => (
+              <SwiperSlide key={i}>
+                <Image
+                  src={i} // Update the src to start with a leading slash
+                  alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                  width={500}
+                  height={100}
+                  sizes="(max-width: 450px) 50vw,
+                  (max-width: 991px) 33vw,
+                  20vw"
+                  blurDataURL={i}
+                  priority={i === 0}
+                  fetchPriority={i === 0 ? "high" : "auto"}
+                  loading="eager"
+                />
+              </SwiperSlide>
+            ))
+          : bgImage?.map((i) => (
+              <SwiperSlide key={i}>
+                <Image
+                  src={i} // Update the src to start with a leading slash
+                  alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                  width={1000}
+                  height={500}
+                  sizes="(max-width: 450px) 50vw,
+                  (max-width: 991px) 33vw,
+                  20vw"
+                  blurDataURL={i}
+                  priority={i === 0}
+                  fetchPriority={i === 0 ? "high" : "auto"}
+                  loading="eager"
+                />
+              </SwiperSlide>
+            ))}
       </Swiper>
     </>
   );

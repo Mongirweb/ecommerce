@@ -302,7 +302,7 @@ export const categories = [
 
 export const newMenu = [
   {
-    name: "Categorias",
+    name: "Categorías",
     link: "",
     subMenu: [
       {

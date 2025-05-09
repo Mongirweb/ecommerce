@@ -10,11 +10,11 @@ import { useRouter } from "next/navigation";
 
 export default function MessengerOrder({ session, order }) {
   const router = useRouter();
+
   const [selectedOrder, setSelectedOrder] = useState(order);
   const [packageCount, setPackageCount] = useState(
     selectedOrder?.inBagProductsInfos?.productsQty || ""
   );
-
   const [products, setProducts] = useState(selectedOrder.products);
   const [pickedImage, setPickedImages] = useState([]);
   const [deliveredImage, setDeliveredImage] = useState(
@@ -23,12 +23,15 @@ export default function MessengerOrder({ session, order }) {
       : []
   );
 
-  const productsQty = products.map((product) => product.qty);
+  // NEW: loading state
+  const [loading, setLoading] = useState(false);
 
+  const productsQty = products.map((product) => product.qty);
   const totalQty = productsQty.reduce((a, b) => a + b, 0);
 
   const handleCollected = async (orderId, productIndex) => {
     try {
+      setLoading(true);
       const { data } = await axios.post(
         "/api/messenger/messengerProductCollected",
         {
@@ -41,32 +44,35 @@ export default function MessengerOrder({ session, order }) {
     } catch (error) {
       console.error(error);
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleImages = (e) => {
     let files = Array.from(e.target.files);
-    files.forEach((img, i) => {
+    files.forEach((img) => {
       const reader = new FileReader();
       reader.readAsDataURL(img);
-      reader.onload = (e) => {
-        setPickedImages((images) => [...images, e.target.result]);
+      reader.onload = (ev) => {
+        setPickedImages((images) => [...images, ev.target.result]);
       };
     });
   };
 
   const handleDeliveredImage = (e) => {
     let files = Array.from(e.target.files);
-    files.forEach((img, i) => {
+    files.forEach((img) => {
       const reader = new FileReader();
       reader.readAsDataURL(img);
-      reader.onload = (e) => {
-        setDeliveredImage((images) => [...images, e.target.result]);
+      reader.onload = (ev) => {
+        setDeliveredImage((images) => [...images, ev.target.result]);
       };
     });
   };
 
   const handlePacked = async (orderId) => {
+    // validations
     if (!pickedImage.length) {
       toast.error("Debes seleccionar una imagen");
       return;
@@ -81,13 +87,13 @@ export default function MessengerOrder({ session, order }) {
     }
 
     try {
+      setLoading(true);
       let uploaded_image = [];
       if (pickedImage.length) {
-        // let temp = images.map((img) => dataURItoBlob(img));
         const path = "packaged_images";
         let formData = new FormData();
         formData.append("path", path);
-        // Agregar las imágenes en orden al FormData
+
         pickedImage.forEach((image) => {
           const blob = dataURItoBlob(image);
           formData.append("file", blob);
@@ -110,7 +116,9 @@ export default function MessengerOrder({ session, order }) {
       setPackageCount("");
     } catch (error) {
       console.error(error);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -119,19 +127,20 @@ export default function MessengerOrder({ session, order }) {
       toast.error("Debes seleccionar una imagen");
       return;
     }
+    setLoading(true);
     let uploaded_image = [];
     if (deliveredImage.length) {
-      // let temp = images.map((img) => dataURItoBlob(img));
       const path = "delivered_images";
       let formData = new FormData();
       formData.append("path", path);
-      // Agregar las imágenes en orden al FormData
+
       deliveredImage.forEach((image) => {
         const blob = dataURItoBlob(image);
         formData.append("file", blob);
       });
       uploaded_image = await uploadImages(formData);
     }
+
     try {
       const { data } = await axios.post(
         "/api/messenger/messengerProductDelivered",
@@ -152,11 +161,33 @@ export default function MessengerOrder({ session, order }) {
     } catch (error) {
       console.error(error);
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
+    ``;
+  };
+
+  const openLabel = async (orderId) => {
+    const url = selectedOrder.trackingInfo.trackingLabel;
+    if (!url) {
+      console.error("URL no encontrada");
+      return;
+    }
+
+    // Abre la URL en una nueva pestaña con los atributos de seguridad adecuados
+    const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+    if (newWindow) newWindow.opener = null;
   };
 
   return (
     <div className={styles.messengerContainer}>
+      {/* Loader Overlay */}
+      {loading && (
+        <div className={styles.loaderOverlay}>
+          <div className={styles.spinner}></div>
+        </div>
+      )}
+
       {/* Header */}
       <div className={styles.header}>
         <Image
@@ -167,16 +198,13 @@ export default function MessengerOrder({ session, order }) {
         />
         <h2>{session.user.name}</h2>
         <span>Opciones:</span>
-        {/* <div className={styles.options}>
-          <button>Pedidos Enviados +</button>
-        </div> */}
       </div>
 
       {/* Orders Section */}
       <div className={styles.ordersContainer}>
         <div key={selectedOrder._id} className={styles.orderCard}>
           <h3>Pedido ID: {selectedOrder._id}</h3>
-          <p>Guía ID: {selectedOrder.trackingNumber || "N/A"}</p>
+          <p>Guía ID: {selectedOrder?.trackingInfo?.trackingNumber || "N/A"}</p>
           <p>
             Estado:{" "}
             <span
@@ -233,9 +261,6 @@ export default function MessengerOrder({ session, order }) {
                   <p>
                     <strong>Empresa:</strong> {product.companyName}
                   </p>
-                  {/* <p>
-                    <strong>Dirección:</strong> {product.address}
-                  </p> */}
                 </div>
               </div>
 
@@ -244,12 +269,12 @@ export default function MessengerOrder({ session, order }) {
                   product.pickedUp ? styles.markCollected__pickedUp : ""
                 }`}
                 onClick={() => {
-                  product.pickedUp
-                    ? null
-                    : handleCollected(selectedOrder._id, index);
+                  if (!product.pickedUp && !loading) {
+                    handleCollected(selectedOrder._id, index);
+                  }
                 }}
                 type="button"
-                disabled={product.pickedUp}
+                disabled={product.pickedUp || loading}
               >
                 {product.pickedUp ? "Recogido" : "Marcar como Recogido"}
               </button>
@@ -271,7 +296,7 @@ export default function MessengerOrder({ session, order }) {
           <div className={styles.imagePreview}>
             <Image
               src={pickedImage[0] || selectedOrder?.inBagProductsInfos?.image}
-              alt={`Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco`}
+              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
               width={200}
               height={200}
             />
@@ -295,12 +320,33 @@ export default function MessengerOrder({ session, order }) {
               : styles.packed
           }`}
           type="button"
-          onClick={() => handlePacked(selectedOrder._id)}
-          disabled={selectedOrder.messengerStatus !== "En proceso de empacar"}
+          onClick={() => {
+            if (!loading) handlePacked(selectedOrder._id);
+          }}
+          disabled={
+            selectedOrder.messengerStatus !== "En proceso de empacar" || loading
+          }
         >
           {selectedOrder.messengerStatus === "En proceso de empacar"
             ? "Empacar"
             : "Paquete empacado"}
+        </button>
+      </div>
+
+      {/* label Section */}
+
+      <div className={styles.shipmentSection}>
+        <h3>Imprime etiqueta de envío</h3>
+
+        <button
+          className={`${styles.shipmentButton} `}
+          type="button"
+          disabled={loading}
+          onClick={() => {
+            openLabel(selectedOrder._id);
+          }}
+        >
+          Ver etiqueta
         </button>
       </div>
 
@@ -317,16 +363,15 @@ export default function MessengerOrder({ session, order }) {
             }
           />
           <div className={styles.imagePreview}>
-            {deliveredImage &&
-              deliveredImage?.map((image, index) => (
-                <Image
-                  key={index}
-                  src={image}
-                  alt={`Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco`}
-                  width={200}
-                  height={200}
-                />
-              ))}
+            {deliveredImage?.map((image, index) => (
+              <Image
+                key={index}
+                src={image}
+                alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+                width={200}
+                height={200}
+              />
+            ))}
           </div>
         </label>
         <button
@@ -336,9 +381,12 @@ export default function MessengerOrder({ session, order }) {
               : styles.packed
           }`}
           type="button"
-          onClick={() => handleDelivered(selectedOrder._id)}
+          onClick={() => {
+            if (!loading) handleDelivered(selectedOrder._id);
+          }}
           disabled={
-            selectedOrder?.messengerStatus === "Entregado a transportador"
+            selectedOrder?.messengerStatus === "Entregado a transportador" ||
+            loading
           }
         >
           {selectedOrder?.messengerStatus === "Entregado a transportador"

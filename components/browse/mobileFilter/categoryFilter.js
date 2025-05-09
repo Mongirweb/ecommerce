@@ -14,7 +14,7 @@ export default function CategoryFilter({
   return (
     <li>
       <div className={styles.filterHeader} onClick={() => toggleFilter()}>
-        <span>Categorias</span>
+        <span>Categorías</span>
         {expandedFilters ? <IoIosArrowUp /> : <IoIosArrowDown />}
       </div>
       {expandedFilters && (

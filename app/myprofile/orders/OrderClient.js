@@ -13,7 +13,6 @@ import Image from "next/image";
 import Layout from "../../../components/profile/layout";
 
 export default function OrdersClient({ session, tab, orders, ordersLinks }) {
-  const searchParams = useSearchParams();
   const formatPrice = (price) => new Intl.NumberFormat("de-DE").format(price);
 
   return (
@@ -56,7 +55,7 @@ export default function OrdersClient({ session, tab, orders, ordersLinks }) {
               <td>Metodo de Pago</td>
               <td>Total</td>
               <td>Pagado</td>
-              <td>Status</td>
+              <td>Estado Envío</td>
               <td>Ver </td>
             </tr>
           </thead>
@@ -69,7 +68,7 @@ export default function OrdersClient({ session, tab, orders, ordersLinks }) {
                     <Image
                       src={p.image}
                       key={p._id}
-                      alt="Mongir Logo"
+                      alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                       width={50}
                       height={50}
                       loading="lazy"
@@ -100,7 +99,18 @@ export default function OrdersClient({ session, tab, orders, ordersLinks }) {
                     />
                   )}
                 </td>
-                <td>{order.status}</td>
+                <td
+                  style={{
+                    fontWeight: "bold",
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    window.open(`${order.trackingInfo.trackingUrl}`, "_blank");
+                  }}
+                >
+                  Rastrear
+                </td>
                 <td>
                   <Link href={`/orderClient/${order._id}`} prefetch={true}>
                     <FiExternalLink />

@@ -22,7 +22,7 @@ export default function Products({ cart }) {
             <div className={styles.product__img}>
               <Image
                 src={product.image}
-                alt="Mongir Logo"
+                alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                 width={300}
                 height={300}
                 loading="lazy"
@@ -32,7 +32,7 @@ export default function Products({ cart }) {
                   width={300}
                   height={200}
                   src={product.color.image}
-                  alt="Mongir Logo"
+                  alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                   loading="lazy"
                 />
                 <span>{product.size}</span>
@@ -61,7 +61,7 @@ export default function Products({ cart }) {
         ))}
       </div>
       <div className={styles.products__total}>
-        Subtotal : <b>COP ${formatPrice(cart.cartTotal)}</b>
+        Subtotal : <b>COP ${formatPrice(cart?.cartTotal)}</b>
       </div>
     </div>
   );

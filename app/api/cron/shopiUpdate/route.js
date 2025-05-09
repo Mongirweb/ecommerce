@@ -95,6 +95,9 @@ export async function GET(req, res) {
             // Provide default values for other properties so the new subProduct isn't empty
             images: [],
             color: {},
+            warranty: {
+              number: 1,
+            },
             // You can add additional defaults as needed
           });
         }

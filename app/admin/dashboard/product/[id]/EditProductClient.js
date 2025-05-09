@@ -62,29 +62,40 @@ const EditProductClient = ({ product, categories, index }) => {
         },
       }));
     } else if (name === "category") {
+      // User selected a new category → reset all sub-category fields
       setEditedProduct({
         ...editedProduct,
-        subCategories: "",
-        subCategorie2: "",
-        subCategorie3: "",
+        subCategories: [],
+        subCategorie2: [],
+        subCategorie3: [],
         [name]: value,
       });
     } else if (name === "subCategories") {
+      // User selected a new subCategories → reset deeper sub-cats
       setEditedProduct({
         ...editedProduct,
-        subCategorie2: "",
-        subCategorie3: "",
+        subCategorie2: [],
+        subCategorie3: [],
         [name]: value,
       });
     } else if (name === "subCategorie2") {
+      // New subCategorie2 → reset subCategorie3
       setEditedProduct({
         ...editedProduct,
-        subCategorie3: "",
+        subCategorie3: [],
+        [name]: value,
+      });
+    } else if (name === "subCategorie3") {
+      setEditedProduct({
+        ...editedProduct,
         [name]: value,
       });
     } else {
-      // Regular fields update
-      setEditedProduct({ ...editedProduct, [name]: value });
+      // Everything else (brand, name, etc.)
+      setEditedProduct({
+        ...editedProduct,
+        [name]: value,
+      });
     }
   };
 

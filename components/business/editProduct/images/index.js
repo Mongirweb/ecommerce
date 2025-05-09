@@ -86,19 +86,32 @@ export default function Images({
     setImages((images) => images.filter((item) => item !== image));
   };
 
-  const handleSetAsCover = (event, index) => {
-    event.preventDefault(); // Invocación correcta
-    if (index === 0) return; // Ya es la portada
+  const handleSetAsCover = (event, i) => {
+    event.preventDefault();
+    if (i === 0) return; // Already at index 0, so no change needed.
+
     const newImages = [...images];
-    const [selectedImage] = newImages.splice(index, 1);
+    const [selectedImage] = newImages.splice(i, 1);
     newImages.unshift(selectedImage);
     setImages(newImages);
+
     setColorImage(selectedImage);
-    // Opcional: Actualizar otros estados relacionados si es necesario
-    setProduct((prevProduct) => ({
-      ...prevProduct,
-      color: { ...prevProduct.color, image: selectedImage },
-    }));
+
+    // IMPORTANT: update the correct subproduct color
+    setProduct((prevProduct) => {
+      const newSubProducts = [...prevProduct.subProducts];
+      newSubProducts[index] = {
+        ...newSubProducts[index],
+        color: {
+          ...newSubProducts[index].color,
+          image: selectedImage,
+        },
+      };
+      return {
+        ...prevProduct,
+        subProducts: newSubProducts,
+      };
+    });
   };
 
   return (
@@ -112,7 +125,7 @@ export default function Images({
               width={100}
               height={100}
               src="../../../images/warning.png"
-              alt="Mongir Logo"
+              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
               loading="lazy"
             />
           )}
@@ -173,7 +186,7 @@ export default function Images({
                   width={200}
                   height={200}
                   src={img?.url || img}
-                  alt="Mongir Logo"
+                  alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                   loading="lazy"
                 />
                 <div className={styles.images__main_grid_actions}>

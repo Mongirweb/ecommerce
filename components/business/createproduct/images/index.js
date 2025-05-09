@@ -43,7 +43,10 @@ export default function Images({
       if (
         img.type !== "image/jpeg" &&
         img.type !== "image/png" &&
-        img.type !== "image/webp"
+        img.type !== "image/webp" &&
+        img.type !== "image/jpg" &&
+        img.type !== "image/gif" &&
+        img.type !== "image/avif"
       ) {
         dispatch(
           showDialog({
@@ -111,7 +114,7 @@ export default function Images({
               width={100}
               height={100}
               src="../../../images/warning.png"
-              alt="Mongir Logo"
+              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
               loading="lazy"
             />
           )}
@@ -132,7 +135,7 @@ export default function Images({
         ref={fileInput}
         hidden
         multiple
-        accept="image/jpeg,image/png,image/webp"
+        accept="image/jpeg,image/png,image/webp,image/jpg,image/gif,image/avif"
         onChange={handleImages}
       />
       <div className={styles.images__main}>
@@ -172,7 +175,7 @@ export default function Images({
                   width={200}
                   height={300}
                   src={img}
-                  alt="Mongir Logo"
+                  alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                   loading="lazy"
                 />
                 <div className={styles.images__main_grid_actions}>

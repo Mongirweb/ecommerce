@@ -10,6 +10,7 @@ import DiscountFilter from "./discountFilter";
 import SizesFilter from "./sizesFilter";
 import BrandsFilter from "./brandsFilter";
 import GenderFilter from "./genderFilter";
+import CompaniesFilter from "./companiesFilter";
 
 export default function MobileMenuFilter({
   setOpenMenuMobile,
@@ -29,6 +30,8 @@ export default function MobileMenuFilter({
   subCategoryHandler,
   subCategorie3,
   subCategory3Handler,
+  companies,
+  companyHandler,
 }) {
   const [expandedFilters, setExpandedFilters] = useState(false);
   const searchParams = useSearchParams();
@@ -107,18 +110,29 @@ export default function MobileMenuFilter({
               expandedFilters={expandedFilters.price}
               toggleFilter={() => toggleFilter("price")}
               priceHandler={priceHandler}
+              setOpenMenuMobile={setOpenMenuMobile}
             />
-            <DiscountFilter
+            {/* <DiscountFilter
               expandedFilters={expandedFilters.discount}
               toggleFilter={() => toggleFilter("discount")}
               discountHandler={discountHandler}
-            />
-            {sizes && sizes.length > 0 && (
+            /> */}
+            {sizes && sizes.length > 0 && sizes.some((size) => size !== "") && (
               <SizesFilter
                 expandedFilters={expandedFilters.sizes}
                 toggleFilter={() => toggleFilter("sizes")}
                 sizes={sizes}
                 sizeHandler={sizeHandler}
+                setOpenMenuMobile={setOpenMenuMobile}
+              />
+            )}
+            {companies && companies.length > 0 && (
+              <CompaniesFilter
+                expandedFilters={expandedFilters.companies}
+                toggleFilter={() => toggleFilter("companies")}
+                companies={companies}
+                companyHandler={companyHandler}
+                setOpenMenuMobile={setOpenMenuMobile}
               />
             )}
             <BrandsFilter
@@ -127,6 +141,7 @@ export default function MobileMenuFilter({
               brands={brands}
               brandHandler={brandHandler}
               replaceQuery={replaceQuery}
+              setOpenMenuMobile={setOpenMenuMobile}
             />
             {/* <GenderFilter
               expandedFilters={expandedFilters.gender}

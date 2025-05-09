@@ -11,7 +11,7 @@ import { authOptions } from "../../../../../app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 
 export const metadata = {
-  title: "Mongir - Editar Producto",
+  title: "Somos el Hueco Medellín - Editar Producto",
 };
 
 export default async function EditProductPage({ params, searchParams }) {
@@ -28,7 +28,8 @@ export default async function EditProductPage({ params, searchParams }) {
 
   // Connect to the database and fetch the product
   await db.connectDb();
-  const product = await Product.findOne({ _id: id }).lean();
+  const product = await Product.findOne({ _id: id })
+  .lean();
 
   // Check if the product exists
   if (!product) {

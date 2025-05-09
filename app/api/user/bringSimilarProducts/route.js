@@ -10,16 +10,24 @@ export async function POST(req) {
 
     await db.connectDb();
 
-    // Single "broad" query with OR
+    // Build the query object incrementally:
+    // - Always match on the main category.
+    // - Then, pick the "deepest" existing sub-category.
     const query = {
       category: product.category?._id,
-      _id: { $ne: product._id },
-      $or: [
-        { subCategories: product.subCategories?.[0]?._id },
-        { subCategorie2: product.subCategorie2?.[0]?._id },
-        { subCategorie3: product.subCategorie3?.[0]?._id },
-      ],
+      "subProducts.sizes.qty": { $gt: 0 },
     };
+
+    if (product.subCategorie3?.[0]?._id) {
+      // If we have subCategorie3
+      query.subCategorie3 = product.subCategorie3[0]._id;
+    } else if (product.subCategorie2?.[0]?._id) {
+      // Else fallback to subCategorie2
+      query.subCategorie2 = product.subCategorie2[0]._id;
+    } else if (product.subCategories?.[0]?._id) {
+      // Else fallback to subCategories
+      query.subCategories = product.subCategories[0]._id;
+    }
 
     const similar = await Product.find(query)
       .select("name slug subProducts category images")

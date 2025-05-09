@@ -6,7 +6,7 @@
   width: 100%;
   z-index: 9;
   box-shadow: $shadow-1;
-  border-radius: 20px;
+  border-radius: 10px;
   overflow: hidden;
 
   @media (max-width: 450px) {
@@ -25,9 +25,14 @@
     width: 100%;
     padding: 10px 20px;
     color: rgb(13, 13, 13);
-    background: $yellow-elhueco;
     border-radius: 10px 10px 0px 0px;
     box-shadow: $shadow-1;
+    background: #f26211;
+    background: linear-gradient(
+      180deg,
+      rgba(242, 98, 17, 1) 0%,
+      rgba(242, 122, 17, 1) 100%
+    );
 
     span {
       font-size: 24px;
@@ -40,7 +45,7 @@
       display: flex;
       align-items: center;
       gap: 5px;
-      font-weight: bold;
+      font-weight: 500;
       cursor: pointer;
       &:hover {
         text-decoration: underline;
@@ -53,9 +58,9 @@
       position: relative !important;
       width: 100% !important;
       max-width: 100% !important;
-      padding: 5px 10px;
+      padding: 10px 20px;
       span {
-        font-size: 16px;
+        font-size: 14px;
       }
       a {
         font-size: 12px;
@@ -100,14 +105,21 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 4px;
+    gap: 0.5rem;
 
     .product_name {
+      margin-top: 6px;
       text-align: left;
       line-height: 1;
       width: 100%;
       span {
-        font-size: 14px;
+        font-size: 13px;
+        color: #777;
+        display: block; /* or inline‑block */
+        white-space: nowrap; /* keep it on one line */
+        overflow: hidden; /* hide the overflow */
+        text-overflow: ellipsis; /* add … when it spills */
+        max-width: 100%;
       }
     }
     .product_brand {
@@ -129,9 +141,10 @@
 
       .product_price_discount {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         gap: 5px;
         justify-content: space-between;
+        align-items: center;
 
         .product_price_discount_price {
           display: flex;
@@ -139,6 +152,33 @@
           gap: 5px;
         }
 
+        .product_add {
+          a {
+            display: flex;
+            justify-content: center;
+            border: 1px solid black;
+            padding: 2px 8px;
+            border-radius: 20px;
+            width: 36px;
+
+            &:hover {
+              box-shadow: 0 0 0 0.5px black; // Add an extra shadow instead of changing the border
+            }
+            svg {
+              font-size: 16px;
+            }
+          }
+        }
+        @media (max-width: 450px) {
+          flex-direction: column;
+        }
+      }
+      .product_price_nodiscount {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 5px;
         .product_add {
           a {
             display: flex;
@@ -155,27 +195,12 @@
               font-size: 22px;
             }
           }
-        }
-      }
-      .product_price_nodiscount {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        gap: 5px;
-        .product_add {
-          a {
-            display: flex;
-            justify-content: center;
-            border: 1px solid black;
-            padding: 2px 8px;
-            border-radius: 20px;
-            width: 40px;
-
-            &:hover {
-              box-shadow: 0 0 0 0.5px black; // Add an extra shadow instead of changing the border
-            }
-            svg {
-              font-size: 22px;
+          @media (max-width: 450px) {
+            a {
+              width: 36px;
+              svg {
+                font-size: 18px;
+              }
             }
           }
         }
@@ -244,18 +269,23 @@
   }
   &__discount {
     position: absolute;
-    top: 0px;
-    right: 0px;
-    z-index: 1;
-    background: $yellow-color;
+    z-index: 99999;
     color: #333;
-    width: 40px;
-    height: 40px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     display: grid;
     place-items: center;
     font-size: 12px;
     font-weight: 600;
+    display: flex;
+    top: 20px;
+    margin: 10px;
+    @media (max-width: 450px) {
+      width: 16px;
+      height: 16px;
+      margin-top: 5px;
+    }
   }
   &__stats {
     margin-top: 1rem;
@@ -324,10 +354,35 @@
       }
     }
   }
+  &__cta {
+    display: flex;
+    align-items: center;
+    margin: 5px 0px;
+    &_button {
+      width: 100%;
+      border: 1px solid #ff155b;
+      background: #f43a72;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 5px;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 12px;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
   &_rating {
     display: flex;
     align-items: center;
-    gap: 2px;
     font-size: 14px;
   }
 }

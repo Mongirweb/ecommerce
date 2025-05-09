@@ -1,14 +1,47 @@
 "use client";
-import React, { useEffect } from "react";
-import styles from "./styles.module.scss"; // Ensure you create and style this file
-import InfiniteCard from "./Card"; // Reuse the existing product card component
+import React, { useRef, useEffect, memo } from "react";
+import { useMediaQuery } from "react-responsive"; // ⬅️  NEW
+import { useVirtualizer } from "@tanstack/react-virtual";
+import styles from "./styles.module.scss";
 import Skeleton from "react-loading-skeleton";
-import { FaSpinner } from "react-icons/fa";
-import { BiCool } from "react-icons/bi";
-import { FaArrowDown } from "react-icons/fa6";
+import "react-loading-skeleton/dist/skeleton.css";
+import useResizeObserver from "@react-hook/resize-observer";
+import { Loader } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+import { Baby } from "lucide-react";
+import dynamic from "next/dynamic";
 import { useInView } from "react-intersection-observer";
 
-export default function InfiniteScroll({
+const InfiniteCard = dynamic(() => import("./Card"), {
+  ssr: false,
+});
+
+function useColumns() {
+  const ref = useRef(null);
+  const [cols, setCols] = React.useState(2); // sensible default
+
+  useResizeObserver(ref, (entry) => {
+    const width = entry.contentRect.width;
+
+    /* pick a minimum card width depending on viewport */
+    const cardMin =
+      width >= 1280
+        ? 220 // desktop XL → 5‑6 cols
+        : width >= 1024
+        ? 200 // desktop / laptop → 4‑5 cols
+        : width >= 640
+        ? 180 // tablet → 3‑4 cols
+        : 150; // phone → 2 cols
+
+    setCols(Math.max(1, Math.floor(width / cardMin)));
+  });
+
+  return [ref, cols];
+}
+
+const ROW_GAP = 40;
+
+export default function InfiniteScrollVirtual({
   products,
   fetchMoreProducts,
   hasMore,
@@ -16,61 +49,157 @@ export default function InfiniteScroll({
   autoFetchEnabled,
   onClickVerMas,
 }) {
-  const { ref, inView } = useInView({
-    threshold: 0.1,
+  /* 1️⃣  How many columns on this screen? */
+  const [parentRef, columns] = useColumns();
+
+  /* 2️⃣  One virtual row = N cards                */
+  const totalRows =
+    Math.ceil(products.length / columns) +
+    (hasMore && autoFetchEnabled ? 1 : 0);
+
+  const rowVirtualizer = useVirtualizer({
+    count: totalRows,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 330 + ROW_GAP, // ≈ height of a card
+    overscan: 6,
   });
 
   useEffect(() => {
-    if (inView && hasMore && autoFetchEnabled) {
+    rowVirtualizer.measure(); // v3 API
+  }, [columns, rowVirtualizer]);
+
+  const { ref: sentinelRef, inView: infiniteInView } = useInView({
+    rootMargin: "200px",
+    threshold: 1,
+  });
+
+  useEffect(() => {
+    if (infiniteInView && !isLoading && hasMore && autoFetchEnabled) {
       fetchMoreProducts();
     }
-  }, [inView, hasMore, autoFetchEnabled, fetchMoreProducts]);
+  }, [infiniteInView]);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} ref={parentRef}>
       <div className={styles.header}>
-        Creemos que te puede gustar <BiCool />
-      </div>
-      <div className={styles.productsGrid}>
-        {products.map((product) => (
-          <div key={product._id} className={styles.productCard}>
-            <InfiniteCard product={product} />
-          </div>
-        ))}
-
-        {isLoading &&
-          [...Array(10)].map((_, index) => (
-            <div key={index} className={styles.productCard}>
-              <Skeleton height={200} width="100%" borderRadius={8} />
-              <Skeleton width="80%" style={{ marginTop: "10px" }} />
-              <Skeleton width="60%" />
-            </div>
-          ))}
+        Todo para tu bebé <Baby />
       </div>
 
-      {/* Loader for automatic fetching */}
-      {hasMore && autoFetchEnabled && (
-        <div ref={ref} className={styles.loader}>
-          <FaSpinner className={styles.spinner} />
-          <p>Cargando más productos...</p>
+      {/* ───────────  Virtualised grid  ─────────── */}
+      <div className={styles.scroller}>
+        <div
+          style={{
+            height: rowVirtualizer.getTotalSize(),
+            width: "100%",
+            position: "relative",
+          }}
+        >
+          {rowVirtualizer.getVirtualItems().map((vRow) => {
+            const firstIndex = vRow.index * columns;
+            const rowProducts = products.slice(
+              firstIndex,
+              firstIndex + columns
+            );
+            const isLoaderRow =
+              autoFetchEnabled && firstIndex >= products.length;
+
+            return (
+              <VirtualRow key={vRow.index} start={vRow.start} size={vRow.size}>
+                {isLoaderRow ? (
+                  <div
+                    ref={sentinelRef}
+                    className={styles.loaderRow}
+                    style={{
+                      overflow: "hidden",
+                      gridTemplateColumns: `repeat(${columns}, 1fr)`,
+                    }}
+                  >
+                    {hasMore ? (
+                      <div
+                        className={styles.rowGrid}
+                        style={{
+                          gridTemplateColumns: `repeat(${columns}, 1fr)`,
+                        }}
+                      >
+                        {[...Array(10)].map((_, i) => (
+                          <div key={i}>
+                            <Skeleton
+                              height={200}
+                              width={190}
+                              borderRadius={8}
+                              style={{ margin: "10px" }}
+                            />
+                            <Skeleton
+                              width="80%"
+                              style={{ marginTop: "10px" }}
+                            />
+                            <Skeleton width="60%" />
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      "No hay más productos"
+                    )}
+                  </div>
+                ) : (
+                  <div
+                    className={styles.rowGrid}
+                    style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
+                  >
+                    {rowProducts.map((p, idx) => (
+                      <InfiniteCard
+                        key={p._id ?? p.slug ?? `${firstIndex + idx}`}
+                        product={p}
+                        priority={vRow.index === 0}
+                      />
+                    ))}
+                  </div>
+                )}
+              </VirtualRow>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* loaders / “ver más” identical to your original code … */}
+      {isLoading && (
+        <div className={styles.loader}>
+          <Loader /> Cargando…
         </div>
       )}
 
-      {/* "Ver más" button after reaching the fetch limit */}
       {hasMore && !autoFetchEnabled && (
         <div className={styles.seeMore}>
           <button onClick={onClickVerMas} disabled={isLoading}>
-            <FaArrowDown /> {isLoading ? "Cargando..." : "Ver más..."}
+            <ChevronDown /> {isLoading ? "Cargando…" : "Ver más…"}
           </button>
         </div>
       )}
 
-      {/* Message when no more products are available */}
-      {!hasMore && (
-        <div className={styles.noMore}>
-          <p>No hay más productos para mostrar.</p>
-        </div>
+      {!hasMore && !isLoading && (
+        <div className={styles.noMore}>No hay más productos para mostrar.</div>
       )}
     </div>
   );
 }
+
+/* 4️⃣  Absolute‑positioned virtual row */
+const VirtualRow = memo(function VirtualRow({ start, size, children }) {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: size,
+        paddingBottom: ROW_GAP,
+        transform: `translateY(${start}px)`,
+        display: "flex", // keep inline‑block children aligned
+        alignItems: "stretch",
+      }}
+    >
+      {children ?? <Skeleton height={300} borderRadius={8} />}
+    </div>
+  );
+});

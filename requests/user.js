@@ -10,10 +10,32 @@ export const saveCart = async (cart) => {
     console.error(error);
   }
 };
+export const saveGuestCart = async (cart, token) => {
+  try {
+    const { data } = await axios.post("/api/user/saveGuestCart", {
+      cart,
+      token,
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
 export const saveAddress = async (address) => {
   try {
     const { data } = await axios.post("/api/user/saveAddress", {
       address,
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+export const saveGuestAddress = async (address, token) => {
+  try {
+    const { data } = await axios.post("/api/user/saveGuestAddress", {
+      address,
+      token,
     });
     return data;
   } catch (error) {
@@ -31,10 +53,33 @@ export const updateAddress = async (id, address) => {
     return error.response.data.message;
   }
 };
+export const updateGuestAddress = async (id, address, token) => {
+  try {
+    const { data } = await axios.put("/api/user/updateGuestAddress", {
+      id,
+      address,
+      token,
+    });
+    return data;
+  } catch (error) {
+    return error.response.data.message;
+  }
+};
 export const changeActiveAddress = async (id) => {
   try {
     const { data } = await axios.put("/api/user/manageAddress", {
       id,
+    });
+    return data;
+  } catch (error) {
+    return error.response.data.message;
+  }
+};
+export const changeActiveGuestAddress = async (id, token) => {
+  try {
+    const { data } = await axios.put("/api/user/manageGuestAddress", {
+      id,
+      token,
     });
     return data;
   } catch (error) {
@@ -56,6 +101,23 @@ export const applyCoupon = async (coupon) => {
     coupon,
   });
   return data;
+};
+export const applyGuestCoupon = async (coupon, token) => {
+  const { data } = await axios.post("/api/user/applyGuestCoupon", {
+    coupon,
+    token,
+  });
+  return data;
+};
+export const deleteGuestAddress = async (id, token) => {
+  try {
+    const { data } = await axios.delete("/api/user/manageGuestAddress", {
+      data: { id, token },
+    });
+    return data;
+  } catch (error) {
+    return error.response.data.message;
+  }
 };
 export const changeUserRole = async (code) => {
   try {

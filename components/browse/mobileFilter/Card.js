@@ -9,18 +9,18 @@ export default function Card({
   setOpenMenuMobile,
 }) {
   const [show, setShow] = useState(false);
-  const check = replaceQuery("category", category.id);
+  const check = replaceQuery("category", category._id);
 
   return (
     <>
       <section>
         <div
           onClick={() => {
-            categoryHandler(category.id);
+            categoryHandler(category._id);
             setOpenMenuMobile(false);
           }}
         >
-          <label htmlFor={category.id}>
+          <label htmlFor={category._id}>
             <a>
               {category?.name?.length > 30
                 ? `${category?.name?.slice(0, 30)}...`

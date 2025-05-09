@@ -1,13 +1,15 @@
 import React from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { IoIosArrowDown } from "react-icons/io";
 import styles from "./styles.module.scss";
+import { useSearchParams } from "next/navigation";
 
-export default function MobileSort({ setOpenMenuSortMobile }) {
+export default function MobileSort({ setOpenMenuSortMobile, sortHandler }) {
+  const searchParams = useSearchParams();
+  const sortQuery = searchParams.get("sort") || "";
   const sortNames = [
-    { name: "Recomendados" },
-    { name: "Mayor precio" },
-    { name: "Menor precio" },
+    { name: "Recomendados", value: "" },
+    { name: "Mayor precio", value: "priceHighToLow" },
+    { name: "Menor precio", value: "priceLowToHigh" },
   ];
 
   return (
@@ -24,7 +26,15 @@ export default function MobileSort({ setOpenMenuSortMobile }) {
         <div className={styles.mobileMenu__options_list}>
           <ul>
             {sortNames.map((item, index) => (
-              <li key={index}>{item.name}</li>
+              <li
+                key={index}
+                onClick={() => {
+                  sortHandler(item.value);
+                  setOpenMenuSortMobile(false);
+                }}
+              >
+                {item.name}
+              </li>
             ))}
           </ul>
         </div>

@@ -33,8 +33,6 @@ export default async function OrderPageWrapper({ params }) {
     redirect("/");
   }
 
-  const paypal_client_id = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
-
   const orderData = JSON.parse(JSON.stringify(order));
 
   return <MessengerOrder session={session} order={orderData} />;

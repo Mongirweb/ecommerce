@@ -89,7 +89,7 @@ export function SearchDropdownComponent({ setQuery, handleSearch }) {
           autoCapitalize="off"
           autoCorrect="off"
           type="text"
-          placeholder="Busca en Mongir..."
+          placeholder="Busca en Somos el Hueco..."
           value={searchTerm}
           onChange={(e) => {
             setQuery(e.target.value);

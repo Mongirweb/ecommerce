@@ -10,7 +10,7 @@ import SalesPage from "./SalesPage"; // The client component we’ll create belo
 import PaymentRequest from "../../../../models/PaymentRequest";
 
 export const metadata = {
-  title: "Mongir - Ventas",
+  title: "Somos el Hueco Medellín - ventas",
 };
 
 export default async function Sales() {

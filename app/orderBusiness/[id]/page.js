@@ -9,7 +9,7 @@ import { authOptions } from "../../api/auth/[...nextauth]/route"; // Adjust the 
 import OrderBusinessPage from "./OrderBusinessPage";
 
 export const metadata = {
-  title: "Mongir | Orden",
+  title: "Somos el Hueco Medellín | Orden",
 };
 
 export default async function OrderPageWrapper({ params }) {

@@ -29,15 +29,6 @@ export default function CsvImportForm() {
 
     // 5) Generate a download link (Object URL)
     const url = URL.createObjectURL(blob);
-
-    // 6) Programmatically create an <a> element, click it to trigger download
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "imported_data.json"; // The file name to be downloaded
-    link.click();
-
-    // 7) Cleanup
-    URL.revokeObjectURL(url);
   };
 
   return (

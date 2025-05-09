@@ -3,7 +3,7 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "../../../../models/User";
-import clientPromise from "../lib/mongodb";
+import clientPromise from "../../../../old-pages/api/auth/lib/mongodb";
 import bcrypt from "bcrypt";
 import db from "../../../../utils/db";
 import { sendWelcomeEmail } from "../../../../utils/sendWelcomeEmail";
@@ -107,7 +107,7 @@ export const authOptions = {
     },
     async session({ session, token }) {
       await db.connectDb();
-      const user = await User.findById(token.sub);
+      const user = await User.findById(token.sub).lean();
       session.user.id = token.sub || user?._id.toString();
       session.user.role = user?.role || "user";
       session.user.image = token.picture;
@@ -115,6 +115,7 @@ export const authOptions = {
         token.bussinesBankAccountNumber || user?.bussinesBankAccountNumber;
       session.user.provider = token.provider;
       session.user.password = token.password;
+      session.user.address = user.address;
       await db.disconnectDb();
       return session;
     },

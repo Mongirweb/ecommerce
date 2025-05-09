@@ -7,7 +7,10 @@ const orderSchema = new mongoose.Schema(
     user: {
       type: ObjectId,
       ref: "User",
-      required: true,
+      required: false,
+    },
+    guestToken: {
+      type: String, // <-- nuevo
     },
     products: [
       {
@@ -105,6 +108,9 @@ const orderSchema = new mongoose.Schema(
       phoneNumber: {
         type: String,
       },
+      id: {
+        type: String,
+      },
       address1: {
         type: String,
       },
@@ -114,13 +120,22 @@ const orderSchema = new mongoose.Schema(
       city: {
         type: String,
       },
+      cityCode: {
+        type: String,
+      },
       state: {
+        type: String,
+      },
+      stateCode: {
         type: String,
       },
       zipCode: {
         type: String,
       },
       country: {
+        type: String,
+      },
+      countryCode: {
         type: String,
       },
     },
@@ -164,6 +179,7 @@ const orderSchema = new mongoose.Schema(
       default: "Procesando",
       enum: [
         "Procesando",
+
         "Exitoso",
         "En reclamación",
         "Cancelado",
@@ -193,13 +209,37 @@ const orderSchema = new mongoose.Schema(
     },
     deliveredBy: {
       type: String,
-      default: "Coordinadora",
-      enum: ["Coordinadora"],
+      default: "No Seleccionada",
+      enum: ["Coordinadora", "No Seleccionada", "Deprisa", "InterRapidismo"],
+    },
+    trackingInfo: {
+      carrier: {
+        type: String,
+      },
+      service: {
+        type: String,
+      },
+      price: {
+        type: Number,
+      },
+      email: {
+        type: String,
+      },
+      trackingNumber: {
+        type: String,
+      },
+      trackingUrl: {
+        type: String,
+      },
+      trackingLabel: {
+        type: String,
+      },
     },
     deliveredAt: {
       type: Date,
     },
     messengerStatus: {
+      type: String,
       type: String,
       default: "Sin empacar",
       enum: [

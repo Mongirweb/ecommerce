@@ -26,7 +26,10 @@ export default function Select({ property, text, data, handleChange }) {
           {text == "Size" ? (
             property || `Select ${text}`
           ) : text == "Style" && property.image ? (
-            <img src={property.image} alt="Mongir Logo" />
+            <img
+              src={property.image}
+              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+            />
           ) : text == "How does it fit" && property ? (
             property
           ) : !property && text == "How does it fit" ? (
@@ -58,7 +61,7 @@ export default function Select({ property, text, data, handleChange }) {
                     style={{ backgroundColor: `${item.color}` }}
                   >
                     <span>
-                      <img src={item.image} alt="Mongir Logo" />
+                      <img src={item.image} alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco" />
                     </span>
                   </li>
                 );

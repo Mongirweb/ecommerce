@@ -38,23 +38,6 @@ const EditProductClient = ({ product, categories, index }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (query.length < 2) return; // require at least 2 chars
-
-    if (pathname !== "/browse") {
-      // If not on /browse, navigate there
-      router.push(`/browse?search=${query}`);
-      closeSearch();
-    } else {
-      // If already on /browse, call any local "searchHandler" you have
-      // For example, if you had a function in context or props
-      // searchHandler(query);
-      router.push(`/browse?search=${query}`);
-      closeSearch();
-    }
-  };
-
   useEffect(() => {
     const getSubs = async () => {
       if (editedProduct.category) {
@@ -83,7 +66,33 @@ const EditProductClient = ({ product, categories, index }) => {
     e.preventDefault();
     const { name, value } = e.target;
 
-    setEditedProduct({ ...editedProduct, [name]: value });
+    setEditedProduct((prev) => {
+      const updated = { ...prev };
+
+      if (name === "category") {
+        // User selected a new category → reset all sub-category fields
+        updated.category = value;
+        updated.subCategories = [];
+        updated.subCategorie2 = [];
+        updated.subCategorie3 = [];
+      } else if (name === "subCategories") {
+        // User selected a new subCategories → reset deeper sub-cats
+        updated.subCategories = value;
+        updated.subCategorie2 = [];
+        updated.subCategorie3 = [];
+      } else if (name === "subCategorie2") {
+        // New subCategorie2 → reset subCategorie3
+        updated.subCategorie2 = value;
+        updated.subCategorie3 = [];
+      } else if (name === "subCategorie3") {
+        updated.subCategorie3 = value;
+      } else {
+        // Everything else (brand, name, etc.)
+        updated[name] = value;
+      }
+
+      return updated;
+    });
   };
 
   const handleSubProductChange = (e) => {
@@ -244,10 +253,13 @@ const EditProductClient = ({ product, categories, index }) => {
             ...finalEditedProduct,
           }
         );
-        toast.success("Producto actualizado con éxito");
-        router.push("/business/dashboard/product/all");
+        if (data.message === "Producto actualizado con éxito") {
+          toast.success("Producto actualizado con éxito");
+          handleBack();
+        }
       } catch (error) {
         toast.error("Error al actualizar el producto.");
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -433,7 +445,7 @@ const EditProductClient = ({ product, categories, index }) => {
                   height={300}
                   src={editedProduct.subProducts[index]?.color?.image}
                   className={styles.image_span}
-                  alt="Mongir Logo"
+                  alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                   loading="lazy"
                 />
               )}

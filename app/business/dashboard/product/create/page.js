@@ -8,7 +8,7 @@ import { authOptions } from "../../../../../app/api/auth/[...nextauth]/route";
 import CreateProductClient from "./CreateProductClient";
 
 export const metadata = {
-  title: "Mongir - Crear Producto",
+  title: "Somos el Hueco Medellín - Crear Producto",
 };
 
 export default async function CreateProductPage() {
@@ -23,7 +23,8 @@ export default async function CreateProductPage() {
     company: companyProducts,
   })
     .select("name subProducts")
-    .lean();
+    .lean()
+    .sort({ createdAt: -1 });
   const categories = await Category.find().lean();
 
   await db.disconnectDb();

@@ -39,17 +39,17 @@ export async function middleware(req) {
 
   const cspHeader = `
     default-src 'self';
-    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval' https://www.googletagmanager.com https://checkout.wompi.co https://www.tiktok.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com https://*.tiktok.com https://s3.amazonaws.com;
-    style-src 'self' 'unsafe-inline' https://sf16-website-login.neutral.ttwstatic.com https://*.tiktok.com;
-    img-src 'self' blob: data: https://cdn.ipregistry.co https://res.cloudinary.com https://randomuser.me https://images.unsplash.com https://lh3.googleusercontent.com https://www.freeiconspng.com https://www.pngmart.com https://cdn.shopify.com https://cdn.shopifycdn.com https://cdn.shopifycdn.net https://*.tiktok.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com https://*.tiktok.com https://s3.amazonaws.com;
+    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval' https://connect.facebook.net/ https://mon.tiktokv.com https://*.tiktok.com https://s3.amazonaws.com https://www.googletagmanager.com https://checkout.wompi.co https://papeleriaelrio.com.co https://pinateriaelrio.com https://rya85q-u0.myshopify.com https://noir-perfumeria.myshopify.com;
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' blob: data: https://cdn.ipregistry.co https://s3.amazonaws.com https://mon.tiktokv.com https://*.tiktok.com https://connect.facebook.net/ https://res.cloudinary.com https://randomuser.me https://images.unsplash.com https://lh3.googleusercontent.com https://www.googletagmanager.com  https://www.google-analytics.com https://analytics.google.com https://www.facebook.com https://www.google.com.co https://www.freeiconspng.com https://www.pngmart.com https://cdn.shopify.com https://cdn.shopifycdn.com https://cdn.shopifycdn.net https://papeleriaelrio.com.co https://pinateriaelrio.com https://rya85q-u0.myshopify.com;
     font-src 'self' data:;
     object-src 'none';
     base-uri 'self';
     form-action 'self';
-    frame-src 'self' https://checkout.wompi.co https://www.tiktok.com https://www.instagram.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com https://*.tiktok.com https://s3.amazonaws.com;
-    frame-ancestors 'self';
+    frame-src 'self' https://checkout.wompi.co https://connect.facebook.net/ https://mon.tiktokv.com https://*.tiktok.com;
+    frame-ancestors 'none';
     upgrade-insecure-requests; 
-    connect-src 'self' https://www.mongir.com blob: ws: http://localhost:3000 https://amaua.myshopify.com https://aleko-comercializadora.myshopify.com https://*.tiktok.com https://sf16-website-login.neutral.ttwstatic.com https://mon.tiktokv.com https://s3.amazonaws.com;
+    connect-src 'self' https://www.somoselhueco.com https://mon.tiktokv.com https://*.tiktok.com https://s3.amazonaws.com blob: ws: http://localhost:3000 https://connect.facebook.net/ https://amaua.myshopify.com https://noir-perfumeria.myshopify.com https://aleko-comercializadora.myshopify.com https://papeleriaelrio.com.co https://los-victorinos.myshopify.com https://pinateriaelrio.com https://rya85q-u0.myshopify.com https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com;
   `;
 
   const contentSecurityPolicyHeaderValue = cspHeader
@@ -92,7 +92,10 @@ export async function middleware(req) {
     "same-origin-allow-popups"
   );
   // response.headers.set("Cross-Origin-Embedder-Policy", "require-corp");
-  response.headers.set("Access-Control-Allow-Origin", "https://mongir.com");
+  response.headers.set(
+    "Access-Control-Allow-Origin",
+    "https://somoselhueco.com"
+  );
   response.headers.set("Access-Control-Allow-Credentials", "true");
   response.headers.set(
     "Strict-Transport-Security",
@@ -105,12 +108,12 @@ export async function middleware(req) {
     secureCookie: process.env.NODE_ENV === "production",
   });
 
-  if (pathname == "/checkout") {
-    if (!session) return NextResponse.redirect(`${origin}`);
-  }
-  if (pathname.startsWith("/order")) {
-    if (!session) return NextResponse.redirect(`${origin}`);
-  }
+  // if (pathname == "/checkout") {
+  //   if (!session) return NextResponse.redirect(`${origin}`);
+  // }
+  // if (pathname.startsWith("/order")) {
+  //   if (!session) return NextResponse.redirect(`${origin}`);
+  // }
   if (pathname.startsWith("/myprofile")) {
     if (!session) return NextResponse.redirect(`${origin}`);
   }

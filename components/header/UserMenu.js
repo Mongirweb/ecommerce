@@ -9,14 +9,14 @@ export default function UserMenu({ session }) {
 
   return (
     <div className={styles.menu}>
-      <h4>Bienvenido a Almacen Mongir!</h4>
+      <h4>Bienvenido a Somos el Hueco Medellín!</h4>
       {session ? (
         <div className={styles.flex}>
           <Image
             width={300}
             height={300}
             src={session?.user?.image}
-            alt="Mongir Logo"
+            alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
             className={styles.menu__img}
             loading="lazy"
           />

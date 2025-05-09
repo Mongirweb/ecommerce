@@ -26,7 +26,10 @@ export default function TableSelect({ property, text, data, handleChange }) {
           {text === "Valoración" || text === "Tamaño" || text === "Ordenar" ? (
             property || `Selecciona`
           ) : text === "Estilo" && property?.image ? (
-            <img src={property?.image} alt="Mongir Logo" />
+            <img
+              src={property?.image}
+              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+            />
           ) : (
             "Selecciona Estilo"
           )}

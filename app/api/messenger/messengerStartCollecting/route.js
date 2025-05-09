@@ -22,9 +22,12 @@ export async function POST(req) {
     // 1) Parse the incoming JSON
     const order = await Order.findById(orderId);
 
-    // Update the order status
-    order.messengerStatus = "En proceso de empacar";
-    order.messengerId = req.user;
+    if (order.messengerStatus === "Sin empacar") {
+      // Update the order status
+      order.messengerStatus = "En proceso de empacar";
+      order.messengerId = req.user;
+    }
+
     await order.save();
 
     await db.disconnectDb();

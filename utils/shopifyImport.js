@@ -1,8 +1,9 @@
 import { gql, GraphQLClient } from "graphql-request";
 
-const storefrontAccessToken = "742089716f80fa924cd6608618137dd7";
+const storefrontAccessToken = "2f2d0e1fb90bc112b2ced74d34f0cc7a";
 
-const endpoint = "https://amaua.myshopify.com/api/2025-01/graphql.json";
+const endpoint =
+  "https://noir-perfumeria.myshopify.com/api/2025-01/graphql.json";
 
 // const storefrontAccessToken = "90ddbfea234687e7038e0ee01d702ddb";
 
@@ -15,10 +16,14 @@ const graphQLClient = new GraphQLClient(endpoint, {
   },
 });
 
-export async function getProducts() {
-  const getAllProductsQuery = gql`
-    query GetAllProducts {
-      products(first: 40) {
+export async function getAllProducts() {
+  const getAllProductsPaginatedQuery = gql`
+    query GetAllProducts($cursor: String) {
+      products(first: 250, after: $cursor) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
         edges {
           node {
             id
@@ -27,6 +32,15 @@ export async function getProducts() {
             description
             descriptionHtml
             productType
+            collections(first: 5) {
+              edges {
+                node {
+                  id
+                  title
+                  handle
+                }
+              }
+            }
             vendor
             tags
             onlineStoreUrl
@@ -35,13 +49,11 @@ export async function getProducts() {
             publishedAt
             availableForSale
             totalInventory
-
             options {
               id
               name
               values
             }
-
             images(first: 40) {
               edges {
                 node {
@@ -52,7 +64,6 @@ export async function getProducts() {
                 }
               }
             }
-
             media(first: 40) {
               edges {
                 node {
@@ -90,7 +101,6 @@ export async function getProducts() {
                 }
               }
             }
-
             variants(first: 40) {
               edges {
                 node {
@@ -119,7 +129,6 @@ export async function getProducts() {
                 }
               }
             }
-
             priceRange {
               minVariantPrice {
                 amount
@@ -137,8 +146,33 @@ export async function getProducts() {
   `;
 
   try {
-    const response = await graphQLClient.request(getAllProductsQuery);
-    return response;
+    let hasNextPage = true;
+    let endCursor = null;
+    let allProducts = [];
+    while (hasNextPage) {
+      const variables = {
+        cursor: endCursor, // null for first page, then set to endCursor for subsequent pages
+      };
+
+      const response = await graphQLClient.request(
+        getAllProductsPaginatedQuery,
+        variables
+      );
+
+      // Extract relevant pagination info
+      const { edges, pageInfo } = response.products;
+      const { hasNextPage: nextPage, endCursor: cursor } = pageInfo;
+
+      // Push products into our array
+      const productsPage = edges.map((edge) => edge.node);
+      allProducts = allProducts.concat(productsPage);
+
+      // Update loop variables
+      hasNextPage = nextPage;
+      endCursor = cursor;
+    }
+
+    return allProducts;
   } catch (error) {
     throw new Error(error);
   }

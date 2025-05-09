@@ -3,16 +3,22 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 import { useState } from "react";
 
-import image from "../../../public/MONGIR-LOGO.png";
+import image from "../../../public/somos-el-hueco-medellin-logo-circulo.avif";
 import Image from "next/image";
-import { FaArrowRight } from "react-icons/fa";
 import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { ChevronRight } from "lucide-react";
+import { signOut, signIn } from "next-auth/react";
 
-export default function Main({ searchHandler }) {
+export default function Main({ searchHandler, session }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
   const [query, setQuery] = useState(searchQuery);
+
+  const pathname = usePathname();
+
+  const isPay = pathname.includes("/checkout", "/order");
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -29,15 +35,13 @@ export default function Main({ searchHandler }) {
       <div className={styles.main__container}>
         <Link href="/" legacyBehavior prefetch={true}>
           <a className={styles.logo}>
-            <Image src={image} alt="Mongir Logo" loading="lazy" />
+            <Image src={image} alt="somoselhueco-logo" loading="lazy" />
           </a>
         </Link>
         <div className={styles.main__container_text}>
-          <Link href="/" prefetch={true}>
-            <p>
-              SEGUIR COMPRANDO <FaArrowRight />
-            </p>
-          </Link>
+          <p>
+            SEGUIR COMPRANDO <ChevronRight />
+          </p>
         </div>
       </div>
     </div>

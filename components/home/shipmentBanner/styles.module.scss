@@ -1,0 +1,51 @@
+.shipmentBanner {
+  border: 1px solid $mongir-orange;
+  border-radius: 10px;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  &__top {
+    background: $mongir-orange;
+    color: #fff;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    padding: 10px;
+    p {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    &__text {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+    @media (max-width: 800px) {
+      font-size: 12px;
+    }
+  }
+  &__bottom {
+    padding: 20px;
+    p {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 500;
+      color: #282727;
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    svg {
+      fill: #282727;
+    }
+  }
+}

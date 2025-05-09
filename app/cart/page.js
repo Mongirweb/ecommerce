@@ -1,21 +1,46 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/cart.module.scss";
-import Header from "../../components/header";
 import Empty from "../../components/cart/empty";
 import { getSession, signIn, useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
-import CartHeader from "../../components/cart/cartHeader";
-import Product from "../../components/cart/products";
-import Checkout from "../../components/cart/checkout";
-import PaymentMethods from "../../components/cart/paymentMethods";
 import axios from "axios";
 import { updateCart } from "../../store/cartSlice";
-import { saveCart } from "../../requests/user";
+import { saveCart, saveGuestCart } from "../../requests/user";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
 import Loading from "../loading";
 import { toast } from "react-toastify";
+import dynamic from "next/dynamic";
+import MainSwiperSkeleton from "../../components/skeletons/MainSwiperSkeleton";
+import { getGuestToken, setGuestToken } from "../../utils/setGuestToken";
+
+const Checkout = dynamic(() => import("../../components/cart/checkout"), {
+  ssr: true,
+  loading: () => <MainSwiperSkeleton />,
+});
+const PaymentMethods = dynamic(
+  () => import("../../components/cart/paymentMethods"),
+  {
+    ssr: true,
+    loading: () => <MainSwiperSkeleton />,
+  }
+);
+
+const Header = dynamic(() => import("../../components/cart/header"), {
+  ssr: true,
+  loading: () => <MainSwiperSkeleton />,
+});
+
+const CartHeader = dynamic(() => import("../../components/cart/cartHeader"), {
+  ssr: true,
+  loading: () => <MainSwiperSkeleton />,
+});
+
+const Product = dynamic(() => import("../../components/cart/products"), {
+  ssr: true,
+  loading: () => <MainSwiperSkeleton />,
+});
 
 export default function Cart() {
   const router = useRouter();
@@ -48,18 +73,18 @@ export default function Cart() {
     return () => window.removeEventListener("pageshow", handlePageShow);
   }, []);
 
-  useEffect(() => {
-    const update = async () => {
-      const { data } = await axios.post("/api/updateCart", {
-        products: cart?.cartItems,
-      });
-      dispatch(updateCart(data));
-    };
+  // useEffect(() => {
+  //   const update = async () => {
+  //     const { data } = await axios.post("/api/updateCart", {
+  //       products: cart?.cartItems,
+  //     });
+  //     dispatch(updateCart(data));
+  //   };
 
-    if (cart?.cartItems?.length > 0) {
-      update();
-    }
-  }, [dispatch]);
+  //   if (cart?.cartItems?.length > 0) {
+  //     update();
+  //   }
+  // }, [dispatch]);
 
   // Recalculate totals for ALL items in the cart.
   useEffect(() => {
@@ -67,7 +92,7 @@ export default function Cart() {
       (acc, item) => acc + item.price * item.qty,
       0
     );
-    setShippingFee(sub.toFixed(2) < 89900 ? 12000 : 6000);
+    setShippingFee(sub.toFixed(2) < 89900 ? 10000 : 5000);
     setSubtotal(sub.toFixed(2));
     setTotal((sub + shippingFee).toFixed(2));
   }, [cart?.cartItems, cart, shippingFee]);
@@ -105,7 +130,36 @@ export default function Cart() {
         console.error(error);
       }
     } else {
-      signIn();
+      try {
+        const checkQuantityProducts = await axios.post(
+          "/api/user/checkQuantityProducts",
+          {
+            products: cart.cartItems,
+          }
+        );
+        if (checkQuantityProducts.data.products.length > 0) {
+          // setIsLoading(false);
+
+          const outOfStockProducts = checkQuantityProducts.data.products
+            .map((p) => `${p?.name} Talla(${p?.size})`)
+            .join(", ");
+          toast.error(
+            `Los siguientes productos no tienen suficiente stock: ${outOfStockProducts}`
+          );
+          router.refresh();
+        } else {
+          setIsLoading(true);
+          const token = await getGuestToken();
+          //  ❷ send cart to backend
+          const res = await saveGuestCart(cart.cartItems, token);
+          if (res.token) {
+            await setGuestToken(res.token); // js-cookie
+            router.push("/checkout"); // luego navegas
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
       // or signIn(null, { callbackUrl: "/checkout" });
     }
   };
@@ -115,7 +169,7 @@ export default function Cart() {
   return (
     <>
       <Head>
-        <title> Mongir | Carrito</title>
+        <title> Somos el Hueco Medellín | Carrito</title>
       </Head>
       <Header />
 

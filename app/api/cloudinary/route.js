@@ -54,7 +54,7 @@ export async function POST(req) {
 async function uploadToCloudinary(buffer, path) {
   return new Promise((resolve, reject) => {
     const stream = cloudinary.v2.uploader.upload_stream(
-      { folder: path },
+      { folder: path, format: "avif" },
       (error, result) => {
         if (error) {
           console.error("Cloudinary Upload Error:", error);

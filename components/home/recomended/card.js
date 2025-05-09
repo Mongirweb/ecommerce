@@ -1,15 +1,14 @@
 import Link from "next/link";
 import styles from "./styles.module.scss";
-import { useEffect, useMemo, useState } from "react";
-import { MdAddShoppingCart } from "react-icons/md";
+import React, { useEffect, useMemo, useState } from "react";
 import { Rating } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
 import Image from "next/image";
 
-export default function RecomendedCard({ product }) {
-  const query450px = useMediaQuery({
-    query: "(max-width:450px)",
-  });
+const RecomendedCard = React.memo(function RecomendedCard({
+  product,
+  firstRow = false, // pass true for the first on‑screen row
+}) {
   const query690px = useMediaQuery({
     query: "(max-width:690px)",
   });
@@ -20,6 +19,8 @@ export default function RecomendedCard({ product }) {
   const [images, setImages] = useState(
     subProducts[active]?.images || product?.images || []
   );
+
+  console.log(images);
   const [prices, setPrices] = useState(
     subProducts[active]?.sizes?.map((s) => s.price).sort((a, b) => a - b) || []
   );
@@ -34,7 +35,7 @@ export default function RecomendedCard({ product }) {
           .map((s) => s.price)
           .sort((a, b) => a - b) || []
       );
-      setDiscount(subProducts[active].discount || 0);
+      setDiscount(Math.floor(Math.random() * 21) + 10);
     }
   }, [active, subProducts, product]);
 
@@ -45,13 +46,16 @@ export default function RecomendedCard({ product }) {
   };
 
   const calculateDiscountedPrice = (price, discount) => {
-    const discountedPrice = price - (price * discount) / 100;
+    const discountedPrice = price * (1 + discount / 100);
     return formatPrice(Math.round(discountedPrice));
   };
 
   const originalPrice = prices.length > 0 ? prices[0] : 0;
   const formattedOriginalPrice = formatPrice(Math.round(originalPrice));
   const discountedPrice = calculateDiscountedPrice(originalPrice, discount);
+
+  const randomStars = Math.floor(Math.random() * 1.5) + 4;
+  const randomReviews = Math.floor(Math.random() * 80) + 1;
 
   return (
     <div className={styles.product}>
@@ -67,29 +71,31 @@ export default function RecomendedCard({ product }) {
         >
           <div>
             <Image
-              width={500}
-              height={500}
-              src={images?.[0]?.url}
-              loading="lazy"
-              objectFit="cover"
-              alt="Mongir Logo"
+              width={200}
+              height={200}
+              src={images?.[0]?.url || ""}
+              sizes="(max-width:450px) 45vw, (max-width:991px) 30vw, 200px"
+              style={{ objectFit: "cover" }}
+              priority={firstRow}
+              alt="somoselhueco-recomendados-products-productos-saldos-saldo"
             />
           </div>
         </Link>
-        {discount > 0 && (
-          <div className={styles.product__discount}>-{discount}%</div>
-        )}
+
+        <div className={styles.product__discount}>
+          {/* mini‑llama de 24 px */}
+          {/* <Image
+            src="/images/llama-promo-producto_1.svg"
+            width={24}
+            height={24}
+            alt="Oferta caliente"
+            loading="lazy"
+          /> */}
+        </div>
+
         <div className={styles.product__infos}>
           <div className={styles.product_name}>
-            <span>
-              {query450px
-                ? product?.name?.length > 20
-                  ? `${product?.name?.substring(0, 17)}...`
-                  : product?.name
-                : product?.name?.length > 20
-                ? `${product?.name?.substring(0, 20)}...`
-                : product?.name}
-            </span>
+            <span>{product?.name}</span>
           </div>
 
           <div className={styles.product_brand}>
@@ -118,7 +124,7 @@ export default function RecomendedCard({ product }) {
                       setImages(product?.subProducts[i]?.images);
                       setActive(i);
                     }}
-                    alt="Mongir Logo"
+                    alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                     loading="lazy"
                   />
                 ) : (
@@ -138,9 +144,9 @@ export default function RecomendedCard({ product }) {
             {discount > 0 ? (
               <div className={styles.product_price_discount}>
                 <div className={styles.product_price_discount_price}>
-                  <span>$ {discountedPrice}</span>
+                  <span>${formattedOriginalPrice}</span>
                   <p>
-                    <del>${formattedOriginalPrice}</del>
+                    <del>${discountedPrice}</del>
                   </p>
                 </div>
                 <div className={styles.product_add}>
@@ -154,7 +160,17 @@ export default function RecomendedCard({ product }) {
                     prefetch={true}
                   >
                     {" "}
-                    <MdAddShoppingCart />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M0 1h4.764l3 11h10.515l3.089-9.265l1.897.633L19.72 14H7.78l-.5 2H22v2H4.72l1.246-4.989L3.236 3H0zm14 1v3h3v2h-3v3h-2V7H9V5h3V2zM4 21a2 2 0 1 1 4 0a2 2 0 0 1-4 0m14 0a2 2 0 1 1 4 0a2 2 0 0 1-4 0"
+                      />
+                    </svg>
                   </Link>
                 </div>
               </div>
@@ -174,26 +190,52 @@ export default function RecomendedCard({ product }) {
                     title={`View details of ${product.name}`}
                   >
                     {" "}
-                    <MdAddShoppingCart />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M0 1h4.764l3 11h10.515l3.089-9.265l1.897.633L19.72 14H7.78l-.5 2H22v2H4.72l1.246-4.989L3.236 3H0zm14 1v3h3v2h-3v3h-2V7H9V5h3V2zM4 21a2 2 0 1 1 4 0a2 2 0 0 1-4 0m14 0a2 2 0 1 1 4 0a2 2 0 0 1-4 0"
+                      />
+                    </svg>
                   </Link>
                 </div>
               </div>
             )}
           </div>
         </div>
+        <Link
+          href={
+            subProducts?.sizes?.length > 1
+              ? `/product/${product.slug}?style=${active}`
+              : `/product/${product.slug}?style=${active}&size=0`
+          }
+          target={query690px ? "_self" : "_blank"}
+          prefetch={true}
+          className={styles.product__cta}
+        >
+          <div className={styles.product__cta_button}>
+            <span>COMPRA AHORA</span>
+          </div>
+        </Link>
         <div className={styles.product_rating}>
           <Rating
             name="half-rating-read"
-            defaultValue={product?.rating}
+            defaultValue={randomStars}
             precision={0.5}
             readOnly
-            style={{ color: "#FACF19" }}
+            style={{ color: "black" }}
             size="large"
             sx={{ border: "1px", width: "90px" }}
           />
-          {product.numReviews > 0 && <>({product.numReviews})</>}
+          {/* {randomReviews > 0 && <>({randomReviews})</>} */}
+          {/* {product.numReviews > 0 && <>({product.numReviews})</>} */}
         </div>
       </div>
     </div>
   );
-}
+});
+export default RecomendedCard;

@@ -53,14 +53,15 @@
     }
 
     .filterOptions {
-      padding: 0 10px 10px 10px; /* Indent options */
+      padding: 10px 10px 10px 10px; /* Indent options */
       /* Remove any position or float styles that might interfere */
       border-bottom: 1px solid #ccc; /* Optional: add a separator */
       background: #e2e2e2;
       display: flex;
       flex-direction: column;
+      gap: 5px;
       span {
-        padding: 5px 0;
+        padding: 8px 0;
       }
       .activeOption {
         color: $empresy-azul;

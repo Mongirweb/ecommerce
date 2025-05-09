@@ -195,15 +195,26 @@ const productSchema = new mongoose.Schema(
   }
 );
 
-// Adding compound index for frequently queried fields, e.g., category and rating
-productSchema.index({ category: 1, rating: -1 });
-productSchema.index({ category: 1, createdAt: -1 }); // Compound index on category and createdAt for sorting
-productSchema.index({ "subProducts.discount": 1 }); // Index on discount for filtering offers
-// Indexes on other important fields like slug for uniqueness and better search
-productSchema.index({ slug: 1 }, { unique: true });
-productSchema.index({ company: 1 });
-productSchema.index({ name: "text" });
-productSchema.index({ slug: "text" });
+// normal B-tree index for uniqueness
+
+// Add ONE single text index:
+productSchema.index(
+  {
+    name: "text",
+    brand: "text",
+    description: "text",
+    slug: "text",
+  },
+  {
+    weights: {
+      name: 5,
+      brand: 3,
+      description: 1,
+      slug: 1,
+    },
+    name: "ProductTextIndex",
+  }
+);
 
 const Product =
   mongoose.models?.Product || mongoose.model("Product", productSchema);

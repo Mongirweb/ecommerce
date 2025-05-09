@@ -16,12 +16,15 @@
  */
 export function customMetaDataGenerator({
   title,
-  description = "Mongir - Compra en linea todo para tu bebé.",
-  canonicalUrl = "https://www.mongir.com",
+  description = "Somos el Hueco Medellín El Marketplace del Hueco de Medellín, todos los productos en un solo lugar a precio del hueco.",
+  canonicalUrl = "https://www.somoselhueco.com",
   ogType = "website",
   keywords = [
-    "mongir",
-    "mongir medellin",
+    "somos el hueco",
+    "somoselhueco",
+    "el hueco en linea",
+    "el hueco en linea colombia",
+    "el hueco en linea online",
     "comprar en linea",
     "comprar en el hueco",
     "el hueco",
@@ -29,7 +32,7 @@ export function customMetaDataGenerator({
     "saldos",
     "saldos Ropa",
     "Tienda de moda saldos en línea colombia",
-    "Mongir.com",
+    "somos el hueco.com",
     "Compras en línea colombia",
     "saldos saldo Ropa de mujer",
     "saldos saldo Hogar y jardín",
@@ -47,13 +50,13 @@ export function customMetaDataGenerator({
     "saldos saldo Industrial",
     "Automotriz y saldos saldo motocicleta, saldo, saldos",
   ],
-  ogImage = "https://res.cloudinary.com/danfiejkv/image/upload/v1737325171/mongir-logo-cuadrado_kfecc1.png",
+  ogImage = "https://res.cloudinary.com/danfiejkv/image/upload/v1737325171/somos-el-hueco-medellin-logo-cuadrado_kfecc1.png",
   twitterCard = "summary_large_image",
   robots = "index, follow",
   locale = "es_CO",
 }) {
   // Create the full page title by combining the site title and page title.
-  const siteTitle = "Mongir";
+  const siteTitle = "Somos el Hueco Medellín";
   const fullTitle = `${siteTitle} | ${title}`;
 
   // Structured data to help search engines understand your site

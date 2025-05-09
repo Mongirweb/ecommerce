@@ -21,6 +21,7 @@ export async function POST(req) {
       total,
       wholeSaleTotal,
       totalBeforeDiscount,
+      shippingPrice,
       couponApplied,
     } = await req.json();
 
@@ -39,6 +40,7 @@ export async function POST(req) {
       products,
       companies, // <-- Populate the companies field
       shippingAddress,
+      shippingPrice,
       paymentMethod,
       total,
       wholeSaleTotal,

@@ -19,6 +19,7 @@ import { hideDialog, showDialog } from "../../../store/DialogSlice";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { FaFireFlameCurved } from "react-icons/fa6";
+import Info from "./info";
 export default function Infos({ product, setActiveImg, company }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -50,7 +51,7 @@ export default function Infos({ product, setActiveImg, company }) {
   }, [product.quantity, qty]);
 
   const formatPrice = (price) => {
-    return new Intl.NumberFormat("de-DE").format(price);
+    return new Intl.NumberFormat("co-CO").format(price);
   };
 
   const addToCartHandler = async () => {
@@ -183,6 +184,8 @@ export default function Infos({ product, setActiveImg, company }) {
     }
   };
 
+  const randomStars = Math.floor(Math.random() * 1.5) + 4;
+
   return (
     <div className={styles.infos}>
       <DialogModal />
@@ -200,7 +203,7 @@ export default function Infos({ product, setActiveImg, company }) {
                   src={company?.image}
                   width={50}
                   height={50}
-                  alt="Mongir Company"
+                  alt="somoselhueco-company"
                   loading="lazy"
                 />
                 <span>{company?.businessName || company?.name}</span>
@@ -211,15 +214,15 @@ export default function Infos({ product, setActiveImg, company }) {
           <div className={styles.infos__container_infos_rating}>
             <Rating
               name="half-rating-read"
-              defaultValue={product?.rating}
+              defaultValue={randomStars}
               precision={0.5}
               readOnly
-              style={{ color: "#FACF19" }}
+              style={{ color: "black" }}
               size="large"
               sx={{ border: "1px", width: "90px" }}
             />
-            ({product.numReviews}
-            {product.numReviews == 1 ? " review" : " reviews"})
+            {/* ({product.numReviews}
+            {product.numReviews == 1 ? " review" : " reviews"}) */}
           </div>
           <div className={styles.infos__container_infos_price}>
             {size === 0 ? (
@@ -230,7 +233,7 @@ export default function Infos({ product, setActiveImg, company }) {
             {product.discount > 0 ? (
               <h3>
                 {size && <span>${formatPrice(product.priceBefore)}</span>}
-                <span>(-{product.discount}%)</span>
+                <span></span>
               </h3>
             ) : (
               ""
@@ -260,7 +263,7 @@ export default function Infos({ product, setActiveImg, company }) {
                     >
                       <Image
                         src={color.image}
-                        alt="Mongir Logo"
+                        alt="somoselhueco-color-producto"
                         width={300}
                         height={300}
                         loading="lazy"
@@ -295,19 +298,20 @@ export default function Infos({ product, setActiveImg, company }) {
                 : null}
             </div>
           </div>
-          <Accordian details={[product?.description, ...product?.details]} />
+          {/* <Accordian details={[product?.description, ...product?.details]} /> */}
         </div>
         <div className={styles.infos__container_action}>
           <span className={styles.infos__container_action_shipping}>
             {product.shipping
               ? `+ $${product.shipping} costo de envío`
-              : "Oferta especial, envío gratis!"}
+              : "OFERTA ESPECIAL!"}
           </span>
           <span className={styles.infos__container_action_quantity}>
             {size
-              ? product?.quantity > 1
+              ? product?.quantity >= 1
                 ? `${
-                    ((<FaFireFlameCurved />), "Quedan pocas unidades, apurate!")
+                    ((<FaFireFlameCurved />),
+                    "QUEDAN POCAS UNIDADES, APURATE!!")
                   }`
                 : "Agotado"
               : product?.sizes?.reduce((start, next) => start + next.qty, 0) > 1
@@ -315,7 +319,7 @@ export default function Infos({ product, setActiveImg, company }) {
               : product?.sizes?.reduce((start, next) => start + next.qty, 0) ===
                 1
               ? "Solo queda 1, apurate!"
-              : "Agotado"}{" "}
+              : "Agotado"}
           </span>
           <div className={styles.infos__container_action_qty}>
             Cantidad:
@@ -351,6 +355,7 @@ export default function Infos({ product, setActiveImg, company }) {
           </div>
           {error && <span className={styles.error}>{error}</span>}
           {success && <span className={styles.success}>{success}</span>}
+          <Info />
           <Share />
         </div>
       </div>

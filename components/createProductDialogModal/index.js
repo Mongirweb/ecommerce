@@ -59,7 +59,7 @@ export default function DialogModal({ type }) {
                       ? "https://www.freeiconspng.com/uploads/orange-error-icon-0.png"
                       : "https://www.pngmart.com/files/20/Success-Transparent-Background.png"
                   }
-                  alt="Mongir Logo"
+                  alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                 />
                 <span>{msg?.msg}</span>
               </DialogContentText>

@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 import Link from "next/link";
-import image from "../../../../public/MONGIR-LOGO.png";
+import image from "../../../../public/somos-el-hueco-medellin-logo-circulo.avif";
 import Image from "next/image";
 
 export default function Header() {
@@ -9,13 +9,7 @@ export default function Header() {
       <div className={styles.header__container}>
         <div className={styles.header__left}>
           <Link href="/" prefetch={true}>
-            <Image
-              src={image}
-              alt="Mongir Logo"
-              loading="lazy"
-              width={100}
-              height={100}
-            />
+            <Image src={image} alt="empresy" loading="lazy" />
           </Link>
         </div>
       </div>

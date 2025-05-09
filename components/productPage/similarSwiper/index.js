@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styles from "./styles.module.scss";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
@@ -13,6 +13,11 @@ import { useMediaQuery } from "react-responsive";
 import SimilarCard from "./similarCard";
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
+import dynamic from "next/dynamic";
+
+const Swiper = dynamic(() => import("swiper/react").then((m) => m.Swiper), {
+  ssr: false,
+});
 
 export default function ProductsSwiper({
   header,

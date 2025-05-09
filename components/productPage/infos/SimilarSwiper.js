@@ -37,10 +37,9 @@ export default function SimillarSwiper() {
           <Link href="" prefetch={true}>
             <Image
               src={p}
-              alt="saldo-mania-producto-parecido"
+              alt="somoselhueco-relacionado"
               loader={imageLoader}
               fill={true}
-              priority={false}
               loading="lazy"
             />
           </Link>

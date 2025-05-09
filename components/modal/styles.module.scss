@@ -150,10 +150,8 @@
   justify-content: space-between;
 
   h1 {
-    padding-top: 20px;
     font-weight: 500;
     margin: auto;
-    font-size: 20px;
   }
   p {
     font-size: 14px;
@@ -224,13 +222,15 @@
       height: fit-content;
 
       a {
-        align-self: center;
         color: #000; // Adjust as needed
         text-decoration: none;
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 2rem;
+
+        img {
+          border-radius: 5px 0 0 5px;
+        }
 
         @media (max-width: 350px) {
           flex-direction: column;

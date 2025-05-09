@@ -1,20 +1,19 @@
 .home {
   min-height: 100vh;
   background: $grey-color;
-
   &__category {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-top: 40px;
-
+    gap: 1rem;
+    margin-top: 20px;
     @media (max-width: 850px) {
       grid-template-columns: repeat(2, 1fr);
     }
-
+    @media (max-width: 550px) {
+      grid-template-columns: 1fr;
+    }
     @media (max-width: 449px) {
       margin-top: 0;
-      gap: 1rem;
     }
   }
 
@@ -30,13 +29,17 @@
     margin: 0 auto;
     padding: 1rem;
     position: relative;
-    bottom: 30px;
+
     @media (min-width: 1240px) {
       max-width: 1200px;
     }
     @media (max-width: 450px) {
-      padding: 0;
+      padding: 0.5rem;
     }
+  }
+  .mainSwiperSkeleton {
+    /* match the real swiper’s height exactly: */
+    height: 300px;
   }
 }
 

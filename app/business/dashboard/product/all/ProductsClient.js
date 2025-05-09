@@ -8,7 +8,13 @@ const PAGE_SIZE = 25; // match your API default "limit=6"
 
 export default function ProductsClient({ companyId }) {
   const [myProducts, setMyProducts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(() => {
+    if (typeof window !== "undefined") {
+      const savedPage = localStorage.getItem("currentPage");
+      return savedPage ? parseInt(savedPage, 10) : 1;
+    }
+    return 1;
+  });
   const [totalPages, setTotalPages] = useState(1);
 
   const [loading, setLoading] = useState(false);
@@ -17,6 +23,22 @@ export default function ProductsClient({ companyId }) {
   // ----- Search -----
   const [query, setQuery] = useState("");
   const [searching, setSearching] = useState(false);
+
+  const handleSavePage = (page) => {
+    localStorage.setItem("currentPage", page);
+  };
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      localStorage.removeItem("currentPage");
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   // ---------------------------
   // 1) Fetch Products (paginated)
@@ -60,11 +82,11 @@ export default function ProductsClient({ companyId }) {
 
     try {
       const res = await fetch(
-        `/api/business/searchProduct?query=${encodeURIComponent(query)}`
+        `/api/business/searchProduct?query=${encodeURIComponent(
+          query
+        )}&companyId=${companyId}`
       );
-      if (!res.ok) {
-        throw new Error(`Error searching: ${res.statusText}`);
-      }
+
       const data = await res.json();
       setSearching(true);
       if (data.products) {
@@ -74,6 +96,7 @@ export default function ProductsClient({ companyId }) {
       }
       setTotalPages(1); // For simplicity, no pagination on search results
     } catch (err) {
+      console.log(err);
       console.error("Error searching products:", err);
       setError("Error searching. Please try again later.");
     } finally {
@@ -89,6 +112,7 @@ export default function ProductsClient({ companyId }) {
     setSearching(false);
     // Reset to page 1 of normal products
     setCurrentPage(1);
+    localStorage.removeItem("currentPage");
   };
 
   // ---------------------------
@@ -126,6 +150,7 @@ export default function ProductsClient({ companyId }) {
   // ---------------------------
   // 5) Render
   // ---------------------------
+
   return (
     <>
       <div className={styles.header}>Todos los productos</div>
@@ -172,7 +197,11 @@ export default function ProductsClient({ companyId }) {
       {!searching && (
         <div className={styles.pagination}>
           <button
-            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+            onClick={() => {
+              const newPage = Math.max(currentPage - 1, 1);
+              setCurrentPage(newPage);
+              handleSavePage(newPage);
+            }}
             disabled={currentPage === 1 || loading}
           >
             Anterior
@@ -181,7 +210,11 @@ export default function ProductsClient({ companyId }) {
             Página {currentPage} de {totalPages}
           </span>
           <button
-            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+            onClick={() => {
+              const newPage = Math.min(currentPage + 1, totalPages);
+              setCurrentPage(newPage);
+              handleSavePage(newPage);
+            }}
             disabled={currentPage === totalPages || loading}
           >
             Siguiente

@@ -25,7 +25,7 @@ export default function SubCategoryFilter({
   return (
     <li>
       <div className={styles.filterHeader} onClick={() => toggleFilter()}>
-        <span>Subcategorias</span>
+        <span>Subcategorías</span>
         {expandedFilters ? <IoIosArrowUp /> : <IoIosArrowDown />}
       </div>
       {expandedFilters && (
@@ -53,25 +53,17 @@ export default function SubCategoryFilter({
               />
             ))}
 
-          {setSubCategory2 && subCategorie3.length > 0
-            ? subCategorie3?.map((category, i) => (
-                <Card
-                  key={i}
-                  category={category}
-                  categoryHandler={subCategory3Handler}
-                  replaceQuery={replaceQuery}
-                  setOpenMenuMobile={setOpenMenuMobile}
-                />
-              ))
-            : subCategorie2?.map((category, i) => (
-                <Card
-                  key={i}
-                  category={category}
-                  categoryHandler={subCategory2Handler}
-                  replaceQuery={replaceQuery}
-                  setOpenMenuMobile={setOpenMenuMobile}
-                />
-              ))}
+          {setSubCategory2 &&
+            subCategorie3.length > 0 &&
+            subCategorie3?.map((category, i) => (
+              <Card
+                key={i}
+                category={category}
+                categoryHandler={subCategory3Handler}
+                replaceQuery={replaceQuery}
+                setOpenMenuMobile={setOpenMenuMobile}
+              />
+            ))}
         </div>
       )}
     </li>

@@ -71,13 +71,13 @@ function Row(props) {
           {row.isPaid ? (
             <img
               src="../../../images/verified.png"
-              alt="Mongir Logo"
+              alt="Somos-el-hueco-medellin-compra-virtual-i-producto-online-en-linea-somoselhueco-medellin"
               className={styles.ver}
             />
           ) : (
             <img
               src="../../../images/unverified.png"
-              alt="Mongir Logo"
+              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
               className={styles.ver}
             />
           )}
@@ -131,12 +131,10 @@ function Row(props) {
                 <TableBody>
                   <TableRow key={row?.user?.id}>
                     <TableCell component="th" scope="row">
-                      <Image
+                      <img
                         src={row?.user?.image}
                         className={styles.table__img}
-                        alt="Mongir Logo"
-                        width={100}
-                        height={100}
+                        alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                       />
                     </TableCell>
                     <TableCell>{row?.user?.name}</TableCell>
@@ -193,7 +191,7 @@ function Row(props) {
                           >
                             <Image
                               src={p.image}
-                              alt="Mongir Logo"
+                              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                               className={styles.table__productImg}
                               width={100}
                               height={100}

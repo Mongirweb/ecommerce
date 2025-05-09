@@ -1,28 +1,43 @@
 import "../styles/globals.scss";
-import { ToastContainer } from "react-toastify";
 import { StoreProvider } from "../store/StoreProvider";
 import SessionWrapper from "./components/SessionWrapper";
-import { GoogleAnalytics } from "@next/third-parties/google";
-import { GoogleTagManager } from "@next/third-parties/google";
-import { customMetaDataGenerator } from "./components/customMetaDataGenerator";
 import { headers } from "next/headers";
 import Script from "next/script";
 import { ModalProvider } from "../context/ModalContext";
-import Modal from "../components/modal";
 import ToastProvider from "./components/ToastProvider";
-import CustomDialog from "../components/dialogModal";
-import DialogModal from "../components/createProductDialogModal";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
-import CrossTabSync from "./components/CrossTabSync";
 import { Poppins } from "next/font/google";
-import { MobileSearchProvider } from "../context/MobileSearchContext";
-import SearchModal from "../components/SearchModal";
+import dynamic from "next/dynamic";
+import { CartProvider } from "../context/CartContext";
+import CartModal from "../components/home/cart";
+import { GoogleTagManager } from "@next/third-parties/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: "400",
+  weight: ["400", "500", "600", "700", "800"], // Google‑font helpers expect an array
+  display: "swap", // optional but recommended for CLS
+});
+
+const CrossTabSync = dynamic(() => import("./components/CrossTabSync"), {
+  ssr: false,
+});
+
+const Whatsapp = dynamic(() => import("../components/Whatsapp"), {
+  ssr: false,
+});
+
+const Modal = dynamic(() => import("../components/modal"), { ssr: false });
+
+const DialogModal = dynamic(
+  () => import("../components/createProductDialogModal"),
+  { ssr: false }
+);
+
+const CustomDialog = dynamic(() => import("../components/dialogModal"), {
+  ssr: false,
 });
 
 export const generateMetadata = async () => {
@@ -83,7 +98,7 @@ export const generateMetadata = async () => {
       title,
       description,
       images: [
-        "https://res.cloudinary.com/danfiejkv/image/upload/v1742231694/MONGIR-LOGO_jkpbgw.png",
+        "https://res.cloudinary.com/danfiejkv/image/upload/v1742231694/MONGIR-LOGO_jkpbgw.webp",
       ],
     },
     alternates: {
@@ -105,40 +120,38 @@ export default function RootLayout({ children }) {
     <html lang="es" translate="no" className={poppins.className}>
       <head>
         <meta name="google" content="notranslate" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        {/* Initialize dataLayer early */}
+        <GoogleTagManager gtmId="GTM-MQTLMPJC" />
+        <GoogleAnalytics gaId="G-WE1CRE8BML" />
       </head>
       <body>
         <Script strategy="afterInteractive" nonce={nonce} />
         <ErrorBoundary>
           <SessionWrapper>
             <StoreProvider>
-              <ModalProvider>
-                <MobileSearchProvider>
+              <CartProvider>
+                <ModalProvider>
                   <ToastProvider>
                     {" "}
                     {/* Wrapping with ToastProvider */}
                     {/* Google Tag Manager */}
-                    <GoogleAnalytics
-                      gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
-                      strategy="afterInteractive"
-                    />
-                    <GoogleTagManager
-                      gtmId={process.env.NEXT_PUBLIC_GTM_MEASUREMENT_ID}
-                    />
                     <CrossTabSync />
                     {/* Main application content */}
                     {children}
+                    <CartModal />
+                    <Whatsapp />
                     <Modal />
-                    <SearchModal />
                     <CustomDialog />
                     <DialogModal />
-                    <Analytics />
+                    <Analytics mode="production" strategy="afterInteractive" />
                   </ToastProvider>
-                </MobileSearchProvider>
-              </ModalProvider>
+                </ModalProvider>
+              </CartProvider>
             </StoreProvider>
           </SessionWrapper>
         </ErrorBoundary>
-        <SpeedInsights />
+        <SpeedInsights mode="production" strategy="afterInteractive" />
       </body>
     </html>
   );

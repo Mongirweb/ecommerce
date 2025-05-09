@@ -46,13 +46,13 @@ function Row(props) {
           {row.isPaid ? (
             <img
               src="../../../images/verified.png"
-              alt="Mongir Logo"
+              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
               className={styles.ver}
             />
           ) : (
             <img
               src="../../../images/unverified.png"
-              alt="Mongir Logo"
+              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
               className={styles.ver}
             />
           )}
@@ -109,7 +109,7 @@ function Row(props) {
                       <img
                         src={row?.user?.image}
                         className={styles.table__img}
-                        alt="Mongir Logo"
+                        alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                       />
                     </TableCell>
                     <TableCell>{row?.user?.name}</TableCell>
@@ -124,6 +124,17 @@ function Row(props) {
                       {row.shippingAddress.country} <br />
                       {row.shippingAddress.zipCode} <br />
                       {row.shippingAddress.phoneNumber} <br />
+                      {row.trackingInfo?.trackingUrl && (
+                        <span style={{ fontWeight: "bold" }}>
+                          <a
+                            href={row.trackingInfo.trackingUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Guía #{row.trackingInfo.trackingNumber}
+                          </a>
+                        </span>
+                      )}
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -166,7 +177,7 @@ function Row(props) {
                           >
                             <Image
                               src={p.image}
-                              alt="Mongir Logo"
+                              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                               className={styles.table__productImg}
                               width={100}
                               height={100}
@@ -262,8 +273,8 @@ export default function CollapsibleTable({ rows }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
+          {rows.map((row, index) => (
+            <Row key={row.name} row={row} index={index} />
           ))}
         </TableBody>
       </Table>

@@ -40,7 +40,7 @@ export default function MessengerClient({ session, orders, user }) {
       <div className={styles.header}>
         <Image
           src={session.user.image}
-          alt="Mongir Logo"
+          alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
           width={80}
           height={80}
         />
@@ -55,7 +55,7 @@ export default function MessengerClient({ session, orders, user }) {
         {orders?.map((order) => (
           <div key={order._id} className={styles.orderCard}>
             <h3>Pedido ID: {order._id}</h3>
-            <p>Guía ID: {order.trackingNumber || "N/A"}</p>
+            <p>Guía ID: {order?.trackingInfo?.trackingNumber || "N/A"}</p>
             <p>
               Estado:{" "}
               <span

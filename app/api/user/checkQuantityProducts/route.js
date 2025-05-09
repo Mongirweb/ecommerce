@@ -8,13 +8,13 @@ export async function POST(req) {
     // Connect to the database
     await db.connectDb();
 
-    // Authenticate the user and attach it to req
-    await auth(req); // This will attach `req.user`
+    // // Authenticate the user and attach it to req
+    // await auth(req); // This will attach `req.user`
 
-    // Ensure the user is authenticated
-    if (!req.user) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-    }
+    // // Ensure the user is authenticated
+    // if (!req.user) {
+    //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    // }
 
     // Parse the request body
     const { products } = await req.json();

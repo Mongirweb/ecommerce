@@ -34,9 +34,9 @@ export default function HeadingFilters({
         >
           <button>
             {sortQuery === ""
-              ? "Recommend"
+              ? "Recomendado"
               : sortingOptions.find((x) => x.value === sortQuery)?.name ||
-                "Recommend"}
+                "Recomendado"}
             <div
               style={{ transform: `${show ? "rotate(180deg)" : "rotate(0)"}` }}
             >

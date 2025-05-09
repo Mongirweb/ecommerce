@@ -11,7 +11,7 @@ import {
   PayPalButtons,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
-import { useReducer, useEffect, useState } from "react";
+import { useReducer, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Image from "next/image";
 import PendingOutlinedIcon from "@mui/icons-material/PendingOutlined";
@@ -27,6 +27,17 @@ import { useWindowSize } from "react-use";
 import Confetti from "react-confetti-boom";
 import { toast } from "react-toastify";
 import Link from "next/link";
+import { MdLocalShipping } from "react-icons/md";
+import MainSwiperSkeleton from "../../../components/skeletons/MainSwiperSkeleton";
+import dynamic from "next/dynamic";
+
+const PaymentMethods = dynamic(
+  () => import("../../../components/cart/paymentMethods"),
+  {
+    ssr: true,
+    loading: () => <MainSwiperSkeleton />,
+  }
+);
 
 function reducer(state, action) {
   switch (action.type) {
@@ -44,8 +55,10 @@ function reducer(state, action) {
 }
 
 export default function OrderPage({ orderData, paypal_client_id }) {
+  const [paymentMethod, setPaymentMethod] = useState("wompi");
   const { width, height } = useWindowSize();
   const dispatchRedux = useDispatch();
+  const shakeRef = useRef(null);
 
   const [state, dispatch] = useReducer(reducer, {
     loading: true,
@@ -148,7 +161,7 @@ export default function OrderPage({ orderData, paypal_client_id }) {
           currency: "COP",
           amountInCents,
           reference: transactionReference,
-          publicKey: process.env.NEXT_PUBLIC_PUB_PROD,
+          publicKey: process.env.NEXT_PUBLIC_PUB_TEST,
           signature: { integrity: integritySignature },
           redirectUrl: `${window.location.origin}/order/${orderData._id}`,
         });
@@ -168,7 +181,24 @@ export default function OrderPage({ orderData, paypal_client_id }) {
     }
   };
 
-  const shipping = orderData.totalBeforeDiscount >= 89900 ? 6000 : 12000;
+  const shipping = orderData.totalBeforeDiscount >= 89900 ? 5000 : 10000;
+
+  useEffect(() => {
+    // Ensure the element exists before setting the interval
+    if (!shakeRef.current) return;
+
+    const interval = setInterval(() => {
+      // Remove the class to reset the animation
+      shakeRef.current.classList.remove(styles.shake);
+      // Trigger a reflow to restart the animation
+      void shakeRef.current.offsetWidth;
+      // Add the class back to restart the animation
+      shakeRef.current.classList.add(styles.shake);
+    }, 7000);
+
+    // Clear the interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
@@ -187,7 +217,7 @@ export default function OrderPage({ orderData, paypal_client_id }) {
       <div className={styles.order}>
         <div className={styles.container}>
           <div className={styles.order__infos}>
-            <Link className={styles.goBack} href="/">
+            <Link className={styles.goBack} href="/checkout">
               <IoMdArrowBack />
               Volver
             </Link>
@@ -216,30 +246,33 @@ export default function OrderPage({ orderData, paypal_client_id }) {
                   "Pendiente de pago"
                 )}
               </div>
-              <div className={styles.order__header_status}>
-                Estado de la Orden :
-                <span
-                  className={
-                    orderData.status === "Procesando"
-                      ? styles.processing
-                      : orderData.status === "Exitoso"
-                      ? styles.dispatched
+              {orderData.isPaid && (
+                <div className={styles.order__header_status}>
+                  Estado de la Orden :
+                  <span
+                    className={
+                      orderData.status === "Procesando"
+                        ? styles.processing
+                        : orderData.status === "Exitoso"
+                        ? styles.dispatched
+                        : orderData.status === "Cancelado"
+                        ? styles.cancelled
+                        : orderData.status === "Exitoso"
+                        ? styles.completed
+                        : ""
+                    }
+                  >
+                    {orderData.status === "Procesando"
+                      ? "Procesando"
                       : orderData.status === "Cancelado"
-                      ? styles.cancelled
+                      ? "Cancelado"
                       : orderData.status === "Exitoso"
-                      ? styles.completed
-                      : ""
-                  }
-                >
-                  {orderData.status === "Procesando"
-                    ? "Procesando"
-                    : orderData.status === "Cancelado"
-                    ? "Cancelado"
-                    : orderData.status === "Exitoso"
-                    ? "Completado"
-                    : orderData.status}
-                </span>
-              </div>
+                      ? "Completado"
+                      : orderData.status}
+                  </span>
+                </div>
+              )}
+
               {orderData?.trackingInfo?.trackingUrl && (
                 <div className={styles.order__header_status}>
                   Estado del envío :
@@ -318,36 +351,89 @@ export default function OrderPage({ orderData, paypal_client_id }) {
                   <>
                     <div className={styles.order__products_total_sub}>
                       <span>Subtotal</span>
-                      <span>{orderData.totalBeforeDiscount}$</span>
+                      <span>${formatPrice(orderData.totalBeforeDiscount)}</span>
                     </div>
                     <div className={styles.order__products_total_sub}>
                       <span>
-                        Coupon Applied <em>({orderData.couponApplied})</em>{" "}
+                        Coupón <em>({orderData.couponApplied})</em>{" "}
                       </span>
                       <span>
-                        -
-                        {(
-                          orderData.totalBeforeDiscount - orderData.total
-                        ).toFixed(2)}
-                        $
+                        - $
+                        {formatPrice(
+                          orderData.totalBeforeDiscount +
+                            orderData.shippingPrice -
+                            orderData.total
+                        )}
                       </span>
                     </div>
-                    <div className={styles.order__products_total_sub}>
+                    {/* <div className={styles.order__products_total_sub}>
                       <span>Tax price</span>
                       <span>+{orderData.taxPrice}$</span>
+                    </div> */}
+                    <div className={styles.order__products_total_sub}>
+                      <span>Envío</span>
+                      {orderData.shippingPrice === 5000 && (
+                        <span
+                          style={{
+                            color: "#1b5e20",
+                            display: "flex",
+                            gap: "5px",
+                            alignItems: "center",
+                          }}
+                        >
+                          ${formatPrice(orderData.shippingPrice)}
+                          <p
+                            style={{
+                              color: "#f6f6f6f",
+                              textDecoration: "line-through",
+                              fontSize: "12px",
+                            }}
+                          >
+                            15.000
+                          </p>
+                        </span>
+                      )}
+                      {orderData.shippingPrice === 10000 && (
+                        <span
+                          style={{
+                            color: "#1b5e20",
+                            display: "flex",
+                            gap: "5px",
+                            alignItems: "center",
+                          }}
+                        >
+                          ${formatPrice(orderData.shippingPrice)}
+                          <p
+                            style={{
+                              color: "#f6f6f6f",
+                              textDecoration: "line-through",
+                              fontSize: "12px",
+                            }}
+                          >
+                            15.000
+                          </p>
+                        </span>
+                      )}
                     </div>
                     <div
                       className={`${styles.order__products_total_sub} ${styles.bordertop}`}
                     >
                       <span>Total</span>
-                      <b>{orderData.total}$</b>
+                      <b>${formatPrice(orderData.total)}</b>
+                    </div>
+                    <div className={styles.cart__message_line}>
+                      {/* Attach the ref to the element you want to shake */}
+                      <span ref={shakeRef} className={styles.shake}>
+                        <MdLocalShipping /> Por compras superiores a $89.900
+                        envío por solo $5.000
+                      </span>
                     </div>
                   </>
                 ) : (
                   <>
                     <div className={styles.order__products_total_sub}>
                       <span>Envío</span>
-                      {shipping === 6000 && (
+                      {shipping === 5000 && (
                         <span
                           style={{
                             color: "#1b5e20",
@@ -368,7 +454,7 @@ export default function OrderPage({ orderData, paypal_client_id }) {
                           </p>
                         </span>
                       )}
-                      {shipping === 12000 && (
+                      {shipping === 10000 && (
                         <span
                           style={{
                             color: "#1b5e20",
@@ -378,7 +464,7 @@ export default function OrderPage({ orderData, paypal_client_id }) {
                           }}
                         >
                           ${formatPrice(shipping)}
-                          <p
+                          {/* <p
                             style={{
                               color: "#f6f6f6f",
                               textDecoration: "line-through",
@@ -386,7 +472,7 @@ export default function OrderPage({ orderData, paypal_client_id }) {
                             }}
                           >
                             15.000
-                          </p>
+                          </p> */}
                         </span>
                       )}
                     </div>
@@ -396,6 +482,13 @@ export default function OrderPage({ orderData, paypal_client_id }) {
                       <span>Total:</span>
                       <b>${formatPrice(orderData.total)}</b>
                     </div>
+                    {/* <div className={styles.cart__message_line}>
+                     
+                      <span ref={shakeRef} className={styles.shake}>
+                        <MdLocalShipping /> Por compras superiores a $89.900
+                        envío por solo $5.000
+                      </span>
+                    </div> */}
                   </>
                 )}
               </div>
@@ -410,30 +503,38 @@ export default function OrderPage({ orderData, paypal_client_id }) {
                   <Image
                     width={300}
                     height={200}
-                    src={orderData.user.image}
+                    src={
+                      orderData?.user?.image ||
+                      "https://res.cloudinary.com/dmhcnhtng/image/upload/v1664642478/992490_b0iqzq.png"
+                    }
                     alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                     loading="lazy"
                   />
                   <div>
-                    <span>{orderData.user.name}</span>
-                    <span>{orderData.user.email}</span>
+                    <span>
+                      {orderData?.user?.name ||
+                        orderData?.shippingAddress?.firstName +
+                          " " +
+                          orderData?.shippingAddress?.lastName}
+                    </span>
+                    <span>{orderData?.user?.email}</span>
                   </div>
                 </div>
               </div>
               <div className={styles.order__address_shipping}>
                 <h2>Dirección de envío</h2>
                 <span>
-                  {orderData.shippingAddress.firstName}{" "}
-                  {orderData.shippingAddress.lastName}
+                  {orderData?.shippingAddress?.firstName}{" "}
+                  {orderData?.shippingAddress?.lastName}
                 </span>
-                <span>{orderData.shippingAddress.address1}</span>
-                <span>{orderData.shippingAddress.address2}</span>
+                <span>{orderData?.shippingAddress?.address1}</span>
+                <span>{orderData?.shippingAddress?.address2}</span>
                 <span>
-                  {orderData.shippingAddress.state},
-                  {orderData.shippingAddress.city}
+                  {orderData?.shippingAddress?.state},
+                  {orderData?.shippingAddress?.city}
                 </span>
-                <span>{orderData.shippingAddress.zipCode}</span>
-                <span>{orderData.shippingAddress.country}</span>
+                <span>{orderData?.shippingAddress?.zipCode}</span>
+                <span>{orderData?.shippingAddress?.country}</span>
               </div>
               {/* <div className={styles.order__address_shipping}>
                 <h2>Dirección de facturación</h2>
@@ -491,6 +592,10 @@ export default function OrderPage({ orderData, paypal_client_id }) {
                 )} */}
               </div>
             )}
+            <PaymentMethods
+              setPaymentMethod={setPaymentMethod}
+              paymentMethod={paymentMethod}
+            />
           </div>
         </div>
       </div>

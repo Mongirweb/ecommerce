@@ -21,7 +21,7 @@ export default function CategoryFilter({
   return (
     <div className={styles.filter}>
       <h3>
-        Categorias:
+        Categorías:
         <span onClick={() => setShow(!show)}>
           {show ? <FaMinus /> : <BsPlusLg />}
         </span>

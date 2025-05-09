@@ -35,6 +35,7 @@ export default function NewCommerce({ session }) {
         router.push("/newcommerce/onboard");
       }
     } else {
+      router.push("/");
       setIsLoggedIn(false);
     }
   }, [session, router]);

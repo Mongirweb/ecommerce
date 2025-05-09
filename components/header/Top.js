@@ -1,13 +1,16 @@
 "use client";
 import styles from "./header.module.scss";
-import { MdSecurity } from "react-icons/md";
-import { FaRegHeart } from "react-icons/fa";
 import { RiAccountPinCircleLine, RiArrowDropDownFill } from "react-icons/ri";
-import Link from "next/link";
 import { useState, useEffect } from "react";
-import UserMenu from "./UserMenu";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { CircleUserRound } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+import dynamic from "next/dynamic";
+
+const UserMenu = dynamic(() => import("./UserMenu"), {
+  ssr: true,
+});
 
 export default function Top({ country }) {
   const [visible, setVisible] = useState(false);
@@ -37,7 +40,7 @@ export default function Top({ country }) {
               width={300}
               height={200}
               src="https://cdn.ipregistry.co/flags/emojitwo/co.svg"
-              alt="Mongir Logo"
+              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
               loading="lazy"
             />
             <span>COL / COP</span>
@@ -75,19 +78,19 @@ export default function Top({ country }) {
                     width={300}
                     height={200}
                     src={session?.user?.image}
-                    alt="Mongir Logo"
+                    alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                     loading="lazy"
                   />
                   <span>{session?.user?.name}</span>
-                  <RiArrowDropDownFill />
+                  <ChevronDown />
                 </div>
               </div>
             ) : (
               <div className={styles.li}>
                 <div className={styles.flex}>
-                  <RiAccountPinCircleLine />
+                  <CircleUserRound />
                   <span>Mi cuenta</span>
-                  <RiArrowDropDownFill />
+                  <ChevronDown />
                 </div>
               </div>
             )}

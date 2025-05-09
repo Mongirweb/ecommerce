@@ -13,42 +13,62 @@
     margin-bottom: 2.5rem;
   }
 }
+.error {
+  font-size: 14px;
+}
 .apply_btn {
   margin-top: -10px;
   width: 100%;
   height: 40px;
-  background: #6d6c6c;
+  background: #080000;
   color: #fff;
   font-weight: 600;
+  border-radius: 50px;
   cursor: pointer;
 }
 .infos {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 5px;
+  width: 100%;
   span {
     background: #eeeeee57;
     padding: 5px;
     font-size: 18px;
     border: 1px solid #cccccc17;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-weight: 400;
+    b {
+      font-weight: 400;
+    }
     &:last-of-type {
+      font-weight: 600;
       b {
         font-size: 20px;
+        font-weight: 600;
       }
     }
   }
   .coupon_span {
-    background: $success-color;
-    color: #fff;
+    background: #e6f3e5;
+    color: #6cc070;
+    font-weight: 600;
+    b {
+      font-weight: 600;
+    }
   }
 }
 .submit_btn {
   margin-top: 1rem;
   width: 100%;
-  height: 45px;
+  height: 40px;
   background: $blue-color;
   color: #fff;
   font-weight: 600;
   cursor: pointer;
+  border-radius: 50px;
 }

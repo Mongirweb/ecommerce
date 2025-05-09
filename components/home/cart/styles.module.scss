@@ -1,0 +1,87 @@
+.overlay {
+  position: fixed;
+  inset: 0; /* top, right, bottom, left = 0 */
+  background-color: rgba(93, 91, 91, 0.7);
+  z-index: 9999;
+  display: flex;
+  justify-content: end;
+}
+
+@keyframes slideIn {
+  // panel entra desde la derecha
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes slideOut {
+  // panel sale hacia la derecha
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.slideIn {
+  animation: slideIn 0.5s forwards;
+}
+.slideOut {
+  animation: slideOut 0.5s forwards;
+}
+
+.modal {
+  background: #fff;
+  width: 31%;
+  padding: 20px;
+  position: relative;
+  height: 100vh;
+  transition: transform 1s ease;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.searchForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+  margin-top: 2rem;
+}
+
+.searchForm input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.searchForm button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.suggestions {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.suggestions li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}

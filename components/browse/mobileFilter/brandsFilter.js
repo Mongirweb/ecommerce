@@ -8,17 +8,29 @@ export default function BrandsFilter({
   brands,
   brandHandler,
   replaceQuery,
+  setOpenMenuMobile,
 }) {
   return (
     <li>
-      <div className={styles.filterHeader} onClick={() => toggleFilter()}>
+      <div
+        className={styles.filterHeader}
+        onClick={() => {
+          toggleFilter();
+        }}
+      >
         <span>Marcas</span>
         {expandedFilters ? <IoIosArrowUp /> : <IoIosArrowDown />}
       </div>
       {expandedFilters && (
         <div className={styles.filterOptions}>
           {brands?.map((brand, i) => (
-            <span key={i} onClick={() => brandHandler(brand)}>
+            <span
+              key={i}
+              onClick={() => {
+                brandHandler(brand);
+                setOpenMenuMobile(false);
+              }}
+            >
               {brand}
             </span>
           ))}

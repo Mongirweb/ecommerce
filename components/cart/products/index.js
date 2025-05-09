@@ -69,24 +69,25 @@ export default function Product({ product, selected, setSelected, session }) {
       <div className={styles.product__header}>
         <Image
           src="/images/store.webp"
-          alt="Mongir Logo"
+          alt="cart-item-somoselhueco"
           width={300}
           height={300}
           loading="lazy"
         />
-        Almacen Mongir
+        Somos el Hueco Marketplace
       </div>
       <div className={styles.product__image}>
         <div></div>
         <Link
           href={`/product/${product.slug}?style=${product.style || 0}&size=0`}
+          target="_blank"
         >
           <Image
             width={300}
             height={300}
             loading="lazy"
             src={product?.images[0].url}
-            alt="Mongir Logo"
+            alt="producto-product-somoselhueco-saldo-saldos"
           />
         </Link>
         <div className={styles.col}>
@@ -115,7 +116,7 @@ export default function Product({ product, selected, setSelected, session }) {
               width={300}
               height={300}
               src={product.color.image}
-              alt="Mongir Logo"
+              alt="somoselhueco-saldo-producto-style"
               loading="lazy"
             />
             {product.size && <span>{product.size}</span>}
@@ -125,11 +126,11 @@ export default function Product({ product, selected, setSelected, session }) {
           <div className={styles.product__priceQty}>
             <div className={styles.product__priceQty_price}>
               <span className={styles.price}>
-                COP ${formatPrice(product.price * product.qty)}
+                ${formatPrice(product.price * product.qty)}
               </span>
               {product.price !== product.priceBefore && (
                 <span className={styles.priceBefore}>
-                  COP${formatPrice(product?.priceBefore)}
+                  ${formatPrice(product?.priceBefore)}
                 </span>
               )}
               {product.discount > 0 && (
@@ -152,11 +153,11 @@ export default function Product({ product, selected, setSelected, session }) {
               </button>
             </div>
           </div>
-          <div className={styles.product__shipping}>
+          {/* <div className={styles.product__shipping}>
             {product.shipping
               ? `+${product.shipping}$ Shipping fee`
               : "Envío gratis"}
-          </div>
+          </div> */}
           <div className={styles.product__advert}>
             {product.quantity === 1 && "Solo queda 1 apurate!"}
           </div>

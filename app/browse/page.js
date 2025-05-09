@@ -2,6 +2,7 @@
 import React from "react";
 import db from "../../utils/db";
 import Product from "../../models/Product";
+import User from "../../models/User";
 import SubCategory from "../../models/SubCategory";
 import {
   filterArray,
@@ -11,10 +12,10 @@ import {
 import dynamic from "next/dynamic";
 import { categories } from "../../data/categorie";
 import locations from "../../data/locations.json";
-import axios from "axios";
 import { customMetaDataGenerator } from "../components/customMetaDataGenerator";
 import SubCategory2 from "../../models/SubCategory2";
 import SubCategory3 from "../../models/SubCategory3";
+import mongoose from "mongoose";
 import styles from "../../styles/browse.module.scss";
 
 const Header = dynamic(() => import("../../components/header"), {
@@ -101,16 +102,19 @@ export default async function Browse({ searchParams }) {
   //-------------------------------------------------->
   const searchQuery = query.search || "";
 
+  const companyQuery = query.company || "";
+
   const categoryQuery = query.category || "";
   const genderQuery = query.gender || "";
-  const priceQuery = query.price?.split("_") || "";
+  const priceQuery = query.price?.split("_") || [];
+
   const subCategoryQuery = query.subcategory || "";
   const subCategory2Query = query.subcategory2 || "";
   const subCategory3Query = query.subcategory3 || "";
   const shippingQuery = query.shipping || 0;
   const ratingQuery = query.rating || "";
   const sortQuery = query.sort || "";
-  const pageSize = 50;
+  const pageSize = 20;
   const page = query.page || 1;
   const discountQuery = query.discount?.split("_") || [];
   const minDiscount = discountQuery[0] || 0;
@@ -230,30 +234,11 @@ export default async function Browse({ searchParams }) {
       : {};
 
   const price =
-    priceQuery && priceQuery[0]
+    priceQuery && priceQuery !== ""
       ? {
-          "subProducts.sizes": {
-            $elemMatch: {
-              $or: [
-                {
-                  priceWithDiscount: {
-                    $gte: Number(priceQuery[0]) || 0,
-                    $lte: Number(priceQuery[1]) || Infinity,
-                  },
-                },
-                {
-                  $and: [
-                    { priceWithDiscount: { $exists: false } },
-                    {
-                      price: {
-                        $gte: Number(priceQuery[0]) || 0,
-                        $lte: Number(priceQuery[1]) || Infinity,
-                      },
-                    },
-                  ],
-                },
-              ],
-            },
+          "subProducts.sizes.price": {
+            $gte: Number(priceQuery[0]) || 0,
+            $lte: Number(priceQuery[1]) || Infinity,
           },
         }
       : {};
@@ -275,9 +260,24 @@ export default async function Browse({ searchParams }) {
       ? { rating: { $gte: Number(ratingQuery) } }
       : {};
 
+  const company =
+    companyQuery && companyQuery.trim() !== ""
+      ? { company: new mongoose.Types.ObjectId(companyQuery.trim()) }
+      : {};
+
+  let defaultSort = {};
+
+  if (searchQuery && searchQuery.trim() !== "") {
+    // If user is performing a text search, default to sort by "score" descending
+    defaultSort = { score: -1 };
+  } else {
+    // Otherwise, default to createdAt descending
+    defaultSort = { createdAt: 1 };
+  }
+
   const sort =
     sortQuery === ""
-      ? {}
+      ? defaultSort
       : sortQuery === "popular"
       ? { rating: -1, "subProducts.sold": -1 }
       : sortQuery === "newest"
@@ -285,7 +285,7 @@ export default async function Browse({ searchParams }) {
       : sortQuery === "topSelling"
       ? { "subProducts.sold": -1 }
       : sortQuery === "topReviewed"
-      ? { rating: -1 }
+      ? { createdAt: -1 }
       : sortQuery === "priceHighToLow"
       ? {
           "subProducts.sizes.priceWithDiscount": -1,
@@ -330,26 +330,43 @@ export default async function Browse({ searchParams }) {
 
   if (searchQuery) {
     const queryTokens = searchQuery.split(" ");
-    const mustClauses = queryTokens.map((token) => ({
-      text: {
-        query: token,
-        path: ["name", "description"], // or include other fields if desired
-        fuzzy: { maxEdits: 1 },
-      },
-    }));
+
     // Use Atlas Search for fuzzy search without category/subcategory filters
     const pipeline = [
       {
         $search: {
           index: "default",
           compound: {
-            must: mustClauses,
+            should: [
+              // 1) Exact phrase boost
+              {
+                phrase: {
+                  query: searchQuery, // "set manicura pequeño"
+                  path: ["name"], // add "slug" and "description"
+                  slop: 2, // how many words can appear in-between
+                  score: { boost: { value: 10 } }, // high boost for exact phrase
+                },
+              },
+              // 2) Fuzzy text search (fallback)
+              {
+                text: {
+                  query: searchQuery,
+                  path: ["name"], // again, include "slug" etc.
+                  fuzzy: {
+                    maxEdits: 1, // allow slight typos
+                    prefixLength: 1,
+                  },
+                  score: { boost: { value: 2 } },
+                },
+              },
+            ],
+            minimumShouldMatch: 1,
           },
         },
       },
       {
         $match: {
-          // Apply all filters except category, subCategory, subCategory2, subCategory3
+          // Apply your other filters
           ...brand,
           ...style,
           ...size,
@@ -358,10 +375,13 @@ export default async function Browse({ searchParams }) {
           ...material,
           ...gender,
           ...price,
+          ...company,
           ...shipping,
           ...rating,
           ...discountFilter,
-          // No category/subcategory filters here
+          "subProducts.sizes": {
+            $elemMatch: { qty: { $gt: 0 } },
+          },
         },
       },
       {
@@ -378,20 +398,30 @@ export default async function Browse({ searchParams }) {
           preserveNullAndEmptyArrays: true,
         },
       },
-
-      { $sort: Object.keys(sort).length ? sort : { _id: 1 } },
-      { $skip: pageSize * (page - 1) },
-      { $limit: pageSize },
+      {
+        // Expose the Atlas Search score as "score"
+        $set: { score: { $meta: "searchScore" } },
+      },
+      {
+        // Sort by highest score first
+        $sort: Object.keys(sort).length ? sort : { score: -1 },
+      },
+      {
+        // Handle pagination
+        $skip: pageSize * (page - 1),
+      },
+      {
+        $limit: pageSize,
+      },
     ];
 
     const productsDb = await Product.aggregate(pipeline).allowDiskUse(true);
-    products =
-      sortQuery && sortQuery !== "" ? productsDb : randomize(productsDb);
+    products = sortQuery && sortQuery !== "" ? productsDb : productsDb;
 
     const countPipeline = [
       {
         $search: {
-          index: "default",
+          index: "Search_Index_Editor",
           text: {
             query: searchQuery,
             path: "name",
@@ -409,9 +439,13 @@ export default async function Browse({ searchParams }) {
           ...material,
           ...gender,
           ...price,
+          ...company,
           ...shipping,
           ...rating,
           ...discountFilter,
+          "subProducts.sizes": {
+            $elemMatch: { qty: { $gt: 0 } },
+          },
           // Again, no category/subcategory filters here
         },
       },
@@ -437,17 +471,21 @@ export default async function Browse({ searchParams }) {
       ...material,
       ...gender,
       ...price,
+      ...company,
       ...shipping,
       ...rating,
       ...discountFilter,
+      "subProducts.sizes": {
+        $elemMatch: { qty: { $gt: 0 } },
+      },
     })
+      .populate({ path: "company", model: "User" })
       .skip(pageSize * (page - 1))
       .limit(pageSize)
       .sort(sort)
       .lean();
 
-    products =
-      sortQuery && sortQuery !== "" ? productsDb : randomize(productsDb);
+    products = sortQuery && sortQuery !== "" ? productsDb : productsDb;
 
     totalProducts = await Product.countDocuments({
       ...category,
@@ -462,9 +500,13 @@ export default async function Browse({ searchParams }) {
       ...material,
       ...gender,
       ...price,
+      ...company,
       ...shipping,
       ...rating,
       ...discountFilter,
+      "subProducts.sizes": {
+        $elemMatch: { qty: { $gt: 0 } },
+      },
     });
   }
 
@@ -484,6 +526,7 @@ export default async function Browse({ searchParams }) {
           ...material,
           ...gender,
           ...price,
+          ...company,
           ...shipping,
           ...rating,
           ...discountFilter,
@@ -501,6 +544,7 @@ export default async function Browse({ searchParams }) {
           ...material,
           ...gender,
           ...price,
+          ...company,
           ...shipping,
           ...rating,
           ...discountFilter,
@@ -520,6 +564,7 @@ export default async function Browse({ searchParams }) {
           ...material,
           ...gender,
           ...price,
+          ...company,
           ...shipping,
           ...rating,
           ...discountFilter,
@@ -537,6 +582,7 @@ export default async function Browse({ searchParams }) {
           ...material,
           ...gender,
           ...price,
+          ...company,
           ...shipping,
           ...rating,
           ...discountFilter,
@@ -551,6 +597,7 @@ export default async function Browse({ searchParams }) {
           ...style,
           ...size,
           ...color,
+          ...company,
           ...pattern,
           ...material,
           ...gender,
@@ -568,6 +615,7 @@ export default async function Browse({ searchParams }) {
           ...style,
           ...size,
           ...color,
+          ...company,
           ...pattern,
           ...material,
           ...gender,
@@ -586,6 +634,7 @@ export default async function Browse({ searchParams }) {
           ...style,
           ...size,
           ...color,
+          ...company,
           ...pattern,
           ...material,
           ...gender,
@@ -600,6 +649,7 @@ export default async function Browse({ searchParams }) {
           ...subCategory2,
           ...subCategory3,
           ...brand,
+          ...company,
           ...style,
           ...size,
           ...color,
@@ -612,6 +662,51 @@ export default async function Browse({ searchParams }) {
           ...discountFilter,
         }),
   }).distinct("details");
+
+  // Distinct list of company ObjectIds from your filtered products
+  let companyIds = await Product.find({
+    ...(searchQuery
+      ? {
+          name: { $regex: searchQuery, $options: "i" },
+          ...brand,
+          ...style,
+          ...size,
+          ...color,
+          ...company,
+          ...pattern,
+          ...material,
+          ...gender,
+          ...price,
+          ...shipping,
+          ...rating,
+          ...discountFilter,
+        }
+      : {
+          ...category,
+          ...subCategory,
+          ...subCategory2,
+          ...subCategory3,
+          ...brand,
+          ...company,
+          ...style,
+          ...size,
+          ...color,
+          ...pattern,
+          ...material,
+          ...gender,
+          ...price,
+          ...shipping,
+          ...rating,
+          ...discountFilter,
+        }),
+    "subProducts.sizes": { $elemMatch: { qty: { $gt: 0 } } },
+  }).distinct("company");
+
+  // Then fetch full user docs for those IDs
+  let companies = [];
+  if (companyIds.length > 0) {
+    companies = await User.find({ _id: { $in: companyIds } }).lean();
+  }
 
   let stylesDb = filterArray(details, "Style");
   let patternsDb = filterArray(details, "Pattern Type");
@@ -646,6 +741,7 @@ export default async function Browse({ searchParams }) {
         }}
         categories={categories}
         locations={locations}
+        companies={JSON.parse(JSON.stringify(companies))}
       />
     </div>
   );

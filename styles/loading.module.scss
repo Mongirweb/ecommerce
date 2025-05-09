@@ -14,8 +14,8 @@
 .logo {
   width: 130px;
   height: 130px;
-  animation: grow-shrink 2s infinite ease-in-out;
   object-fit: contain;
+  animation: grow-shrink 2s infinite ease-in-out;
 }
 
 @keyframes grow-shrink {

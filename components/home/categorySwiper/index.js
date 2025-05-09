@@ -1,6 +1,8 @@
+"use client";
 import React from "react";
 import styles from "./styles.module.scss";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { SwiperSlide } from "swiper/react";
+import dynamic from "next/dynamic";
 
 // Import Swiper styles
 import "swiper/css";
@@ -13,6 +15,11 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import Link from "next/link";
 import { useMediaQuery } from "react-responsive";
 import Image from "next/image";
+import { ChevronRight } from "lucide-react";
+
+const Swiper = dynamic(() => import("swiper/react").then((m) => m.Swiper), {
+  ssr: false,
+});
 
 export default function CategoriesSwiper({ categories, bg }) {
   const query449px = useMediaQuery({
@@ -82,7 +89,8 @@ export default function CategoriesSwiper({ categories, bg }) {
                     width={300}
                     src={categorie.image}
                     loading="lazy"
-                    alt="Mongir Logo"
+                    blurDataURL={categorie.image}
+                    alt="categorias-saldos-moda-somoselhueco-hogar-jardineria-herramnientas-hogar-saldo-accesorios"
                   />
                 </div>
                 <div className={styles.product__infos}>
@@ -91,6 +99,7 @@ export default function CategoriesSwiper({ categories, bg }) {
                       ? `${categorie?.name?.slice(0, 30)}...`
                       : categorie?.name}
                   </p>
+                  <ChevronRight size={18} />
                 </div>
               </div>
             </Link>

@@ -30,7 +30,7 @@ export default function Dropdown({ userImage }) {
       onMouseLeave={() => setShow(false)}
     >
       <div className={styles.dropdown__toggle}>
-        <img src={userImage} alt="Mongir Logo" />
+        <img src={userImage} alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco" />
       </div>
       <div
         className={`${styles.dropdown__content} ${show ? styles.active : ""}`}

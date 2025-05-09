@@ -1,60 +1,45 @@
+// bringSimilar.js
 import Product from "../../../../models/Product";
 import db from "../../../../utils/db";
 
 export async function POST(req) {
   try {
-    // Parse the request body
     const { product, page } = await req.json();
     const limit = 6;
     const skip = page * limit;
 
-    // Connect to the database
     await db.connectDb();
 
-    // Build the initial query
-    let query = {
-      category: product.category?._id || 0,
-      subCategories: product.subCategories?.[0]?._id || 0,
-      _id: { $ne: product._id }, // Exclude the current product
+    // Build the query object incrementally:
+    // - Always match on the main category.
+    // - Then, pick the "deepest" existing sub-category.
+    const query = {
+      category: product.category?._id,
+      "subProducts.sizes.qty": { $gt: 0 },
     };
 
-    // Helper function to execute a query with skip/limit
-    const runQuery = async (q) => {
-      return Product.find(q)
-        .select("name slug subProducts category images")
-        .skip(skip)
-        .limit(limit)
-        .lean();
-    };
-
-    // Step 1: Try the narrowest query
-    let related = await runQuery(query);
-
-    // Step 2: If no results, broaden by removing subCategories
-    if (related.length === 0) {
-      delete query.subCategories;
-      related = await runQuery(query);
+    if (product.subCategorie3?.[0]?._id) {
+      // If we have subCategorie3
+      query.subCategorie2 = product.subCategorie2[0]._id;
+    } else if (product.subCategorie2?.[0]?._id) {
+      // Else fallback to subCategorie2
+      query.subCategories = product.subCategories[0]._id;
+    } else if (product.subCategories?.[0]?._id) {
+      // Else fallback to subCategories
+      query.category = product.category?._id;
     }
 
-    // Step 3: If still no results, fallback to just category
-    if (related.length === 0) {
-      query = {
-        category: product.category?._id || 0,
-        _id: { $ne: product._id },
-      };
-      related = await runQuery(query);
-    }
+    const similar = await Product.find(query)
+      .select("name slug subProducts category images")
+      .skip(skip)
+      .limit(limit)
+      .lean();
 
-    // Disconnect from the database
     await db.disconnectDb();
 
-    // Return the results
-    return new Response(JSON.stringify(related), { status: 200 });
+    return new Response(JSON.stringify(similar), { status: 200 });
   } catch (error) {
     console.error(error);
-
-    // Disconnect in case of error
-    await db.disconnectDb();
     return new Response(JSON.stringify({ message: error.message }), {
       status: 500,
     });

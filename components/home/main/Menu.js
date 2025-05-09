@@ -68,7 +68,7 @@ export default function Menu({ setOpenCategory }) {
             <li key={i}>
               <a
                 onClick={() => {
-                  if (item.name === "Categorias") {
+                  if (item.name === "Categorías") {
                     setOpenCategory((prev) => !prev);
                   } else {
                     router.push("/browse"); // Redirect to /browse

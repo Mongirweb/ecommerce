@@ -19,9 +19,9 @@ export async function POST(req) {
       throw new Error("Completar toda la información");
     }
 
-    const user = await User.findById(req.user);
-    user.deliveredOrders.push(orderId);
-    await user.save();
+    // const user = await User.findById(req.user);
+    // user.deliveredOrders.push(orderId);
+    // await user.save();
 
     // 1) Parse the incoming JSON
     const order = await Order.findById(orderId);

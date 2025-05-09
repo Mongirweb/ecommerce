@@ -1,55 +1,65 @@
-// File: app/checkout/page.jsx
+// app/checkout/page.jsx
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation"; // <-- add this
 
-import { getServerSession } from "next-auth"; // Import getServerSession
 import User from "../../models/User";
 import Cart from "../../models/Cart";
+import GuestCart from "../../models/GuestCart";
 import db from "../../utils/db";
 import Header from "../../components/cart/header";
-import Head from "next/head";
-import { authOptions } from "../api/auth/[...nextauth]/route"; // Adjust the path as needed
-import { redirect } from "next/navigation";
 import CheckoutClient from "./CheckoutClient";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { getGuestToken } from "../../utils/setGuestToken";
+import { cookies } from "next/headers";
 
-// **Add the metadata export**
+// -----------------------------------------------------
+// If you read cookies, the page can’t be prerendered:
+// -----------------------------------------------------
+export const dynamic = "force-dynamic"; // or dynamicParams = true
+
 export const metadata = {
-  title: "Mongir | Checkout",
+  title: "Somos el Hueco Medellín | Checkout",
 };
 
 export default async function Checkout() {
-  // Fetch session on the server side
+  // 1️⃣  Session (logged-in user)
+  const session = await getServerSession(authOptions);
 
-  const session = await getServerSession(authOptions); // Use getServerSession
+  // 2️⃣  Guest token (anonymous user)
+  const cookieStore = await cookies();
+  const guestToken = cookieStore.get("guest_token")?.value;
 
-  if (!session) {
-    // If there's no session, redirect to signin page
-    return redirect("/signin");
-  }
-
-  // Connect to the database
+  // 3️⃣  Fetch data ---------------------------------------------------
   await db.connectDb();
 
-  // Fetch user and cart data
-  const user = await User.findById(session.user.id);
-  const cart = await Cart.findOne({ user: user._id }).sort({ updatedAt: -1 });
+  const user = session ? await User.findById(session?.user?.id) : null;
+
+  let cart = user
+    ? await Cart.findOne({ user: user._id }).sort({ updatedAt: -1 })
+    : null;
+
+  if (!cart && guestToken) {
+    cart = await GuestCart.findOne({ token: guestToken }).sort({
+      updatedAt: -1,
+    });
+  }
 
   await db.disconnectDb();
 
+  // 4️⃣  Guard-rails: nothing to show → back to cart or signin
   if (!cart) {
-    // If cart is empty, redirect to cart page
-    return redirect("/cart");
+    return redirect("/cart"); // or "/signin" — your call
   }
 
-  // Parse data to JSON
-  const userData = JSON.parse(JSON.stringify(user));
-  const cartData = JSON.parse(JSON.stringify(cart));
-
-  // Since we're in a server component, we can't use useState or useEffect directly
-  // So, we'll pass the data to a client component
-
+  // 5️⃣  Pass plain JSON down to the client component
   return (
     <>
-      <Header />
-      <CheckoutClient cart={cartData} user={userData} />
+      <Header session={session} />
+      <CheckoutClient
+        cart={JSON.parse(JSON.stringify(cart))}
+        user={JSON.parse(JSON.stringify(user))}
+        guestToken={guestToken}
+      />
     </>
   );
 }

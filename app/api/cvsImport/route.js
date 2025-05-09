@@ -2,17 +2,30 @@ import { NextResponse } from "next/server";
 import Papa from "papaparse";
 import db from "../../../utils/db";
 import Product from "../../../models/Product";
+import slugify from "slugify";
 
 // Helper function to capitalize each word in a string
 function capitalizeEachWord(str) {
   if (!str) return "";
   return str
-    .split(/\s+/) // split on spaces (handles multiple spaces)
-    .map((word) => {
-      // Uppercase first letter, lowercase the rest
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    })
+    .split(/\s+/)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
+}
+
+// Helper function to parse price strings as numbers
+function parsePrice(rawValue) {
+  if (!rawValue) return 0;
+  let val = rawValue
+    .toString()
+    .trim()
+    .replace(/[^\d.,-]/g, "");
+  val = val.replace(",", ".");
+  let parsed = parseFloat(val);
+  if (isNaN(parsed)) {
+    parsed = 0;
+  }
+  return parsed;
 }
 
 export async function POST(request) {
@@ -28,112 +41,145 @@ export async function POST(request) {
     // 3) Parse CSV with Papa
     const { data: rows } = Papa.parse(csvText, {
       header: true,
-      skipEmptyLines: true,
     });
 
-    // 4) Group by handle
-    const groupedByHandle = {};
+    // 5) Group rows by "SKU"
+    const groupedBySKU = {};
     for (const row of rows) {
-      const handle = (row.Handle || "").trim();
-      if (!groupedByHandle[handle]) {
-        groupedByHandle[handle] = [];
+      const sku = (row.SKU || "").trim();
+      ``;
+      if (!sku) continue; // Skip if no SKU
+      if (!groupedBySKU[sku]) {
+        groupedBySKU[sku] = [];
       }
-      groupedByHandle[handle].push(row);
+      groupedBySKU[sku].push(row);
     }
 
     // If no products found in CSV, throw an error
-    const allHandles = Object.keys(groupedByHandle);
-    if (allHandles.length === 0) {
-      throw new Error("No products found in CSV.");
+    const allSKUs = Object.keys(groupedBySKU);
+    if (allSKUs.length === 0) {
+      throw new Error("No products found in CSV (no valid SKU values).");
     }
 
-    // 5) Loop over every handle to build products
+    // 6) Loop over every SKU to build products
     let importedCount = 0;
-    for (const [handle, rowGroup] of Object.entries(groupedByHandle)) {
-      // a) Pick the "main" row (often the first row with Title, Price, etc.)
-      const mainRow = rowGroup.find((r) => r.Title) || rowGroup[0];
-
-      //  --  Check the "Status" field in CSV (skip if not "active") --
-      const csvStatus = (mainRow["Status"] || "").trim().toLowerCase();
-      if (csvStatus !== "active") {
-        // Skip creating this product
-        continue;
-      }
+    for (const [sku, rowGroup] of Object.entries(groupedBySKU)) {
+      // a) Take the first row in this group as the "main" row
+      const mainRow = rowGroup[0];
 
       // b) Basic product-level fields
-      const rawTitle = mainRow.Title || "Untitled Product";
-      const name = capitalizeEachWord(rawTitle); // Capitalize each word
-      const description = mainRow["Body (HTML)"] || "";
-      const brand = mainRow.Vendor || "";
-      const slug = handle;
+      const rawName = mainRow["Nombre"] || "Untitled Product";
+      const name = capitalizeEachWord(rawName);
 
-      const categoryId = "66b683bfc2bd5f4688ba3e6c"; // Example category
+      // Description (if you have a column for it, use that instead)
+      const description = "";
+
+      // brand from the CSV column "Marcas"
+      const brand = mainRow["Marcas"] || "El Rio";
+
+      // For now, we’ll use the SKU as the slug
+      const slugOptions = {
+        lower: true,
+        strict: true,
+        remove: /[*+~.()'"!:@,]/g,
+      };
+      const slug = slugify(mainRow["Nombre"], slugOptions);
+
+      // (Optional) Hard-code category, subcategories, and company IDs
+      // Adjust these to your real values or remove if not needed
+      const artId = "672beb92269204da83f3eb34";
+      const escuelaId = "672bebf9269204da83f3eb76";
+      const oficinaId = "672bec0b269204da83f3eb82";
+      const categoryId = "66b683a4c2bd5f4688ba3e5d";
       const subCategories = [{ _id: "672be40573a386d9e158d526" }];
-      const subCategorie2 = [{ _id: "672e55e110b35e38d4833766" }];
-      const subCategorie3 = [{ _id: "672e8539088be824a9c4b480" }];
-      const companyId = "67afdadf9acbabff66d36490"; // Example company
+      const companyId = "67dc2bf15c96ade19a5a310e";
 
-      // c) Gather ALL images from this rowGroup
-      const allUrls = rowGroup
-        .map((r) => r["Image Src"]?.trim())
-        .filter(Boolean);
+      // c) Gather ALL images from this rowGroup using "Imágenes"
+      const allUrls = rowGroup.flatMap((rowItem) => {
+        // If there are multiple URLs in one cell, split by comma
+        const rawImages = (rowItem["Imágenes"] || "").trim();
+        if (!rawImages) return [];
+        // Split on commas (allowing for optional whitespace around them)
+        return rawImages.split(/\s*,\s*/).filter(Boolean);
+      });
       const uniqueUrls = [...new Set(allUrls)];
 
-      //  --  If there are no images, skip this product  --
+      // If there are no images, skip this product
       if (uniqueUrls.length === 0) {
-        // Skip creating this product
+        console.log(`Skipping SKU: ${sku}, no images found.`);
         continue;
       }
 
-      // Convert each URL into { url, public_id }
+      // Convert each URL into an object for your subProduct structure
       const imageObjects = uniqueUrls.map((imgUrl) => ({
         url: imgUrl,
         public_id: "",
       }));
 
-      // d) Single subProduct (If multiple variants, expand logic)
-      const variantSku = mainRow["Variant SKU"] || "";
-      const variantPrice = mainRow["Variant Price"] || "0";
-      const variantQty = mainRow["Variant Inventory Qty"] || "0";
+      // d) Variant & subProduct information
+      //    - Use "Precio normal" as your main variant price
+      //    - Use "Precio al por Mayor" as your wholesale price if needed
+      //    - Hard-code or parse a quantity if your CSV doesn’t have it
+      // Parse numeric fields safely
+      const variantPrice = parsePrice(mainRow["Precio normal"]);
+      const wholesalePrice = parsePrice(mainRow["Precio al por Mayor"]);
+      const variantQty = 50; // default to 10, or read from CSV if available
+      const colorValue = "#ADD8E6"; // default or read from CSV if available
+      const category = mainRow["Categorías"].split(">")[0] || "";
+      let subCatId = ""; // We will fill this below
 
-      // If you have a color column in CSV, use it; else default
-      const colorValue =
-        mainRow["Color (product.metafields.shopify.color-pattern)"] ||
-        "#ADD8E6";
+      switch (category) {
+        case "Sin categorizar":
+          subCatId = [{ _id: artId }];
+          break;
+        case "Escolar":
+          subCatId = [{ _id: escuelaId }];
+          break;
+        case "Oficina":
+          subCatId = [{ _id: oficinaId }];
+          break;
+        case "Arte":
+          subCatId = [{ _id: artId }];
+          break;
+        default:
+          // If none match, pick a default
+          subCatId = [{ _id: artId }];
+          break;
+      }
 
       const subProducts = [
         {
           images: imageObjects,
           description_images: [],
           gender: "Sin género",
-          warranty: { number: 6 },
-          weight: "0",
+          warranty: { number: 1 },
+          weight: "0.1",
           flashOffer: "No",
           chargeMarket: 0,
           measures: {
-            long: "",
-            width: "",
-            high: "",
+            long: "15",
+            width: "10",
+            high: "5",
             volumetric_weight: "",
           },
           color: {
             color: colorValue,
-            // Optionally set the first image as color image
+            // Optionally set the first image as the color image
             image: uniqueUrls[0] || "",
           },
           sizes: [
             {
-              qty: Number(variantQty),
-              wholesalePrice: 0,
-              price: Number(variantPrice),
-              sku: variantSku,
-              universalCode: variantSku,
-              priceWithDiscount: 0,
-              priceWithDiscountFlash: 0,
+              qty: variantQty,
+              wholesalePrice,
+              price: variantPrice,
+              sku: sku, // re-using SKU here
+              universalCode: sku,
+              priceWithDiscount: variantPrice,
+              priceWithDiscountFlash: variantPrice,
             },
           ],
           discount: 0,
-          variant: mainRow["Option1 Value"] || "Default Variant",
+          variant: "Default Variant",
           flashDiscount: 0,
           sold: 0,
           soldInFlash: 0,
@@ -142,7 +188,7 @@ export async function POST(request) {
       ];
 
       // e) Upsert product in DB
-      await Product.findOneAndUpdate(
+      const product = await Product.findOneAndUpdate(
         { slug },
         {
           company: companyId,
@@ -151,9 +197,7 @@ export async function POST(request) {
           brand,
           slug,
           category: categoryId,
-          subCategories,
-          subCategorie2,
-          subCategorie3,
+          subCategories: subCatId,
           subProducts,
         },
         { upsert: true, new: true }
@@ -162,12 +206,12 @@ export async function POST(request) {
       importedCount++;
     }
 
-    // 6) Close DB & return success
+    // 7) Close DB & return success
     await db.disconnectDb();
 
     return NextResponse.json({
       success: true,
-      message: `Processed ${allHandles.length} product handles. Imported ${importedCount} products successfully (skipped non-active or missing-image).`,
+      message: `Processed ${allSKUs.length} SKUs. Imported/updated ${importedCount} products successfully (skipped those missing images).`,
     });
   } catch (error) {
     await db.disconnectDb();

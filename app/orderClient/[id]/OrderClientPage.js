@@ -30,6 +30,12 @@ export default function OrderClientPage({ orderData }) {
   const formatPrice = (price) => {
     return new Intl.NumberFormat("de-DE").format(price);
   };
+  const [shipping, setShipping] = useState(0);
+  useEffect(() => {
+    const shippingPrice = orderData.total - orderData.totalBeforeDiscount;
+    setShipping(shippingPrice);
+  }, [orderData]);
+
   return (
     <>
       <Header />
@@ -96,6 +102,22 @@ export default function OrderClientPage({ orderData }) {
                     : orderData.status}
                 </span>
               </div>
+              {orderData?.trackingInfo?.trackingUrl && (
+                <div className={styles.order__header_status}>
+                  Estado del envío :
+                  <span
+                    style={{ fontWeight: "bold", textDecoration: "underline" }}
+                  >
+                    <a
+                      href={orderData.trackingInfo.trackingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Rastrear envío
+                    </a>
+                  </span>
+                </div>
+              )}
             </div>
             {/* Order Products */}
             <div className={styles.order__products}>
@@ -116,12 +138,18 @@ export default function OrderClientPage({ orderData }) {
                         ? `${product.name.substring(0, 30)}...`
                         : product.name}
                     </h1>
+                    <h1 className={styles.product__infos_name}>
+                      Variante:
+                      {product.variant.length > 30
+                        ? `${product.variant.substring(0, 30)}...`
+                        : product.variant}
+                    </h1>
                     <div className={styles.product__infos_style}>
                       <Image
                         width={300}
                         height={200}
                         src={product.color.image}
-                        alt="Mongir Logo"
+                        alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                         loading="lazy"
                       />{" "}
                       {product.size ? `/ ${product.size}` : null}
@@ -180,6 +208,10 @@ export default function OrderClientPage({ orderData }) {
                   </>
                 ) : (
                   <>
+                    <div className={styles.order__products_total_sub}>
+                      <span>Envío</span>
+                      <span>${formatPrice(shipping)}</span>
+                    </div>
                     <div
                       className={`${styles.order__products_total_sub} ${styles.bordertop}`}
                     >
@@ -201,7 +233,7 @@ export default function OrderClientPage({ orderData }) {
                     width={300}
                     height={200}
                     src={orderData.user.image}
-                    alt="Mongir Logo"
+                    alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
                     loading="lazy"
                   />
                   <div>
@@ -225,7 +257,7 @@ export default function OrderClientPage({ orderData }) {
                 <span>{orderData.shippingAddress.zipCode}</span>
                 <span>{orderData.shippingAddress.country}</span>
               </div>
-              <div className={styles.order__address_shipping}>
+              {/* <div className={styles.order__address_shipping}>
                 <h2>Dirección de facturación</h2>
                 <span>
                   {orderData.shippingAddress.firstName}{" "}
@@ -239,7 +271,7 @@ export default function OrderClientPage({ orderData }) {
                 </span>
                 <span>{orderData.shippingAddress.zipCode}</span>
                 <span>{orderData.shippingAddress.country}</span>
-              </div>
+              </div> */}
             </div>
             {!orderData.isPaid && (
               <div className={styles.order__payment}>

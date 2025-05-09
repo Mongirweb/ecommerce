@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-disallow: [/admin, /signin, /business, /messenger, /cart, /newcommerce, /update]
-Sitemap: https://www.mongir.com/sitemap
+disallow: [/excelpinateria,/admin, /signin, /business, /messenger, /newcommerce, /newcommerce/onboard, /cart, getallproducts, cvs]
+Sitemap: https://www.somoselhueco.com/sitemap

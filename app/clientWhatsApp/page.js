@@ -7,7 +7,7 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 const handleOpenWhatsApp = () => {
   window.open(
-    "https://api.whatsapp.com/send?phone=15551515711&text=Hola%20tengo%20unas%20preguntas%20somoselhueco.com%20quisiera%20atención%20porfavor",
+    "https://api.whatsapp.com/send?phone=573147193718&text=Hola%20vengo%20de%20la%20pagina%20web%20somoselhueco.com%20y%20tengo%20una%20pregunta",
     "_blank"
   );
 };

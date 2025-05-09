@@ -42,11 +42,21 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
+// Función para detectar si es HTML
+function hasHtmlTags(text = "") {
+  return /<[a-z][\s\S]*>/i.test(text);
+}
+
 export default function Accordian({ details }) {
   const [expanded, setExpanded] = React.useState("");
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
+
+  // Aseguramos que details[0] existe (si no, usamos cadena vacía)
+  const description = details?.[0] ?? "";
+  const isHtml = hasHtmlTags(description);
+
   return (
     <div className={styles.infos__accordian}>
       <Accordion
@@ -62,18 +72,24 @@ export default function Accordian({ details }) {
           Descripción Producto
         </AccordionSummary>
         <AccordionDetails>
-          <div className={styles.infos__accordian_grid}>
-            <p dangerouslySetInnerHTML={{ __html: details[0] }}></p>
-          </div>
+          {/* Render condicional: si contiene HTML, usar dangerouslySetInnerHTML.
+             De lo contrario, usamos p con un estilo que permita saltos de línea */}
+          {isHtml ? (
+            <div dangerouslySetInnerHTML={{ __html: description }} />
+          ) : (
+            <p style={{ fontWeight: "400", textAlign: "justify" }}>
+              {description}
+            </p>
+          )}
         </AccordionDetails>
-        <AccordionDetails className="scrollbar">
+        {/* <AccordionDetails className="scrollbar">
           {details.slice(1, details.length).map((info, i) => (
             <div className={styles.infos__accordian_grid} key={i}>
               <span>{info.name}:</span>
               <span>{info.value}</span>
             </div>
           ))}
-        </AccordionDetails>
+        </AccordionDetails> */}
       </Accordion>
       {/* <Accordion
         expanded={expanded === "panel2"}

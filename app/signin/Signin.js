@@ -180,11 +180,7 @@ export default function SignInComponent({ providers, csrfToken, callbackUrl }) {
                           className={styles.social__btn}
                           onClick={() => signIn(provider.id, { callbackUrl })}
                         >
-                          <Image
-                            src={google}
-                            alt="Mongir Logo"
-                            loading="lazy"
-                          />
+                          <Image src={google} alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco" loading="lazy" />
                           Acceder con {provider.name}
                         </button>
                       </div>
@@ -301,7 +297,7 @@ export default function SignInComponent({ providers, csrfToken, callbackUrl }) {
               {success && <span className={styles.success}>{success}</span>}
             </div>
             <p style={{ marginTop: "20px", width: "90%", fontSize: "14px" }}>
-              Al ingresar a Almacen Mongir aceptas nuestros{" "}
+              Al ingresar a Somos el Hueco Medellín aceptas nuestros{" "}
               <span style={{ color: "blue", cursor: "pointer" }}>
                 términos y condiciones
               </span>

@@ -1,0 +1,95 @@
+.whatsapp {
+  position: fixed;
+  bottom: -80px;
+  right: 40px;
+  z-index: 99999999999;
+  cursor: pointer;
+
+  /* animate both bottom *and* transform */
+  transition: bottom 0.3s ease, transform 0.3s ease;
+  will-change: bottom, transform;
+  transform-origin: center center;
+
+  animation: pulse 2s infinite;
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 580px) {
+    width: 40px;
+    height: 40px;
+  }
+
+  &:hover {
+    /* now this will actually animate */
+    transform: scale(1.2);
+  }
+
+  &__icon {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    z-index: 50;
+    width: 10px;
+    height: auto;
+
+    &__span {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      border-radius: 50%;
+      background: #25d366;
+      opacity: 0.5;
+
+      &__image {
+        width: 55px;
+        height: 55px;
+        transition: transform 0.3s ease;
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+  }
+  70% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+.whatsapp.visible {
+  bottom: 60px;
+}
+@media only screen and (max-width: 580px) {
+  .whatsapp {
+    position: fixed;
+    bottom: -80px;
+    right: 40px;
+    z-index: 99999999999;
+    cursor: pointer;
+    transition: bottom 0.3s ease-in-out;
+    animation: pulse 2s infinite;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .whatsapp.visible {
+    bottom: 30px;
+  }
+}

@@ -7,11 +7,11 @@ export default function MobileMenu({ setShowMenuMobile, handleOpenModal }) {
     <div className={styles.menumobile}>
       <h4>Menu</h4>
       <ul>
-        <li>
+        {/* <li>
           <Link href="/browse" prefetch={true}>
             <BsFire /> Hot Sale
           </Link>
-        </li>
+        </li> */}
         <li
           onClick={() => {
             handleOpenModal();

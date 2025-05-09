@@ -20,7 +20,7 @@ export default function SubCategoryFilter2({
   return (
     <div className={styles.filter}>
       <h3>
-        Subcategorias:
+        Subcategorías:
         <span onClick={() => setShow(!show)}>
           {show ? <FaMinus /> : <BsPlusLg />}
         </span>

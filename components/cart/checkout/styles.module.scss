@@ -10,6 +10,36 @@
       color: rgb(4, 165, 4);
       background: #e6f3e5;
       padding: 5px;
+
+      .shake {
+        animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+      }
+
+      @keyframes shake {
+        10%,
+        90% {
+          transform: translate3d(-1px, 0, 0);
+        }
+
+        20%,
+        80% {
+          transform: translate3d(2px, 0, 0);
+        }
+
+        30%,
+        50%,
+        70% {
+          transform: translate3d(-4px, 0, 0);
+        }
+
+        40%,
+        60% {
+          transform: translate3d(4px, 0, 0);
+        }
+      }
     }
   }
   &__checkout {
@@ -34,14 +64,16 @@
 }
 .submit {
   margin-top: 1rem;
+
   button {
     background: $blue-color;
     border-radius: 5px;
     width: 100%;
     color: #fff;
     font-weight: 700;
-    height: 50px;
+    height: 45px;
     font-size: 19px;
     cursor: pointer;
+    border-radius: 50px;
   }
 }

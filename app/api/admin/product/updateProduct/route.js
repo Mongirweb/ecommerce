@@ -35,7 +35,7 @@ export async function PUT(req) {
 
     // Example: sanitize known string fields
     if (body.name) body.name = sanitizeString(body.name);
-    if (body.description) body.description = sanitizeString(body.description);
+    if (body.description) body.description = body.description;
     if (body.brand) body.brand = sanitizeString(body.brand);
 
     // If you have arrays of strings, e.g. subCategories, sanitize each:

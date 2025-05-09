@@ -13,6 +13,8 @@ import { ImUsers } from "react-icons/im";
 import { AiFillMessage } from "react-icons/ai";
 import { FaThList } from "react-icons/fa";
 import { BsPatchPlus } from "react-icons/bs";
+import { DollarSign } from "lucide-react";
+
 import {
   RiCoupon3Fill,
   RiLogoutCircleFill,
@@ -51,7 +53,7 @@ export default function Sidebar() {
             width={300}
             height={200}
             src={session?.user?.image}
-            alt="Mongir Logo"
+            alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
             loading="lazy"
           />
           <div className={styles.show}>
@@ -81,6 +83,12 @@ export default function Sidebar() {
             <Link href="/admin/dashboard/users" prefetch={true}>
               <ImUsers />
               <span className={styles.show}>Users</span>
+            </Link>
+          </li>
+          <li className={route === "payments" ? styles.active : ""}>
+            <Link href="/admin/dashboard/payments" prefetch={true}>
+              <DollarSign />
+              <span className={styles.show}>Payments</span>
             </Link>
           </li>
           {/* <li className={route == "messages" ? styles.active : ""}>

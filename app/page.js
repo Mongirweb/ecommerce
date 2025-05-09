@@ -1,11 +1,34 @@
-import Footer from "../components/footer";
-import Header from "../components/header";
-import PromoSection from "../components/home/promoSection";
+// app/page.js or app/home/page.js (depending on your folder structure)
 import Product from "../models/Product";
 import db from "../utils/db";
-import ClientHome from "./ClientHome";
+import dynamic from "next/dynamic";
 import electric from "../public/images/promo/electrodomesticos-saldos-saldomania.webp";
 import styles from "../styles/Home.module.scss";
+import MainSwiperSkeleton from "../components/skeletons/MainSwiperSkeleton";
+import { categories } from "../data/categorie";
+import { Suspense } from "react";
+import { getCategorySlices } from "../utils/getCategorySlices";
+
+const Header = dynamic(() => import("../components/header"), {
+  ssr: true,
+  loading: () => <MainSwiperSkeleton />,
+});
+
+const HeroLazy = dynamic(() => import("../app/components/hero/HeroLazy"), {
+  ssr: true,
+  loading: () => <MainSwiperSkeleton />,
+});
+
+const Footer = dynamic(() => import("../components/footer"), {
+  ssr: true,
+  loading: () => <MainSwiperSkeleton />,
+});
+
+// Lazy-load ClientHome because it contains dynamic and client-only code
+const ClientHome = dynamic(() => import("./ClientHome"), {
+  ssr: true,
+  loading: () => <MainSwiperSkeleton />,
+});
 
 export const generateMetadata = async () => {
   const title = "Mongir | Todo para bebés";
@@ -49,7 +72,7 @@ export const generateMetadata = async () => {
       siteName: "Mongir",
       images: [
         {
-          url: "https://res.cloudinary.com/danfiejkv/image/upload/v1742231694/MONGIR-LOGO_jkpbgw.png",
+          url: "https://res.cloudinary.com/danfiejkv/image/upload/q_50/v1742231694/MONGIR-LOGO_jkpbgw.webp",
           width: 200,
           height: 200,
           alt: "Mongir-logo-cuadrado",
@@ -80,28 +103,45 @@ export const generateMetadata = async () => {
   };
 };
 
+export const revalidate = 3600;
+
 export default async function HomePage() {
-  await db.connectDb();
-  const limit = 15; // Adjust the limit if needed
-  const page = 0;
-  const skip = page * limit;
-
-  const recommendedData = JSON.parse(
-    JSON.stringify(
-      await Product.find({})
-        .sort({ createdAt: -1 })
-        .skip(skip)
-        .limit(limit)
-        .lean()
-    )
-  );
-
-  await db.disconnectDb();
-
   return (
     <div>
       <Header />
-      <ClientHome recommendedData={recommendedData} />
+      <HeroLazy />
+      {/* Render static MainSwiper immediately.
+          If MainSwiper includes images, consider using the "priority" prop
+          on <Image> components inside it to preload key visuals. */}
+      {/* Lazy-loaded dynamic content */}
+      <Suspense fallback={null}>
+        <ClientHome />
+      </Suspense>
+
+      {/* <div className={styles.container}>
+        <PromoSection
+          img={electric}
+          text={
+            <>
+              <span></span> <br />
+              <span>TE VENDEMOS AL POR MAYOR</span>
+              <br />
+              <span
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  justifyContent: "center",
+                }}
+              >
+                {" "}
+                <FaWhatsapp />
+                CONTACTANOS!
+              </span>
+            </>
+          }
+        />
+      </div> */}
       <Footer />
     </div>
   );

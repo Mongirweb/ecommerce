@@ -4,8 +4,6 @@ import { useEffect } from "react";
 import Image from "next/image";
 import styles from "./styles.module.scss";
 import { IoInformationCircle } from "react-icons/io5";
-import { FaTicketAlt } from "react-icons/fa";
-import { IoIosInformationCircleOutline } from "react-icons/io";
 import { IoShieldCheckmark } from "react-icons/io5";
 import { paymentMethods } from "../../../data/paymentMethods";
 import { IoLockClosedSharp } from "react-icons/io5";

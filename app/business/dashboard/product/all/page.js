@@ -9,7 +9,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../../../api/auth/[...nextauth]/route";
 
 export const metadata = {
-  title: "Mongir - Mis Productos",
+  title: "Somos el Hueco Medellín - Mis Productos",
 };
 
 export default async function AllProductsPage() {

@@ -12,7 +12,7 @@ export default function Loading() {
         src={image}
         alt="Mongir Logo"
         width={200}
-        height={200}
+        height={100}
         priority
       />
     </div>

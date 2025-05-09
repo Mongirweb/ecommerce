@@ -7,6 +7,7 @@ export default function PriceFilter({
   toggleFilter,
   expandedFilters,
   priceHandler,
+  setOpenMenuMobile,
 }) {
   const searchParams = useSearchParams();
 
@@ -93,7 +94,10 @@ export default function PriceFilter({
         <div className={styles.filterOptions}>
           <div className={styles.filter__prices}>
             <div
-              onClick={() => handlePredefinedPrice("0", "50000", "lessThan50k")}
+              onClick={() => {
+                handlePredefinedPrice("0", "50000", "lessThan50k");
+                setOpenMenuMobile(false);
+              }}
               className={
                 selectedPredefined === "lessThan50k"
                   ? styles.activeOption
@@ -103,9 +107,10 @@ export default function PriceFilter({
               Menos de $50.000
             </div>
             <div
-              onClick={() =>
-                handlePredefinedPrice("50000", "100000", "50kTo100k")
-              }
+              onClick={() => {
+                handlePredefinedPrice("50000", "100000", "50kTo100k");
+                setOpenMenuMobile(false);
+              }}
               className={
                 selectedPredefined === "50kTo100k"
                   ? styles.activeOption
@@ -115,9 +120,10 @@ export default function PriceFilter({
               de $50.000 a $100.000
             </div>
             <div
-              onClick={() =>
-                handlePredefinedPrice("100000", "200000", "100kTo200k")
-              }
+              onClick={() => {
+                handlePredefinedPrice("100000", "200000", "100kTo200k");
+                setOpenMenuMobile(false);
+              }}
               className={
                 selectedPredefined === "100kTo200k"
                   ? styles.activeOption
@@ -127,9 +133,10 @@ export default function PriceFilter({
               de $100.000 a $200.000
             </div>
             <div
-              onClick={() =>
-                handlePredefinedPrice("200000", "", "moreThan200k")
-              }
+              onClick={() => {
+                handlePredefinedPrice("200000", "", "moreThan200k");
+                setOpenMenuMobile(false);
+              }}
               className={
                 selectedPredefined === "moreThan200k"
                   ? styles.activeOption

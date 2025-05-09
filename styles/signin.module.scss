@@ -24,13 +24,8 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    max-width: 500px;
+    max-width: 300px;
     gap: 10px;
-
-    @media (max-width: 350px) {
-      max-width: 300px;
-    }
-
     .back__svg {
       a {
         width: 50px;
@@ -95,16 +90,16 @@
     border-radius: 20px;
 
     h1 {
-      font-size: 28px;
+      font-size: 30px;
       margin: 0;
       @media (max-width: 790px) {
-        font-size: 25px;
+        font-size: 32px;
       }
     }
     p {
       color: #96979b;
       text-align: center;
-      font-size: 18px;
+      font-size: 20px;
     }
     form {
       margin-top: 2rem;

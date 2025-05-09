@@ -2,21 +2,17 @@ import React, { useEffect, useState } from "react";
 import { BsArrowRightCircle } from "react-icons/bs";
 import styles from "./category.module.scss";
 import { useMediaQuery } from "react-responsive";
-import { IoIosArrowForward } from "react-icons/io";
+
 import CategoryProductCard from "../../categoryProductCard";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 export default function Category({ header, products, background, categories }) {
   const [category, setCategory] = useState(null);
   const isMedium = useMediaQuery({ query: "(max-width:1300px)" });
   const isMobile = useMediaQuery({ query: "(max-width:550px)" });
-  const query500px = useMediaQuery({ query: "(max-width:500px)" });
   const isLoading = !products || products.length === 0 || !categories;
-  const router = useRouter();
 
   useEffect(() => {
     const matchedCategory = categories.find((cat) => cat.name === header);
@@ -25,20 +21,37 @@ export default function Category({ header, products, background, categories }) {
     }
   }, [categories, header]);
 
-  const handleOpenCategory = () => {
-    router.push(`browse?category=${category?.id}`);
-  };
-
   return (
-    <div className={styles.category} onClick={handleOpenCategory}>
-      <Image
-        className={styles.img}
-        src={category?.image}
-        alt={category?.name}
-        width={500}
-        height={500}
-        loading="lazy"
-      />
+    <div className={styles.category} style={{ background: `${background}` }}>
+      <div className={styles.category__header}>
+        <Link
+          href={{
+            pathname: `${category?.link}`,
+            query: { category: category?.id },
+          }}
+          prefetch={true}
+        >
+          <h1>{header}</h1>
+          <BsArrowRightCircle />
+        </Link>
+      </div>
+
+      <div className={styles.category__products}>
+        {isLoading
+          ? [...Array(isMobile ? 6 : isMedium ? 4 : 6)].map((_, i) => (
+              <div key={i} className={styles.skeletonWrapper}>
+                <Skeleton height={200} width="100%" borderRadius={8} />
+                <Skeleton width="80%" style={{ marginTop: "10px" }} />
+                <Skeleton width="60%" />
+              </div>
+            ))
+          : products
+              .slice(0, isMobile ? 6 : isMedium ? 4 : 6)
+              .map((product, i) => (
+                <CategoryProductCard key={i} product={product} />
+              ))}
+      </div>
+
       <div className={styles.category__see_all}>
         <Link
           href={{
@@ -47,10 +60,7 @@ export default function Category({ header, products, background, categories }) {
           }}
           prefetch={true}
         >
-          <button>
-            {header}
-            {!query500px && <IoIosArrowForward size={22} />}
-          </button>
+          <button>Ver todo</button>
         </Link>
       </div>
     </div>

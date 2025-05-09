@@ -153,7 +153,7 @@ function PhotoGroup({
                 {group.files.map((file) => (
                   <SwiperSlide key={file.name}>
                     <div className={styles.preview_item}>
-                      <img src={file.preview.url} alt="Mongir Logo" />
+                      <img src={file.preview.url} alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco" />
                       <div className={styles.preview_info}>
                         <button onClick={() => removeFile(file.name, group.id)}>
                           <IoClose />

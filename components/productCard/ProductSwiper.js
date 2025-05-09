@@ -11,6 +11,7 @@ import "swiper/css/navigation";
 
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import Image from "next/image";
 
 export default function ProductSwiper({ images }) {
   const swiperRef = useRef(null);
@@ -38,7 +39,15 @@ export default function ProductSwiper({ images }) {
       >
         {images?.map((img, i) => (
           <SwiperSlide key={i} className={styles.swiperSlide}>
-            <img src={img.url} alt="" />
+            <Image
+              src={img.url}
+              alt="somos-elhueco"
+              width={200}
+              height={200}
+              loading="lazy"
+              blurDataURL={img.url}
+              placeholder="blur"
+            />
           </SwiperSlide>
         ))}
       </Swiper>

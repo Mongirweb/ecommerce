@@ -58,13 +58,22 @@ const userSchema = new mongoose.Schema(
         city: {
           type: String,
         },
+        cityCode: {
+          type: String,
+        },
         zipCode: {
           type: String,
         },
         state: {
           type: String,
         },
+        stateCode: {
+          type: String,
+        },
         country: {
+          type: String,
+        },
+        countryCode: {
           type: String,
         },
         active: {

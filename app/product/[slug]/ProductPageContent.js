@@ -1,8 +1,6 @@
 // app/product/[slug]/ProductClient.jsx
 "use client";
 import { useEffect, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-
 import Link from "next/link";
 import styles from "../../../styles/product.module.scss";
 import {
@@ -16,37 +14,47 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToVisited, updateVisited } from "../../../store/visitedItemsSlice";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
-import { useRef } from "react";
+import MainSwiperSkeleton from "../../../components/skeletons/MainSwiperSkeleton";
 
 // Dynamically import components
 const Header = dynamic(() => import("../../../components/header"), {
-  ssr: false,
+  ssr: true,
+  loading: () => <MainSwiperSkeleton />,
 });
 const Footer = dynamic(() => import("../../../components/footer"), {
-  ssr: false,
+  ssr: true,
+  loading: () => <MainSwiperSkeleton />,
 });
 const Infos = dynamic(() => import("../../../components/productPage/infos"), {
-  ssr: false,
+  ssr: true,
+  loading: () => <MainSwiperSkeleton />,
 });
 const Reviews = dynamic(
   () => import("../../../components/productPage/reviews"),
-  { ssr: false }
+  { ssr: true, loading: () => <MainSwiperSkeleton /> }
 );
 const ProductsSwiper = dynamic(
   () => import("../../../components/productsSwiper"),
-  { ssr: false }
+  { ssr: true, loading: () => <MainSwiperSkeleton /> }
 );
 const SimillarSwiper2 = dynamic(
   () => import("../../../components/productPage/similarSwiper"),
-  { ssr: false }
+  { ssr: true, loading: () => <MainSwiperSkeleton /> }
 );
 const DynamicMobileSwiper = dynamic(
   () => import("../../../components/productPage/mobileSwiper"),
-  { ssr: false }
+  { ssr: true, loading: () => <MainSwiperSkeleton /> }
 );
 const DynamicMainSwiper = dynamic(
   () => import("../../../components/productPage/mainSwiper"),
-  { ssr: false }
+  { ssr: true, loading: () => <MainSwiperSkeleton /> }
+);
+const Comments = dynamic(
+  () => import("../../../components/productPage/comments"),
+  {
+    ssr: true,
+    loading: () => <MainSwiperSkeleton />,
+  }
 );
 
 const alreadyFetchedPages = new Set(); // Track fetched pages
@@ -240,6 +248,8 @@ export default function ProductPageContent({ product, country, company }) {
               />
             </div>
           </div>
+          <div className={styles.divider}></div>
+          <Comments product={product} />
           <div className={styles.divider}></div>
           <div ref={similarRef}>
             <SimillarSwiper2

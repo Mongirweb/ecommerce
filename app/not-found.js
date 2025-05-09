@@ -10,10 +10,11 @@ export default function NotFound() {
         <Image
           className={styles.logo}
           src={image}
-          alt="Mongir Logo"
+          alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
           width={100}
           height={100}
-          priority
+          loading="lazy"
+          blurDataURL={image}
         />
         <p>
           Oops! La pagina que buscas no fue encontrada. Retorna a la pagina

@@ -10,10 +10,14 @@ import SingularSelect from "../../selects/SingularSelect";
 import SingularShippingSelect from "../../selects/SingularShippingSelect";
 import {
   changeActiveAddress,
+  changeActiveGuestAddress,
   deleteAddress,
+  deleteGuestAddress,
   saveAddress,
+  saveGuestAddress,
   // ⬇️ Import your new or existing update request here:
-  updateAddress, // You need to create or import this
+  updateAddress,
+  updateGuestAddress, // You need to create or import this
 } from "../../../requests/user";
 import { FaIdCard } from "react-icons/fa";
 import { GiPhone } from "react-icons/gi";
@@ -35,20 +39,33 @@ const initialValues = {
   id: "",
   phoneNumber: "",
   state: "",
+  stateCode: "",
   city: "",
+  cityCode: "",
   zipCode: "",
   address1: "",
   address2: "",
   country: "",
+  countryCode: "",
 };
 
-export default function Shipping({ user, profile, addresses, setAddresses }) {
+export default function Shipping({
+  user,
+  profile,
+  addresses,
+  setAddresses,
+  guestToken,
+}) {
   const [shipping, setShipping] = useState(initialValues);
   const [visible, setVisible] = useState(addresses?.length ? false : true);
   const [cities, setCities] = useState([]);
   const [editAddressId, setEditAddressId] = useState(null);
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const emailRule = Yup.string().email(
+    "Introduce una dirección de correo válida."
+  );
 
   // ------------- VALIDATION SCHEMA -------------
   const validate = Yup.object({
@@ -80,6 +97,9 @@ export default function Shipping({ user, profile, addresses, setAddresses }) {
       .required("El nombre de la ciudad es obligatorio.")
       .min(2, "Debe contener entre 2 y 60 caracteres.")
       .max(60, "Debe contener entre 2 y 60 caracteres."),
+    email: user
+      ? emailRule
+      : emailRule.required("El correo electrónico es obligatorio."),
     // zipCode: Yup.string()
     //   .required("El código postal es obligatorio.")
     //   .min(2, "Debe contener entre 2 y 30 caracteres.")
@@ -120,31 +140,67 @@ export default function Shipping({ user, profile, addresses, setAddresses }) {
 
   // Create new address
   const saveShippingHandler = async (resetForm) => {
-    try {
-      const res = await saveAddress(shipping);
-      setAddresses(res.addresses);
-      setVisible(false);
-      setShipping(initialValues);
-      resetForm();
-      toast.success("Dirección creada con exito!");
-    } catch (error) {
-      toast.error(error.response.data.message);
+    if (!user) {
+      try {
+        const res = await saveGuestAddress(shipping, guestToken);
+        setAddresses(res.addresses);
+        setVisible(false);
+        setShipping(initialValues);
+        resetForm();
+        toast.success("Dirección creada con exito!");
+      } catch (err) {
+        // prevents “cannot read properties of undefined”
+        const msg =
+          err.response?.data?.message ||
+          "Invitado solo puede tener 1 dirección";
+        toast.error(msg);
+        throw err; // re-throw if the caller needs it
+      }
+    } else {
+      try {
+        const res = await saveAddress(shipping);
+        setAddresses(res.addresses);
+        setVisible(false);
+        setShipping(initialValues);
+        resetForm();
+        toast.success("Dirección creada con exito!");
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
     }
   };
 
   // Update existing address
   const updateShippingHandler = async (resetForm) => {
-    try {
-      const res = await updateAddress(editAddressId, shipping);
-      setAddresses(res.addresses);
-      setVisible(false);
-      setShipping(initialValues);
-      setEditAddressId(null);
-      resetForm();
-      toast.success("Dirección modificada con exito!");
-    } catch (error) {
-      console.error(error);
-      toast.error(error.response.data.message);
+    if (!user) {
+      try {
+        const res = await updateGuestAddress(
+          editAddressId,
+          shipping,
+          guestToken
+        );
+        setAddresses(res.addresses);
+        setVisible(false);
+        setShipping(initialValues);
+        setEditAddressId(null);
+        resetForm();
+        toast.success("Dirección modificada con exito!");
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
+    } else {
+      try {
+        const res = await updateAddress(editAddressId, shipping, guestToken);
+        setAddresses(res.addresses);
+        setVisible(false);
+        setShipping(initialValues);
+        setEditAddressId(null);
+        resetForm();
+        toast.success("Dirección modificada con exito!");
+      } catch (error) {
+        console.error(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 
@@ -154,8 +210,14 @@ export default function Shipping({ user, profile, addresses, setAddresses }) {
       if (activeAdress?._id === id) {
         return;
       }
-      const res = await changeActiveAddress(id);
-      setAddresses(res.addresses);
+      if (!user) {
+        const res = await changeActiveGuestAddress(id, guestToken);
+        setAddresses(res.addresses);
+      } else {
+        const res = await changeActiveAddress(id);
+        setAddresses(res.addresses);
+      }
+
       toast.success("Dirección elegida con exito!");
     } catch (error) {
       console.error(error);
@@ -189,8 +251,13 @@ export default function Shipping({ user, profile, addresses, setAddresses }) {
             style: { backgroundColor: "red", color: "#fff" },
             onClick: async () => {
               try {
-                const res = await deleteAddress(id);
-                setAddresses(res.addresses);
+                if (!user) {
+                  const res = await deleteGuestAddress(id, guestToken);
+                  setAddresses(res.addresses);
+                } else {
+                  const res = await deleteAddress(id);
+                  setAddresses(res.addresses);
+                }
                 if (id === editAddressId) {
                   handleOpenCloseEdit();
                   setEditAddressId("");
@@ -314,14 +381,18 @@ export default function Shipping({ user, profile, addresses, setAddresses }) {
               className={`${styles.address} ${address.active && styles.active}`}
               onClick={() => changeActiveHandler(address._id)}
             >
-              {/* <div className={styles.address__side}>
+              <div className={styles.address__side}>
                 <Image
-                  width={300}
-                  height={300}
-                  src={profile ? user.image : user.image}
+                  width={200}
+                  height={200}
+                  src={
+                    profile
+                      ? user?.image
+                      : "https://res.cloudinary.com/dmhcnhtng/image/upload/v1664642478/992490_b0iqzq.png"
+                  }
                   alt=""
                 />
-              </div> */}
+              </div>
               <div className={styles.address__col}>
                 <span>
                   <FaIdCard />
@@ -337,8 +408,8 @@ export default function Shipping({ user, profile, addresses, setAddresses }) {
                 <span>
                   <FaMapMarkerAlt />
                   {address.address1}
+                  {address.address2 ? `, ${address.address2}` : ""}
                 </span>
-                <span>{address.address2}</span>
                 <span>
                   {address.city}, {address.state}, {address.country}
                 </span>
@@ -356,7 +427,113 @@ export default function Shipping({ user, profile, addresses, setAddresses }) {
         ))}
       </div>
 
-      {/* Show/Hide Button */}
+      {/* The Form (New or Edit) */}
+      {visible && (
+        <Formik
+          enableReinitialize
+          initialValues={shipping}
+          validationSchema={validate}
+          onSubmit={(values, { resetForm }) => {
+            if (editAddressId) {
+              // If we are editing an address
+              updateShippingHandler(resetForm);
+            } else {
+              // If we are creating a new address
+              saveShippingHandler(resetForm);
+            }
+          }}
+        >
+          {() => (
+            <Form>
+              {/* Country */}
+              <ShippingInput
+                principal
+                name="email"
+                placeholder="*Correo electrónico"
+                onChange={handleChange}
+              />
+              <SingularSelect
+                name="country"
+                value={shipping.country}
+                placeholder="*Pais"
+                handleChange={handleChange}
+                data={countries}
+              />
+              {/* Departamento */}
+              <SingularShippingSelect
+                name="state"
+                value={shipping.state}
+                placeholder="*Departamento"
+                handleChange={handleChange}
+                data={departaments}
+              />
+              {/* Ciudad */}
+              <SingularShippingSelect
+                name="city"
+                value={shipping.city}
+                placeholder="*Ciudad"
+                handleChange={handleChange}
+                data={cities}
+              />
+              <div className={styles.col}>
+                <ShippingInput
+                  name="firstName"
+                  placeholder="*Nombre"
+                  onChange={handleChange}
+                />
+                <ShippingInput
+                  name="lastName"
+                  placeholder="*Apellido"
+                  onChange={handleChange}
+                />
+              </div>
+              {/* Ciudad */}
+              <SingularShippingSelect
+                name="idType"
+                value={shipping.idType}
+                placeholder="* Tipo de identificación"
+                handleChange={handleChange}
+                data={idTypes}
+              />
+              <ShippingInput
+                name="id"
+                placeholder="*Numero de Identificación"
+                onChange={handleChange}
+                type="number"
+              />
+              <ShippingInput
+                name="phoneNumber"
+                placeholder="*Numero de Telefono"
+                onChange={handleChange}
+                type="number"
+              />
+
+              {/* <ShippingInput
+                name="zipCode"
+                placeholder="*Codigo Postal/ZIP"
+                onChange={handleChange}
+              /> */}
+              <ShippingInput
+                name="address1"
+                placeholder="Dirección ej: Calle 10 #10-10 "
+                onChange={handleChange}
+              />
+              <div className={styles.warning}>
+                * No cubrimos zonas rurales ni veredales.
+              </div>
+              {/* Optional Address2 field */}
+              <ShippingInput
+                name="address2"
+                placeholder="Complemento: (Ej: Unidad Uva Torre 1  Apto 101)"
+                onChange={handleChange}
+              />
+              <button type="submit">
+                {editAddressId ? "Actualizar dirección" : "Guardar dirección"}
+              </button>
+            </Form>
+          )}
+        </Formik>
+      )}
       <button
         className={styles.hide_show}
         onClick={() => {
@@ -387,110 +564,6 @@ export default function Shipping({ user, profile, addresses, setAddresses }) {
           </span>
         )}
       </button>
-
-      {/* The Form (New or Edit) */}
-      {visible && (
-        <Formik
-          enableReinitialize
-          initialValues={shipping}
-          validationSchema={validate}
-          onSubmit={(values, { resetForm }) => {
-            if (editAddressId) {
-              // If we are editing an address
-              updateShippingHandler(resetForm);
-            } else {
-              // If we are creating a new address
-              saveShippingHandler(resetForm);
-            }
-          }}
-        >
-          {() => (
-            <Form>
-              {/* Country */}
-              <SingularSelect
-                name="country"
-                value={shipping.country}
-                placeholder="*Pais"
-                handleChange={handleChange}
-                data={countries}
-              />
-
-              {/* Departamento */}
-              <SingularShippingSelect
-                name="state"
-                value={shipping.state}
-                placeholder="*Departamento"
-                handleChange={handleChange}
-                data={departaments}
-              />
-
-              {/* Ciudad */}
-              <SingularShippingSelect
-                name="city"
-                value={shipping.city}
-                placeholder="*Ciudad"
-                handleChange={handleChange}
-                data={cities}
-              />
-
-              <div className={styles.col}>
-                <ShippingInput
-                  name="firstName"
-                  placeholder="*Nombre"
-                  onChange={handleChange}
-                />
-                <ShippingInput
-                  name="lastName"
-                  placeholder="*Apellido"
-                  onChange={handleChange}
-                />
-              </div>
-              {/* Ciudad */}
-              <SingularShippingSelect
-                name="idType"
-                value={shipping.idType}
-                placeholder="* Tipo de identificación"
-                handleChange={handleChange}
-                data={idTypes}
-              />
-              <ShippingInput
-                name="id"
-                placeholder="*Numero de Identificación"
-                onChange={handleChange}
-                type="number"
-              />
-
-              <ShippingInput
-                name="phoneNumber"
-                placeholder="*Numero de Telefono"
-                onChange={handleChange}
-                type="number"
-              />
-              {/* <ShippingInput
-                name="zipCode"
-                placeholder="*Codigo Postal/ZIP"
-                onChange={handleChange}
-              /> */}
-              <ShippingInput
-                name="address1"
-                placeholder="Dirección ej: Calle 10 #10-10 Unidad Uva Torre 1 Apt 101"
-                onChange={handleChange}
-              />
-
-              {/* Optional Address2 field
-              <ShippingInput
-                name="address2"
-                placeholder="Complemento (Ej: Apto 101)"
-                onChange={handleChange}
-              /> */}
-
-              <button type="submit">
-                {editAddressId ? "Actualizar dirección" : "Guardar dirección"}
-              </button>
-            </Form>
-          )}
-        </Formik>
-      )}
     </div>
   );
 }

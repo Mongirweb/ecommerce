@@ -8,13 +8,19 @@ export default function SizesFilter({
   expandedFilters,
   sizes,
   sizeHandler,
+  setOpenMenuMobile,
 }) {
   const searchParams = useSearchParams();
   const existedSize = searchParams.get("size") || "";
 
   return (
     <li>
-      <div className={styles.filterHeader} onClick={() => toggleFilter()}>
+      <div
+        className={styles.filterHeader}
+        onClick={() => {
+          toggleFilter();
+        }}
+      >
         <span>Tallas</span>
         {expandedFilters ? <IoIosArrowUp /> : <IoIosArrowDown />}
       </div>
@@ -23,9 +29,10 @@ export default function SizesFilter({
           {sizes?.map((size, i) => (
             <div
               key={i}
-              onClick={() =>
-                sizeHandler(existedSize ? `${existedSize}_${size}` : size)
-              }
+              onClick={() => {
+                sizeHandler(existedSize ? `${existedSize}_${size}` : size);
+                setOpenMenuMobile(false);
+              }}
               className={
                 existedSize === size ? styles.activeOption : styles.option
               }

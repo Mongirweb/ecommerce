@@ -84,7 +84,10 @@ export default function MultipleSelect({
       >
         <div className={styles.flex}>
           {meta.error[name] && (
-            <img src="../../../images/warning.png" alt="Mongir Logo" />
+            <img
+              src="../../../images/warning.png"
+              alt="Somos-el-hueco-medellin-compra-virtual-producto-online-en-linea-somoselhueco"
+            />
           )}
           {header}
         </div>
