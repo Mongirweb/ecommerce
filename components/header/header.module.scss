@@ -38,6 +38,9 @@
     color: black;
     margin: 0;
     font-weight: 500;
+    @media (max-width: 570px) {
+      font-size: 12px;
+    }
   }
 
   svg {
