@@ -24,8 +24,8 @@ export async function sendPurchaseConfirmationEmailSomos(order, user) {
 
   const msg = {
     to: user.email, // User email
-    from: "notificaciones@somoselhueco.com", // Verified sender email
-    subject: `¡📦✅ Pedido confirmado! Somos el Hueco!`,
+    from: "notificaciones@mongir.com", // Verified sender email
+    subject: `¡📦✅ Pedido confirmado! Mongir`,
     html: emailTemplate,
   };
 

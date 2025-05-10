@@ -10,7 +10,7 @@ export async function sendWelcomeEmail(email, name) {
   const msg = {
     to: email, // User email
     from: EMAIL, // Verified sender email
-    subject: `¡Bienvenido a Somos el Hueco!`,
+    subject: `🎉 ¡Bienvenido a Mongir!`,
     html: emailTemplate,
   };
 

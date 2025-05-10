@@ -5,41 +5,22 @@ export const welcomeEmailTemplate = ({ name }) => {
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-  <!--[if !mso]><!-->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <!--<![endif]-->
-  <!--[if (gte mso 9)|(IE)]>
-      <xml>
-        <o:OfficeDocumentSettings>
-          <o:AllowPNG/>
-          <o:PixelsPerInch>96</o:PixelsPerInch>
-        </o:OfficeDocumentSettings>
-      </xml>
-      <![endif]-->
-  <!--[if (gte mso 9)|(IE)]>
-  <style type="text/css">
-    body {width: 600px;margin: 0 auto;}
-    table {border-collapse: collapse;}
-    table, td {mso-table-lspace: 0pt;mso-table-rspace: 0pt;}
-    img {-ms-interpolation-mode: bicubic;}
-  </style>
-<![endif]-->
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" type="text/css">
+
   <style type="text/css">
     body,
     p,
-    div {
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 14px;
-      color: #000000;
-    }
-
-    a {
-      color: #1188E6;
-      text-decoration: none;
-    }
-
-    p {
+    div,
+    span,
+    a,
+    h1,
+    h2,
+    h3 {
+      font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
+      text-align: center !important;
       margin: 0;
       padding: 0;
     }
@@ -50,346 +31,144 @@ export const welcomeEmailTemplate = ({ name }) => {
     }
 
     img.max-width {
-      max-width: 80% !important;
+      max-width: 100% !important;
+      height: auto !important;
     }
 
-    .column {
-      width: 33.333%;
-      display: inline-block;
-      vertical-align: top;
-      text-align: center;
+    a {
+      color: #1188E6;
+      text-decoration: none;
     }
 
-    .image-container {
-      flex-wrap: nowrap;
-      justify-content: center;
-    }
-
-    .image-container img {
-      flex: 0 0 auto;
+    .container {
+      max-width: 600px;
       margin: 0 auto;
+      width: 100%;
     }
 
-    .module-1 {
-      width: 40%;
+    .section {
+      padding: 20px;
     }
 
-    @media screen and (max-width: 480px) {
-      .image-container {
-        flex-wrap: nowrap;
-        justify-content: center;
-      }
+    .menu,
+    .cta {
+      background-color: #142D4A;
+      border-radius: 0px;
+      padding: 15px 0;
+      color: #ffffff;
+      width: 100%;
+      max-width: 600px;
+      margin: 20px auto;
+    }
 
-      .column {
-        width: auto;
-        display: inline-block;
-      }
+    .menu a,
+    .cta a {
+      font-size: 14px;
+      color: #ffffff;
+      margin: 0 10px;
+      text-decoration: none;
+    }
 
-      .image-container img {
-        flex: 0 0 auto;
-        margin: 0 auto;
-      }
+    .footer {
+      font-size: 14px;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
 
-      .module-1 {
-        width: 60%;
+    @media only screen and (max-width: 600px) {
+      .menu a,
+      .cta a {
+        display: block;
+        margin: 10px auto;
       }
     }
   </style>
-
-  <!--user entered Head Start-->
-  <!--End Head user entered-->
 </head>
 
-<body>
-  <center class="wrapper" data-link-color="#1188E6" data-body-style="font-size:14px; font-family:arial,helvetica,sans-serif; color:#000000; background-color:#FFFFFF;">
+<body style="background-color:#FFFFFF;">
+  <center class="wrapper">
     <div class="webkit">
-      <table cellpadding="0" cellspacing="0" border="0" width="100%" class="wrapper" bgcolor="#FFFFFF">
+      <table class="wrapper" bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td valign="top" bgcolor="#FFFFFF" width="100%">
-            <table width="100%" role="content-container" class="outer" align="center" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td width="100%">
-                  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                    <tr>
-                      <td>
-                        <!--[if mso]>
-    <center>
-    <table><tr><td width="600">
-  <![endif]-->
-                        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:600px;" align="center">
-                          <tr>
-                            <td role="modules-container" style="padding:0px 0px 0px 0px; color:#000000; text-align:left;" bgcolor="#FFFFFF" width="100%" align="left">
-                              <table class="module preheader preheader-hide" role="module" data-type="preheader" border="0" cellpadding="0" cellspacing="0" width="100%" style="display: none !important; mso-hide: all; visibility: hidden; opacity: 0; color: transparent; height: 0; width: 0;">
-                                <tr>
-                                  <td role="module-content">
-                                    <p> </p>
-                                  </td>
-                                </tr>
-                              </table>
-                              <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" role="module" data-type="columns" style="padding:0px 0px 0px 0px;" bgcolor="#FFFFFF" data-distribution="1,1">
-                                <tbody>
-                                  <tr role="module-content">
-                                    <td height="100%" valign="top">
-                                      <table width="290" style="width:290px; border-spacing:0; border-collapse:collapse; margin:0px 10px 0px 0px;" cellpadding="0" cellspacing="0" align="left" border="0" bgcolor="" class="column column-0">
-                                        <tbody>
-                                          <tr>
-                                            <td style="padding:0px;margin:0px;border-spacing:0;">
-                                              <table class="wrapper" role="module" data-type="image" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="r2LZvbS8XR4Q747hgVZE7h">
-                                                <tbody>
-                                                  <tr>
-                                                    <td style="font-size:6px; line-height:10px; padding:10px 10px 0px 10px;" valign="top" align="left">
+          <td>
+            <div class="container">
 
-                                                      <a href="https://www.somoselhueco.com/"><img class="max-width" border="0" style="display:block; color:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif; font-size:16px; max-width:30% !important; width:30%; height:auto !important;" width="87" alt=" " data-proportionally-constrained="true" data-responsive="true" src="http://cdn.mcauto-images-production.sendgrid.net/52f6a5de8d102239/a7f5770b-0d45-4e2e-aaf0-958aae8b11ec/324x324.png"></a>
-                                                    </td>
-                                                  </tr>
-                                                </tbody>
-                                              </table>
-                                            </td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                      <table width="290" style="width:290px; border-spacing:0; border-collapse:collapse; margin:0px 0px 0px 10px;" cellpadding="0" cellspacing="0" align="left" border="0" bgcolor="" class="column column-1">
-                                        <tbody>
-                                          <tr>
-                                            <td style="padding:0px;margin:0px;border-spacing:0;">
-                                              <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="dJWTTz97S1HhqGKdxNZa2e" data-mc-module-version="2019-10-22">
-                                                <tbody>
-                                                  <tr>
-                                                    <td style="padding:18px 0px 18px 0px; line-height:30px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content">
-                                                      <div>
-                                                        <h2 style="text-align: center"><span style="color: #bababa; font-size: 18px; font-family: arial, helvetica, sans-serif">¡Bienvenido a Somos el Hueco!</span></h2>
-                                                        <div></div>
-                                                      </div>
-                                                    </td>
-                                                  </tr>
-                                                </tbody>
-                                              </table>
-                                            </td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                              <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="4399d907-f42c-4aca-b266-6499ccb3c792" data-mc-module-version="2019-10-22">
-                                <tbody>
-                                  <tr>
-                                    <td style="padding:18px 10px 18px 10px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content">
-                                      <div>
-                                        <div style="font-family: inherit; text-align: justify"><span style="font-family: arial, helvetica, sans-serif; font-size: 18px">Hola &nbsp;${name}. Gracias por iniciar sesión en Somos el Hueco. </span></div>
-                                        <div style="font-family: inherit; text-align: justify"><br></div>
+              <!-- LOGO -->
+              <div class="section">
+                <a href="https://www.mongir.com/">
+                  <img src="http://cdn.mcauto-images-production.sendgrid.net/52f6a5de8d102239/12f6ec65-5670-4137-af41-f318e7165c25/323x112.png" alt="Logo Mongir" class="max-width" width="150">
+                </a>
+              </div>
 
-                                        <div style="font-family: inherit; text-align: justify"><span style="font-family: arial, helvetica, sans-serif; font-size: 18px">📦 ¡Compra fácil, rápido y seguro desde la comodidad de tu hogar!️ </span></div>
-                                        <div style="font-family: inherit; text-align: justify"><br></div>
+              <!-- TEXTO DE BIENVENIDA -->
+              <div class="section">
+                <p>Hola ${name}. ¡Bienvenido a Mogir! Gracias por iniciar sesión.</p>
+                <p>&nbsp;</p>
+                <p>Encuentra los mejores productos y accesorios para bebés y niños con la calidad que tu familia merece.</p>
+              </div>
 
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
+              <!-- MENÚ -->
+              <!--<div class="menu">-->
+              <!--  <a href="https://www.mongir.com/browse?category=67d3450902d26a8677f2e260">Primer día</a>-->
+              <!--  <a href="https://www.mongir.com/browse?category=67d344eb02d26a8677f2e228">Ropa</a>-->
+              <!--  <a href="https://www.mongir.com/browse?category=67d344f302d26a8677f2e236">Calzado</a>-->
+              <!--  <a href="https://www.mongir.com/browse?category=67d344fa02d26a8677f2e244">Accesorios</a>-->
+              <!--  <a href="https://www.mongir.com">Todo</a>-->
+              <!--</div>-->
 
-                              <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" style="background-color:#282829; text-align:center; padding:15px 0;">
-                                <tr>
-                                  <td>
-                                    <a href="https://www.somoselhueco.com/browse?category=66b683b6c2bd5f4688ba3e67" style="color:#FFFFFF; text-decoration:none; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin-right:20px;">Moda</a>
-                                    <a href="https://www.somoselhueco.com/browse?category=66b683c5c2bd5f4688ba3e71" style="color:#FFFFFF; text-decoration:none; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin-right:20px;">Belleza</a>
-                                    <a href="https://www.somoselhueco.com/browse?category=66b683f5c2bd5f4688ba3e8e" style="color:#FFFFFF; text-decoration:none; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin-right:20px;">Hogar</a>
-                                    <a href="https://www.somoselhueco.com/hogar" style="color:#FFFFFF; text-decoration:none; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin-right:20px;">Tecnología</a>
-                                    <a href="https://www.somoselhueco.com" style="color:#FFFFFF; text-decoration:none; font-family:Arial, Helvetica, sans-serif; font-size:14px;">Todo</a>
+              <!-- ENCABEZADO PRINCIPAL -->
+              <div class="section">
+                <a href="https://www.mongir.com">
+                  <img src="http://cdn.mcauto-images-production.sendgrid.net/52f6a5de8d102239/6d748d97-31a7-4490-8c35-974511049447/740x906.PNG" alt="Encabezado" class="max-width">
+                </a>
+              </div>
 
-                                  </td>
-                                </tr>
-                              </table>
+              <!-- BOTÓN DESTACADO -->
+              <div class="cta">
+                <a href="https://www.mongir.com/">Ingresa a www.mongir.com</a>
+              </div>
 
-                              <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" role="module" style="padding:0; margin:0; background-color:#FFFFFF;">
-                                <tbody>
-                                  <tr>
-                                    <td align="center" valign="top" style="padding:0; margin:0;">
-                                      <!-- Enlace que redirige al hacer clic en la imagen -->
-                                      <a href="https://www.somoselhueco.com" target="_blank" style="display:block;">
-                                        <img src="http://cdn.mcauto-images-production.sendgrid.net/52f6a5de8d102239/5a88dbae-9204-4f7f-ba37-5011efd2e687/800x800.gif" alt="Encabezado" style="display:block; width:100%; max-width:600px; height:auto; margin:0; padding:0;" />
-                                      </a>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
+               <!-- TEXTO PRINCIPAL -->
+              <div class="section">
+                <p><strong>¡VISÍTANOS!</strong></p>
+                <p>&nbsp;</p>
+                <p>Estamos a una cuadra de la estación San Antonio.</p>
+                
+                <p><a href="https://www.google.com/maps/place/Calle+46+%23+52,+Medell%C3%ADn,+Antioquia" target="_blank" style="text-decoration:none; color:inherit;"><img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="Ubicación" width="16" style="vertical-align:middle; margin-right:6px; filter: grayscale(100%);">Calle 46 # 52, Medellín, Antioquia</a></p>
+                <p>&nbsp;</p>
+                <p>Síguenos en:</p>
+              </div>
 
-                              <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" style="background-color:#282829; text-align:center; padding:20px 0; margin:0;">
-                                <tbody>
-                                  <tr>
-                                    <td>
-                                      <a href="https://www.somoselhueco.com" style="color:#FFFFFF; text-decoration:none; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin-right:20px;">Ingresa a www.somoselhueco.com</a>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
+              <!-- REDES SOCIALES -->
+              <div class="section">
+                <a href="https://www.facebook.com/almacenmongir/?locale=es_LA">
+                  <img src="http://cdn.mcauto-images-production.sendgrid.net/52f6a5de8d102239/38419b19-8e77-421c-865d-ec9433981870/304x304.png" alt="Facebook" width="50">
+                </a>
+                <a href="https://www.instagram.com/almacenmongir/">
+                  <img src="http://cdn.mcauto-images-production.sendgrid.net/52f6a5de8d102239/392d9bd9-3d81-4d6d-af25-550f9e4f3f4e/304x304.png" alt="Instagram" width="50">
+                </a>
+                <a href="https://www.tiktok.com/@almacenmongir">
+                  <img src="http://cdn.mcauto-images-production.sendgrid.net/52f6a5de8d102239/f815cc6b-39c5-4c73-9c17-877a78f01068/304x304.png" alt="TikTok" width="50">
+                </a>
+              </div>
 
-                              <div style="font-family: inherit; text-align: justify"><br></div>
+              <!-- PIE DE PÁGINA -->
+              <div class="footer">
+                <p>NOTA: Este es un email generado automáticamente, no lo respondas.</p>
+                <p>&nbsp;</p>
+                <p>Contáctanos si tienes alguna pregunta.</p>
+                <p><a href="https://www.mongir.com/terms">Términos y condiciones</a> | <a href="https://www.mongir.com/privacy">Política de Privacidad</a> | <a href="https://www.mongir.com/clientWhatsApp">Contáctanos</a></p>
+                <p>&nbsp;</p>
+                <p>Mongir - Medellín, Colombia</p>
+              </div>
 
-                              <table class="module" role="module" data-type="spacer" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="7a40eb7d-4f65-49de-9996-7c4d7cabf087.1">
-                                <tbody>
-                                  <tr>
-                                    <td style="padding:0px 0px 30px 0px;" role="module-content" bgcolor="">
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                              <table class="module" role="module" data-type="spacer" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="7a40eb7d-4f65-49de-9996-7c4d7cabf087">
-                                <tbody>
-                                  <tr>
-                                    <td style="padding:0px 0px 30px 0px;" role="module-content" bgcolor="">
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
+              <!-- UNSUBSCRIBE -->
+              <div class="footer">
+                <p><a href="{{{unsubscribe}}}">Darse de baja</a></p>
+              </div>
 
-                              <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="4399d907-f42c-4aca-b266-6499ccb3c792.1" data-mc-module-version="2019-10-22">
-                                <tbody>
-                                  <tr>
-                                    <td style="padding:18px 10px 18px 10px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content">
-                                      <div>
-                                        <div style="font-family: inherit; text-align: center"><span style="font-family: arial, helvetica, sans-serif; font-size: 18px">Síguenos en:</span></div>
-                                        <div></div>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-
-                              <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" role="module" data-type="columns" style="padding:30px 10px 30px 10px;" bgcolor="#FFFFFF" data-distribution="1,1,1">
-                                <tbody>
-                                  <tr role="module-content">
-                                    <td height="100%" valign="top">
-
-                                      <table class="module-1" role="module" data-type="image" border="0" cellpadding="0" cellspacing="0" style="margin: 20px auto; text-align: center;">
-                                        <tr>
-                                          <td style="text-align: center;">
-                                            <div class="image-container" style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-                                              <div class="column">
-                                                <a href="https://www.facebook.com/profile.php?id=61555759280981">
-                                                  <img src="http://cdn.mcauto-images-production.sendgrid.net/52f6a5de8d102239/5902be93-8ab7-4c9a-9281-b365b278a768/451x449.png" alt="Facebook" class="max-width" style="width: 100%;" />
-                                                </a>
-                                              </div>
-                                              <div class="column">
-                                                <a href="https://www.instagram.com/somoselhuecomedellin/?hl=es">
-                                                  <img src="http://cdn.mcauto-images-production.sendgrid.net/52f6a5de8d102239/d3ea041a-7019-461b-b304-671da48995a7/450x449.png" alt="Instagram" class="max-width" style="width: 100%;" />
-                                                </a>
-                                              </div>
-                                              <div class="column">
-                                                <a href="https://www.tiktok.com/@somoselhueco">
-                                                  <img src="http://cdn.mcauto-images-production.sendgrid.net/52f6a5de8d102239/e0ab277f-536b-4429-b4f6-6b94d0daaf22/452x450.png" alt="Tiktok" class="max-width" style="width: 100%;" />
-                                                </a>
-                                              </div>
-                                            </div>
-                                          </td>
-                                        </tr>
-                                      </table>
-
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                              <table class="module" role="module" data-type="spacer" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="d384bfa7-0c8c-4d00-b5ec-1e5abd25d452">
-                                <tbody>
-                                  <tr>
-                                    <td style="padding:0px 0px 30px 0px;" role="module-content" bgcolor="">
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-
-                              <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" role="module" style="padding:0; margin:0; background-color:#FFFFFF;">
-                                <tbody>
-                                  <tr>
-                                    <td align="center" valign="top" style="padding:0; margin:0;">
-                                      <!-- Enlace que redirige al hacer clic en la imagen -->
-                                      <a href="https://www.somoselhueco.com" target="_blank" style="display:block;">
-                                        <img src="http://cdn.mcauto-images-production.sendgrid.net/52f6a5de8d102239/49ca3146-2be2-4f9a-a861-b8bd4bda1eb1/800x200.png" alt="Encabezado" style="display:block; width:100%; max-width:600px; height:auto; margin:0; padding:0;" />
-                                      </a>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-
-                              <div style="font-family: inherit; text-align: center"><br></div>
-                              <div style="font-family: inherit; text-align: center"><br></div>
-                              <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="4399d907-f42c-4aca-b266-6499ccb3c792.2" data-mc-module-version="2019-10-22">
-                                <tbody>
-                                  <tr>
-                                    <td style="padding:18px 10px 18px 10px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content">
-                                      <div>
-                                        <div style="font-family: inherit; text-align: center"><span style="font-family: arial, helvetica, sans-serif; font-size: 18px">NOTA: Este es un email generado automáticamente, no lo respondas.&nbsp;</span></div>
-                                        <div style="font-family: inherit; text-align: center"><br></div>
-                                        <div style="font-family: inherit; text-align: center"><span style="font-family: arial, helvetica, sans-serif; font-size: 18px">Contáctanos si tienes alguna pregunta.</span></div>
-                                        <div style="font-family: inherit; text-align: center"><br></div>
-                                        <div></div>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-
-                              <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" role="module" style="padding:0px 0px 0px 0px; text-align: center;" bgcolor="#FFFFFF">
-                                <tbody>
-                                  <tr>
-                                    <td align="center" style="padding: 20px 0;">
-                                      <table border="0" cellpadding="0" cellspacing="0" align="center" style="text-align: center;">
-                                        <tr>
-                                          <td style="padding: 0 10px;">
-                                            <a href="https://www.somoselhueco.com/terms" style="color: #000000; text-decoration: none;">
-                                              <span style="font-size: 14px; font-family: Arial, Helvetica, sans-serif;"><u>Términos y condiciones</u></span>
-                                            </a>
-                                          </td>
-                                          <td style="padding: 0 10px;">
-                                            <a href="https://www.somoselhueco.com/privacy" style="color: #000000; text-decoration: none;">
-                                              <span style="font-size: 14px; font-family: Arial, Helvetica, sans-serif;"><u>Política de Privacidad</u></span>
-                                            </a>
-                                          </td>
-                                          <td style="padding: 0 10px;">
-                                            <a href="https://www.somoselhueco.com/clientWhatsApp" style="color: #000000; text-decoration: none;">
-                                              <span style="font-size: 14px; font-family: Arial, Helvetica, sans-serif;"><u>Contáctanos</u></span>
-                                            </a>
-                                          </td>
-                                        </tr>
-                                      </table>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-
-                              <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="4399d907-f42c-4aca-b266-6499ccb3c792.2.1" data-mc-module-version="2019-10-22">
-                                <tbody>
-                                  <tr>
-                                    <td style="padding:18px 10px 10px 10px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content">
-                                      <div>
-                                        <div style="font-family: inherit; text-align: center"><span style="font-family: arial, helvetica, sans-serif; font-size: 14px">Somos el Hueco - Medellín, Colombia</span></div>
-                                        <div style="font-family: inherit; text-align: center"><br></div>
-                                        <div></div>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                              <div data-role="module-unsubscribe" class="module" role="module" data-type="unsubscribe" style="color:#444444; font-size:12px; line-height:20px; padding:16px 16px 16px 16px; text-align:Center;" data-muid="4e838cf3-9892-4a6d-94d6-170e474d21e5">
-                                <div class="Unsubscribe--addressLine"></div>
-                                <p style="font-size:12px; line-height:20px;"><a class="Unsubscribe--unsubscribeLink" href="{{{unsubscribe}}}" target="_blank" style="">Unsubscribe</a></p>
-                              </div>
-                            </td>
-                          </tr>
-                        </table>
-                        <!--[if mso]>
-                                  </td>
-                                </tr>
-                              </table>
-                            </center>
-                            <![endif]-->
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
+            </div>
           </td>
         </tr>
       </table>

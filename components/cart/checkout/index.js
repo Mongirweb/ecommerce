@@ -66,13 +66,7 @@ export default function Checkout({
         <span>Total</span>
         <span>${formatPrice(total)}</span>
       </div>
-      <div className={styles.cart__message_line}>
-        {/* Attach the ref to the element you want to shake */}
-        <span ref={shakeRef} className={styles.shake}>
-          <MdLocalShipping /> Por compras superiores a $89.900 envío por solo
-          $5.000
-        </span>
-      </div>
+
       <div className={styles.submit}>
         <button onClick={saveCartToDbHandler}>Continuar</button>
       </div>
