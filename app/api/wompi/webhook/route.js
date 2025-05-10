@@ -226,9 +226,9 @@ async function handleTransactionUpdated(transaction) {
       order?.trackingInfo?.price = data.price;
       order?.trackingInfo?.email = data.email;
       order?.trackingInfo?.trackingNumber =
-        data.genrateResponse.data[0].trackingNumber;
+        data?.genrateResponse?.data[0].trackingNumber;
       order?.trackingInfo?.trackingUrl = data.genrateResponse.data[0].trackUrl;
-      order?.trackingInfo?.trackingLabel = data.genrateResponse.data[0].label;
+      order.trackingInfo.trackingLabel = data.genrateResponse.data[0].label;
       await order.save();
       // Save the tracking/shipping number in your order record.
       order.trackingNumber = data.trackingNumber; // adjust according to Envia's response structure.
