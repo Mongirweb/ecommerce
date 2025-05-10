@@ -221,14 +221,14 @@ async function handleTransactionUpdated(transaction) {
         );
       }
       const data = await shipmentResponse.json();
-      order.trackingInfo.carrier = data.carrier;
-      order.trackingInfo.service = data.service;
-      order.trackingInfo.price = data.price;
-      order.trackingInfo.email = data.email;
-      order.trackingInfo.trackingNumber =
+      order?.trackingInfo?.carrier = data.carrier;
+      order?.trackingInfo?.service = data.service;
+      order?.trackingInfo?.price = data.price;
+      order?.trackingInfo?.email = data.email;
+      order?.trackingInfo?.trackingNumber =
         data.genrateResponse.data[0].trackingNumber;
-      order.trackingInfo.trackingUrl = data.genrateResponse.data[0].trackUrl;
-      order.trackingInfo.trackingLabel = data.genrateResponse.data[0].label;
+      order?.trackingInfo?.trackingUrl = data.genrateResponse.data[0].trackUrl;
+      order?.trackingInfo?.trackingLabel = data.genrateResponse.data[0].label;
       await order.save();
       // Save the tracking/shipping number in your order record.
       order.trackingNumber = data.trackingNumber; // adjust according to Envia's response structure.
